@@ -1,0 +1,11 @@
+{% macro breadcrumb(breadcrumb_items_dict) -%}
+<ol class="breadcrumb mb-2 mt-2">
+  {% for key, value in breadcrumb_items_dict.items() %}
+  {% if not loop.last %}
+  <li class="breadcrumb-item small" ><a class="text-muted" href="{{ value }}"> {{ key|e }} </a></li>
+  {% else %}
+  <li class="breadcrumb-item active small text-muted"> {{ key|e }} </li>
+  {% endif %}
+  {% endfor %}
+</ol>
+{%- endmacro %}

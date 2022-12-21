@@ -1,14 +1,24 @@
 from flask import Blueprint, render_template, request
 from application.database import db
-from application.models import User
+from application.model import User
 
 
 blueprint = Blueprint('user_bp', __name__, url_prefix='/user')
 
 
+@blueprint.route('/<username>', methods=['GET'])
+def view(username):
+  query = User.query.filter(User.username == username).first_or_404();
+  return render_template('user/view.html', user=query.to_dict())
+
+@blueprint.route('/', methods=['GET'])
+def index():
+  return render_template('user/index.html')
+
+
 @blueprint.route('/api/list')
 def data():
-  query = User.query.filter(User.admin==0)
+  query = User.query.filter(User.admin == 0)
 
   # search filter
   search = request.args.get('search')
@@ -43,8 +53,3 @@ def data():
       'data': [user.to_dict() for user in query],
       'total': total,
   }
-
-
-@blueprint.route('/', methods=['GET'])
-def index():
-  return render_template('user/index.html')
