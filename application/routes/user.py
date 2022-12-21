@@ -8,7 +8,7 @@ blueprint = Blueprint('user_bp', __name__, url_prefix='/user')
 
 @blueprint.route('/api/list')
 def data():
-  query = User.query
+  query = User.query.filter(User.admin==0)
 
   # search filter
   search = request.args.get('search')
