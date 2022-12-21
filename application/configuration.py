@@ -8,7 +8,7 @@ load_dotenv()
 class BaseConfiguration:
   # Application
   DEBUG = False
-  APP_NAME = os.getenv('APP_NAME', 'Flask Boilerplate')
+  APP_NAME = os.getenv('APP_NAME', 'App Name')
   APP_VER = os.getenv('APP_VER', 'x.y.z')
   APP_DIR = os.path.abspath(os.path.dirname(__file__))
   ROOT_DIR = os.path.abspath(os.path.join(APP_DIR, os.pardir))
