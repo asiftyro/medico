@@ -1,4 +1,5 @@
 import datetime
+from flask import url_for
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 # from application.routes.authentication.login_manager import login_manager
@@ -50,6 +51,15 @@ class User(db.Model, UserMixin):
     return self.admin
 
   def to_dict(self):
+    avatar = '';
+    if self.photo:
+      avatar = url_for('static', filename=f'img/user-avatar/{self.photo}')
+    elif not self.photo and self.sex == 'M':
+      avatar = url_for('static', filename='img/user-avatar/default-avatar-male.png')
+    elif not self.photo and self.sex == 'F':
+      avatar = url_for('static', filename='img/user-avatar/default-avatar-female.png')
+    else:
+       avatar = url_for('static', filename='img/user-avatar/default-avatar-other.png')
     return {
         'id': self.id,
         'username': self.username,
@@ -60,7 +70,7 @@ class User(db.Model, UserMixin):
         'reference': self.reference,
         'email': self.email,
         'address': self.address,
-        'photo': self.photo,
+        'photo': avatar,
         'admin': self.admin,
         'active': self.active,
         'author': self.author,

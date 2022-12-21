@@ -1,11 +1,13 @@
 {% extends 'layout/layout.html' %}
-
+{% from 'layout/helper.html' import breadcrumb %}
 {% block title %}Patients{% endblock title %}
 
-{% block breadcrumb %}Patients{% endblock breadcrumb %}
+{% block breadcrumb %}
+{{ breadcrumb({'Patient': 'javascript:void(0)'}) }}
+{% endblock breadcrumb %}
 
 {% block content %}
-<div class="h1 mb-4">Patient Index</div>
+<div class="h2 mb-4 mt-1">Patient Index</div>
 <div class="row">
   <div class="col">
     <div id="all-user-table"></div>
@@ -30,7 +32,8 @@
     },
     columns: [{
         id: 'username',
-        name: 'Username'
+        name: 'Username',
+        formatter: (cell) => gridjs.html(`<a class='text-dark' href='{{ url_for('user_bp.view', username='' )}}${cell}'><i class="fa-regular fa-circle-check"></i>&nbsp;<b>${cell}</b></a>`),
       },
       {
         id: 'fullname',

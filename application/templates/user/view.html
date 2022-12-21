@@ -1,0 +1,99 @@
+{% extends 'layout/layout.html' %}
+{% from 'layout/helper.html' import breadcrumb %}
+{% block style %} {% endblock style %}
+{% block javascript %} {% endblock javascript %}
+
+{% block title %}Patient Details{% endblock title %}
+
+
+{% block breadcrumb %}
+{{ breadcrumb({'Patient':  url_for('user_bp.index'), 'View: ' + user.username: ''} ) }}
+{% endblock breadcrumb %}
+
+
+
+{% block content %}
+<div class="d-flex justify-content-between">
+<div class="h2 mb-4 mt-1">Patient Details </div> 
+<div><a class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Edit</a></div>
+</div>
+<div class="row">
+  <div class="col-xl-7">
+    <div class="card mb-3" style="max-width: 840px;">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="{{user.photo}}" class="img-fluid rounded-start details-view-avatar" alt="{{user.fullname}}">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title text-center">{{user.fullname}}</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span class="small">Mobile/Username:</span>
+                <span>{{user.username}}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span class="small">Date of Birth</span>
+                <span>{{user.dob}}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span class="small">Sex</span>
+                <span>{{user.sex}}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span class="small">Blood Group</span>
+                <span>{{user.blood}}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span class="small">Reference</span>
+                <span>{{user.reference}}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span class="small">Email</span>
+                <span>{{user.email}}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span class="small">Address</span>
+                <span>{{user.address}}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xl-7">
+    <ul class="list-group">
+      <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
+        <span class="small">User ID</span>
+        <span>{{user.id}}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
+        <span class="small">Active</span>
+        <span>{{ 'Yes' if user.active else 'No'}}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
+        <span class="small">Admin</span>
+        <span>{{ 'Yes' if user.admin else 'No'}}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
+        <span class="small">Created By</span>
+        <span>{{user.author}}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
+        <span class="small">Created At</span>
+        <span>{{user.created_at}}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
+        <span class="small">Modified At</span>
+        <span>{{user.modified_at or '-'}}</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+
+{% endblock content %}
