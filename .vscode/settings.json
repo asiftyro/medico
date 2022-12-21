@@ -1,0 +1,8 @@
+{
+  "python.formatting.provider": "yapf",
+  "python.formatting.yapfArgs": ["--style={BASED_ON_STYLE: PEP8, INDENT_WIDTH: 2, COLUMN_LIMIT:120, SPACES_BEFORE_COMMENT:2,4, BLANK_LINES_BETWEEN_TOP_LEVEL_IMPORTS_AND_VARIABLES:2}"],
+  "files.exclude": {
+    "venv/": true,
+    "**/__pycache__": true
+  }
+}
