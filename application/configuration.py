@@ -28,7 +28,9 @@ class BaseConfiguration:
   COMPRESS_REGISTER = True
   # Local Timezome
   LOCAL_TIMEZONE = os.getenv('LOCAL_TIMEZONE', 'Asia/Dhaka')
-
+  # Bootstrap
+  BOOTSTRAP_SERVE_LOCAL=True
+  # BOOTSTRAP_BOOTSWATCH_THEME='cerulean'
 
 class DevelopmentConfiguration(BaseConfiguration):
   # Application

@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from flask_minify import Minify
 from flask_compress import Compress
 from flask_wtf.csrf import CSRFProtect
+from flask_bootstrap import Bootstrap5
 import pytz
 
 from application.database import db
@@ -50,6 +51,7 @@ def create_app(configuration):
   # login_manager.init_app(app)
   CSRFProtect(app)
   Migrate(app, db)
+  Bootstrap5(app)
 
   # Register routes/apps
   for route in ['auth', 'home', 'user']:
