@@ -22,14 +22,13 @@ class User(db.Model, UserMixin):
   photo = db.Column(db.String(128))
   admin = db.Column(db.SmallInteger, nullable=False, default=0)
   active = db.Column(db.SmallInteger, nullable=False, default=0)
-  password = db.Column(db.LargeBinary, nullable=False)
   author = db.Column(db.Integer, nullable=False)
   created_at = db.Column(db.DateTime, default=datetime.datetime.now(datetime.timezone.utc))
   modified_at = db.Column(db.DateTime, onupdate=datetime.datetime.now(datetime.timezone.utc))
 
   def __repr__(self):
     return f'<User: {self.id}>'
-    
+
   @property
   def password(self):
     return self.password_hash
@@ -54,11 +53,19 @@ class User(db.Model, UserMixin):
     return {
         'id': self.id,
         'username': self.username,
+        'fullname': self.fullname,
+        'dob': self.dob,
+        'sex': self.sex,
+        'blood': self.blood,
+        'reference': self.reference,
+        'email': self.email,
+        'address': self.address,
+        'photo': self.photo,
         'admin': self.admin,
         'active': self.active,
         'author': self.author,
-        'created': self.created,
-        'modified': self.modified,
+        'created_at': self.created_at,
+        'modified_at': self.modified_at,
     }
 
 
