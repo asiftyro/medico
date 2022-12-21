@@ -2,6 +2,10 @@
 
 **Patient/case management system for Doctors.**
 
+*WIP*
+
+---
+
 ## Used packages
 
 ```bash
