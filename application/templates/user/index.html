@@ -1,0 +1,89 @@
+{% extends 'layout/layout.html' %}
+
+{% block title %}Patients{% endblock title %}
+
+{% block breadcrumb %}Patients{% endblock breadcrumb %}
+
+{% block content %}
+<div class="h1 mb-4">Patient Index</div>
+<div class="row">
+  <div class="col">
+    <div id="all-user-table"></div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block style %}
+<link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+{% endblock style %}
+
+{% block javascript %}
+<script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+<script>
+  const updateUrl = (prev, query) => {
+    return prev + (prev.indexOf('?') >= 0 ? '&' : '?') + new URLSearchParams(query).toString();
+  };
+
+  new gridjs.Grid({
+    className: {
+      table: 'table table-striped',
+    },
+    columns: [{
+        id: 'username',
+        name: 'Username'
+      },
+      {
+        id: 'fullname',
+        name: 'Fullname'
+      },
+      {
+        id: 'sex',
+        name: 'Sex'
+      },
+      {
+        id: 'active',
+        name: 'Active'
+      },
+    ],
+    server: {
+      url: '/user/api/list',
+      then: results => results.data,
+      total: results => results.total,
+    },
+    search: {
+      enabled: true,
+      server: {
+        url: (prev, search) => {
+          return updateUrl(prev, {
+            search
+          });
+        },
+      },
+    },
+    sort: {
+      enabled: true,
+      multiColumn: true,
+      server: {
+        url: (prev, columns) => {
+          const columnIds = ['username', 'fullname', 'sex', 'active'];
+          const sort = columns.map(col => (col.direction === 1 ? '+' : '-') + columnIds[col.index]);
+          return updateUrl(prev, {
+            sort
+          });
+        },
+      },
+    },
+    pagination: {
+      enabled: true,
+      server: {
+        url: (prev, page, limit) => {
+          return updateUrl(prev, {
+            start: page * limit,
+            length: limit
+          });
+        },
+      },
+    },
+  }).render(document.getElementById('all-user-table'));
+</script>
+{% endblock javascript %}
