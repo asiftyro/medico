@@ -8,6 +8,10 @@ migrations
 # Mac resource fork
 .DS_Store
 
+# uploaded test files
+user-avatar/
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
