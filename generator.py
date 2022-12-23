@@ -3,7 +3,7 @@ import datetime
 # ------------------------------------------------------------
 from werkzeug.security import generate_password_hash
 from application import create_app
-from application.models import User
+from application.model import User
 from application.configuration import DevelopmentConfiguration
 from application.database import db
 

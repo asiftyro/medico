@@ -10,7 +10,11 @@
           <a class="nav-link" href="{{ url_for('user_bp.index') }}">
               <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
               Index
-          </a>          
+          </a> 
+          <a class="nav-link" href="{{ url_for('user_bp.create') }}">
+            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+            Add
+          </a>                      
           <div class="sb-sidenav-menu-heading">Patient</div>
           <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
               <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -38,6 +42,6 @@
   </div>
   <div class="sb-sidenav-footer">
       <div class="small">Logged in as:</div>
-      Start Bootstrap
+      Super User
   </div>
 </nav>

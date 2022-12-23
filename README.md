@@ -19,6 +19,8 @@ email-validator==1.3.0
 Flask-Minify==0.41
 Flask-Compress==1.13
 pytz==2022.6
+Bootstrap-Flask==2.2.0
+# for code formatting:
 yapf==0.32.0
 ```
 

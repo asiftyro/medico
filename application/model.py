@@ -11,21 +11,22 @@ class User(db.Model, UserMixin):
   __tablename__ = 'user'
 
   id = db.Column(db.Integer, primary_key=True)
-  username = db.Column(db.String(64), unique=True, nullable=False)
+  username = db.Column(db.String(16), unique=True, nullable=False)
   password_hash = db.Column(db.String(128))
   fullname = db.Column(db.String(64), nullable=False)
   dob = db.Column(db.Date, nullable=False)
   sex = db.Column(db.String(1), nullable=False)
   blood = db.Column(db.String(3))
   reference = db.Column(db.String(64))
-  email = db.Column(db.String(64), unique=True)
-  address = db.Column(db.String(128))
+  email = db.Column(db.String(64), nullable=True, unique=True)
+  address = db.Column(db.String(64))
   photo = db.Column(db.String(128))
   admin = db.Column(db.SmallInteger, nullable=False, default=0)
   active = db.Column(db.SmallInteger, nullable=False, default=0)
-  author = db.Column(db.Integer, nullable=False)
+  author = db.Column(db.Integer, db.ForeignKey("user.id"), default=1) # TODO: get from logged in user
   created_at = db.Column(db.DateTime, default=datetime.datetime.now(datetime.timezone.utc))
   modified_at = db.Column(db.DateTime, onupdate=datetime.datetime.now(datetime.timezone.utc))
+  
 
   def __repr__(self):
     return f'<User: {self.id}>'
@@ -51,15 +52,16 @@ class User(db.Model, UserMixin):
     return self.admin
 
   def to_dict(self):
-    avatar = '';
+    avatar = ''
     if self.photo:
       avatar = url_for('static', filename=f'img/user-avatar/{self.photo}')
     elif not self.photo and self.sex == 'M':
-      avatar = url_for('static', filename='img/user-avatar/default-avatar-male.png')
+      avatar = url_for('static', filename='img/default-avatar-male.png')
     elif not self.photo and self.sex == 'F':
-      avatar = url_for('static', filename='img/user-avatar/default-avatar-female.png')
+      avatar = url_for('static', filename='img/default-avatar-female.png')
     else:
-       avatar = url_for('static', filename='img/user-avatar/default-avatar-other.png')
+      avatar = url_for('static', filename='img/default-avatar-other.png')
+
     return {
         'id': self.id,
         'username': self.username,
