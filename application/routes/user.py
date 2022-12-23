@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, current_app
+from flask import Blueprint, render_template, request, redirect, url_for, current_app, flash
 from application.database import db
 from application.model import User
 from application.form import CreateUserForm
@@ -23,7 +23,11 @@ def create():
       user.photo = unique_photo_name
     db.session.add(user)
     db.session.commit()
+    flash('Patient information added.', 'success')
     return redirect(url_for('user_bp.view', username=create_user_form.username.data))
+  elif request.method=='POST':
+    flash('Please check form fields.', 'error')
+
   return render_template("user/create.html", form=create_user_form)
 
 

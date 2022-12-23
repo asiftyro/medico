@@ -12,11 +12,9 @@
 {{ breadcrumb({'Boiler':  '/', 'Plate': ''} ) }}
 {% endblock breadcrumb %}
 
-
+{% block pageheader %}Boilerplate{% endblock pageheader %}
 
 {% block content %}
-<div class="h2 mb-4 mt-1">Boilerplate</div>
-
 <div class="row">
   <div class="col">
     {{ lipsum(n=5, html=True, min=20, max=100) }}

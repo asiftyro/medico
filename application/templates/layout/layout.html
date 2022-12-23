@@ -13,19 +13,19 @@
   <meta name="description" content="Medico" />
   <meta name="author" content="Asif R. Porosh" />
 
-  <link rel="apple-touch-icon" sizes="180x180" href='{{ url_for("static", filename="img/favicon/apple-touch-icon.png" ) }}'>   
-  <link rel="icon" type="image/png" sizes="32x32" href='{{ url_for("static", filename="img/favicon/favicon-32x32.png" ) }}'>  
-  <link rel="icon" type="image/png" sizes="16x16" href='{{ url_for("static", filename="img/favicon/favicon-16x16.png" ) }}'>  
-  <link rel="manifest" href='{{ url_for("static", filename="img/favicon/site.webmanifest" ) }}'>  
-  <link rel="mask-icon" href='{{ url_for("static", filename="img/favicon/safari-pinned-tab.svg" ) }}' color='#5bbad5'>   
+  <link rel="apple-touch-icon" sizes="180x180" href='{{ url_for("static", filename="img/favicon/apple-touch-icon.png" ) }}'>
+  <link rel="icon" type="image/png" sizes="32x32" href='{{ url_for("static", filename="img/favicon/favicon-32x32.png" ) }}'>
+  <link rel="icon" type="image/png" sizes="16x16" href='{{ url_for("static", filename="img/favicon/favicon-16x16.png" ) }}'>
+  <link rel="manifest" href='{{ url_for("static", filename="img/favicon/site.webmanifest" ) }}'>
+  <link rel="mask-icon" href='{{ url_for("static", filename="img/favicon/safari-pinned-tab.svg" ) }}' color='#5bbad5'>
   <link rel="shortcut icon" href='{{ url_for("static", filename="img/favicon/favicon.ico" ) }}'>
   <meta name="msapplication-TileColor" content="#ffc40d">
   <meta name="msapplication-config" content="{{ url_for("static", filename="img/favicon/browserconfig.xml" ) }}">
   <meta name="theme-color" content="#ffffff">
-{# {{ bootstrap.load_css() }} #}
+  {# {{ bootstrap.load_css() }} #}
   <link href='{{ url_for("static", filename="css/styles.css") }}' rel="stylesheet" />
   <link href='{{ url_for("static", filename="css/custom.css") }}' rel="stylesheet" />
-  
+
   <title>{{config.APP_NAME}} - {% block title %}{% endblock title%}</title>
   {% block style %}{% endblock style %}
 </head>
@@ -40,6 +40,10 @@
       <main>
         <div class="container-fluid px-4">
           {% block breadcrumb %}{% endblock breadcrumb %}
+          <div class="h2 mb-4 mt-1">
+            {% block pageheader %}{% endblock pageheader %}
+          </div>
+          {{ render_messages(dismissible=1,dismiss_animate=1) }}
           {% block content %}{% endblock content%}
         </div>
       </main>
