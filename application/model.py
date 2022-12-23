@@ -1,5 +1,5 @@
 import datetime
-from flask import url_for
+from flask import url_for, jsonify
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 # from application.routes.authentication.login_manager import login_manager
@@ -26,7 +26,7 @@ class User(db.Model, UserMixin):
   author = db.Column(db.Integer, db.ForeignKey("user.id"), default=1) # TODO: get from logged in user
   created_at = db.Column(db.DateTime, default=datetime.datetime.now(datetime.timezone.utc))
   modified_at = db.Column(db.DateTime, onupdate=datetime.datetime.now(datetime.timezone.utc))
-  
+  author_desc = db.relationship("User", remote_side=[id])
 
   def __repr__(self):
     return f'<User: {self.id}>'
@@ -78,6 +78,7 @@ class User(db.Model, UserMixin):
         'author': self.author,
         'created_at': self.created_at,
         'modified_at': self.modified_at,
+        "author_username": self.author_desc.username,
     }
 
 
