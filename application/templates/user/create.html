@@ -13,13 +13,14 @@
 {% endblock breadcrumb %}
 
 
+{% block pageheader %}
+Add new Patient
+{% endblock %}
 
 {% block content %}
-<div class="h2 mb-4 mt-1">Add new Patient</div>
-
 <div class="row">
   <div class="col-xl-6 mb-4">
-    {{ render_form(form, action=url_for('user_bp.create'), method='post') }}
+    {{ render_form(form, action=url_for('user_bp.create'), method='post', novalidate=1) }}
   </div>
 </div>
 

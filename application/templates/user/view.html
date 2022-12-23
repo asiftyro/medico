@@ -10,13 +10,14 @@
 {{ breadcrumb({'Patient':  url_for('user_bp.index'), 'View: ' + user.username: ''} ) }}
 {% endblock breadcrumb %}
 
-
+{% block pageheader %}
+<div class="d-flex justify-content-between">
+  <div class="h2 mb-4 mt-1">Patient Details </div> 
+  <div><a class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Edit</a></div>
+  </div>  
+{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between">
-<div class="h2 mb-4 mt-1">Patient Details </div> 
-<div><a class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Edit</a></div>
-</div>
 <div class="row">
   <div class="col-xl-7">
     <div class="card mb-3" style="max-width: 840px;">
