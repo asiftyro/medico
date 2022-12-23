@@ -15,11 +15,12 @@ def create():
     user = User()
     create_user_form.populate_obj(user)
     del user.photo # uploaded file will not be stored in db
-    unique_photo_name = get_unique_id()+".png"
-    user.photo = unique_photo_name
     photo = create_user_form.photo.data
-    user_avatar_path = os.path.join( current_app.config['USER_AVATAR_DIR'], unique_photo_name)
-    save_user_avatar_thumbnail(photo, user_avatar_path)
+    if photo:
+      unique_photo_name = get_unique_id()+".png"
+      user_avatar_path = os.path.join( current_app.config['USER_AVATAR_DIR'], unique_photo_name)
+      save_user_avatar_thumbnail(photo, user_avatar_path)
+      user.photo = unique_photo_name
     db.session.add(user)
     db.session.commit()
     return redirect(url_for('user_bp.view', username=create_user_form.username.data))
