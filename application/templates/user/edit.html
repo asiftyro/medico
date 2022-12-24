@@ -5,19 +5,19 @@
 
 {% block javascript %} {% endblock javascript %}
 
-{% block title %} Add new Patient {% endblock title %}
+{% block title %} Edit Patient Info {% endblock title %}
 
 
 {% block breadcrumb %}
-{{ breadcrumb({'Patient':  url_for('user_bp.index'), 'Add New': ''} ) }}
+{{ breadcrumb({'Patient':  url_for('user_bp.index'), 'Edit: ' + user.username: ''} ) }}
 {% endblock breadcrumb %}
-
 
 
 {% block pageheader %}
 <div class="d-flex justify-content-between">
-  <div class="h2 mb-4 mt-1">Add new Patient</div> 
+  <div class="h2 mb-4 mt-1">Edit Patient Info</div> 
   <div>
+    <a class="btn btn-success mt-1" href="{{ url_for('user_bp.view', username=user.username) }}"><i class="fa-solid fa-circle-info"></i>&nbsp;Patient info</a>
     <a class="btn btn-primary mt-1" href="{{ url_for('user_bp.index') }}"><i class="fa-solid fa-users"></i>&nbsp;Patient index</a>
   </div>  
 </div>  
@@ -26,7 +26,7 @@
 {% block content %}
 <div class="row">
   <div class="col-xl-6 mb-4">
-    {{ render_form(form, action=url_for('user_bp.create'), method='post', novalidate=1) }}
+    {{ render_form(form, action=url_for('user_bp.edit', username=user.username), method='post', novalidate=1) }}
   </div>
 </div>
 

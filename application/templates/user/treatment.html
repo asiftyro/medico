@@ -1,24 +1,26 @@
 {% extends 'layout/layout.html' %}
 {% from 'layout/helper.html' import breadcrumb %}
+
 {% block style %} {% endblock style %}
+
 {% block javascript %} {% endblock javascript %}
 
-{% block title %}Patient Details{% endblock title %}
+{% block title %}Patient Treatment{% endblock title %}
 
 
 {% block breadcrumb %}
-{{ breadcrumb({'Patient':  url_for('user_bp.index'), 'View: ' + user.username: ''} ) }}
+{{ breadcrumb({'Patient':  url_for('user_bp.index'), 'Treatment: ' + user.username: ''} ) }}
 {% endblock breadcrumb %}
 
 {% block pageheader %}
 <div class="d-flex justify-content-between">
-  <div class="h2 mb-4 mt-1">Patient Details </div> 
+  <div class="h2 mb-4 mt-1">Patient Treatment </div> 
   <div>
-    <a class="btn btn-success mt-1" href="{{ url_for('user_bp.treatment', username=user.username) }}"><i class="fa-solid fa-stethoscope"></i>&nbsp;Treatment</a>
+    <a class="btn btn-success mt-1" href="{{ url_for('user_bp.view', username=user.username) }}"><i class="fa-solid fa-circle-info"></i>&nbsp;Patient info</a>
     <a class="btn btn-primary mt-1" href="{{ url_for('user_bp.edit', username=user.username) }}"><i class="fa-solid fa-user-pen"></i>&nbsp;Edit patient info</a>
   </div>  
-  </div>  
-    {% endblock %}
+</div>  
+{% endblock %}
 
 {% block content %}
 <div class="row">
@@ -84,45 +86,6 @@
     </div>
   </div>
 </div>
-<div class="row">
-  <div class="offset-md-6 col-md-6">
-    <div class="card">
-      <div class="card-header d-flex justify-content-between">
-        <span><b>Status</b></span>
-        <button class="btn btn-outline-secondary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#patient-status" aria-expanded="false">
-          <i class="fa-solid fa-arrows-up-down"></i>
-        </button>
-      </div>
-        <div class="collapse show"id="patient-status">
-        <div class="card-body">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
-              <span class="small">Active</span>
-              <span>{{ 'Yes' if user.active else 'No'}}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
-              <span class="small">Admin</span>
-              <span>{{ 'Yes' if user.admin else 'No'}}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
-              <span class="small">Created By</span>
-              <span>{{user.author_username}}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
-              <span class="small">Created At</span>
-              <span>{{user.created_at}}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
-              <span class="small">Modified At</span>
-              <span>{{user.modified_at or '-'}}</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 
 
