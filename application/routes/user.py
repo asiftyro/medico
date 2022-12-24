@@ -53,6 +53,8 @@ def edit(username):
       user.photo = unique_photo_name
     else:
       photo = prev_photo
+    db.session.add(user)
+    db.session.commit()
     flash('Information updated.', 'success')
     return redirect( url_for('user_bp.view', username=user.username))
   elif request.method=='POST':

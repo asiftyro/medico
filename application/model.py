@@ -69,7 +69,7 @@ class User(db.Model, UserMixin):
         'fullname': self.fullname,
         'dob': self.dob,
         'dob_str': self.dob.strftime("%Y-%m-%d"),
-        'age': "{0.years}y {0.months}m {0.days}d".format(  relativedelta(self.dob , datetime.date.today())),
+        'age': "{0.years}y {0.months}m {0.days}d".format(  relativedelta(datetime.date.today(), self.dob)),
         'sex': self.sex,
         'blood': self.blood,
         'reference': self.reference,
