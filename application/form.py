@@ -42,3 +42,23 @@ class CreateUserForm(FlaskForm):
   active = SelectField('Active', choices=[(1, "Yes"), (0, "No")])
   admin = SelectField('Admin', choices=[(0, "No"), (1, "Yes")])
   save = SubmitField('Save')
+
+
+
+class EditUserForm(FlaskForm):
+  fullname = StringField('Full Name', validators=[InputRequired(), Length(min=4, max=64)])
+  dob = DateField('Date of Birth', validators=[InputRequired()])
+  sex = SelectField('Sex', choices=[("M", "Male"), ("F", "Female"), ("O", "Other")])
+  blood = SelectField('Blood Group',
+                      choices=[("U", "Unknown"), ("A+", "A+"), ("A-", "A-"), ("B+", "B+"), ("B-", "B-"), ("O+", "O+"),
+                               ("O-", "O-"), ("AB+", "AB+"), ("AB-", "AB-")])
+  reference = StringField("Reference", validators=[Length(max=64)])
+  email = StringField('Email',
+                      validators=[Email(), Optional(strip_whitespace=True),
+                                  Length(max=64)],
+                      filters=[lambda x: x or None])
+  address = StringField("Address", validators=[Length(max=64)])
+  photo = FileField('Photo', validators=[FileAllowed(['jpg', 'png'], 'Allowed JPG or PNG Images only.')])
+  active = SelectField('Active', choices=[(1, "Yes"), (0, "No")])
+  admin = SelectField('Admin', choices=[(0, "No"), (1, "Yes")])
+  save = SubmitField('Save')

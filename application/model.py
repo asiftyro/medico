@@ -1,4 +1,5 @@
 import datetime
+from dateutil.relativedelta import relativedelta
 from flask import url_for, jsonify
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -67,6 +68,8 @@ class User(db.Model, UserMixin):
         'username': self.username,
         'fullname': self.fullname,
         'dob': self.dob,
+        'dob_str': self.dob.strftime("%Y-%m-%d"),
+        'age': "{0.years}y {0.months}m {0.days}d".format(  relativedelta(self.dob , datetime.date.today())),
         'sex': self.sex,
         'blood': self.blood,
         'reference': self.reference,
