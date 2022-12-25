@@ -30,7 +30,7 @@ class User(db.Model, UserMixin):
   case_photo_4 = db.Column(db.String(128))
   admin = db.Column(db.SmallInteger, nullable=False, default=0)
   active = db.Column(db.SmallInteger, nullable=False, default=0)
-  author = db.Column(db.Integer, db.ForeignKey("user.id"), default=1)  # TODO: get from logged in user
+  author = db.Column(db.Integer, db.ForeignKey("user.id"), default=5)  # TODO: get from logged in user
   created_at = db.Column(db.DateTime, default=datetime.datetime.now(datetime.timezone.utc))
   modified_at = db.Column(db.DateTime, onupdate=datetime.datetime.now(datetime.timezone.utc))
   author_desc = db.relationship("User", remote_side=[id])
@@ -87,7 +87,7 @@ class User(db.Model, UserMixin):
         'email': self.email,
         'address': self.address,
         'avatar': avatar,
-        'analysis': markdown.markdown(self.analysis or "", extensions=['fenced_code']),
+        'analysis': markdown.markdown(self.analysis or "", extensions=['fenced_code', 'nl2br']),
         'case_photo_1': url_for('static', filename=case_photo_1),
         'case_photo_2': url_for('static', filename=case_photo_2),
         'case_photo_3': url_for('static', filename=case_photo_3),
@@ -98,6 +98,35 @@ class User(db.Model, UserMixin):
         'created_at': self.created_at,
         'modified_at': self.modified_at,
         "author_username": self.author_desc.username,
+    }
+
+class Prescription(db.Model):
+
+  __tablename__ = "prescription"
+
+  id = db.Column(db.Integer, primary_key=True)
+  prescription = db.Column(db.Text)
+  follow_up_date = db.Column(db.Date)
+  patient_id = db.Column(db.Integer, db.ForeignKey("user.id"), default=1)
+  author = db.Column(db.Integer, db.ForeignKey("user.id"), default=5)  # TODO: get from logged in user
+  created_at = db.Column(db.DateTime, default=datetime.datetime.now(datetime.timezone.utc))
+  modified_at = db.Column(db.DateTime, onupdate=datetime.datetime.now(datetime.timezone.utc))
+  author_desc = db.relationship("User", foreign_keys=author)
+  patient_desc = db.relationship("User", foreign_keys=patient_id)
+
+  def __repr__(self):
+    return f'<Prescription: {self.id}>'
+
+  def to_dict(self):
+    return {
+        'id': self.id,
+        'prescription': markdown.markdown(self.prescription or "", extensions=['fenced_code', 'nl2br']),
+        'follow_up_date': self.follow_up_date,
+        'author': self.author,
+        'created_at': self.created_at,
+        'modified_at': self.modified_at,
+        "author_username": self.author_desc.username,
+        "patient_desc": self.patient_desc.username
     }
 
 

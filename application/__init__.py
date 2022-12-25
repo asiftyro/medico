@@ -5,6 +5,7 @@ from flask_minify import Minify
 from flask_compress import Compress
 from flask_wtf.csrf import CSRFProtect
 from flask_bootstrap import Bootstrap5
+import datetime
 import pytz
 
 from application.database import db
@@ -24,13 +25,23 @@ def action_before_first_request():
   pass
 
 
-def local_datetime(dttm, long=False):
+def local_datetime(dttm, format='s'):
+  if not dttm: return;
+  if(not isinstance(dttm, datetime.datetime)):
+    dttm = datetime.datetime(dttm.year, dttm.month, dttm.day, 0, 0, 0, 0, tzinfo=datetime.timezone.utc)
+
   local_tzone = current_app.config['LOCAL_TIMEZONE']
   local_timezone = pytz.timezone(local_tzone)
-  if long:
+  if format=='s':
+    return dttm.replace(tzinfo=pytz.utc).astimezone(local_timezone).strftime('%Y-%m-%d %H:%M:%S')
+  elif format=='l':
     return dttm.replace(tzinfo=pytz.utc).astimezone(local_timezone).strftime('%c')
-  return dttm.replace(tzinfo=pytz.utc).astimezone(local_timezone).strftime('%Y-%m-%d %H:%M:%S')
-
+  elif format=='d':
+    return dttm.replace(tzinfo=pytz.utc).astimezone(local_timezone).strftime('%Y-%m-%d')
+  elif format=='t':
+    return dttm.replace(tzinfo=pytz.utc).astimezone(local_timezone).strftime('%H:%M:%S')
+  elif format=='dd':
+    return dttm.replace(tzinfo=pytz.utc).astimezone(local_timezone).strftime('%A, %B %d, %Y')
 
 # def context_processors(app, db):
 #   @app.context_processor
@@ -54,7 +65,7 @@ def create_app(configuration):
   Bootstrap5(app)
 
   # Register routes/apps
-  for route in ['auth', 'home', 'user']:
+  for route in ['auth', 'home', 'user', 'prescription']:
     bp = import_module(f'application.routes.{route}').blueprint
     app.register_blueprint(bp)
 

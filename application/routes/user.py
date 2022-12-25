@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, current_app, flash
 from application.database import db
-from application.model import User
+from application.model import User, Prescription
 from application.form import CreateUserForm, EditUserForm, CaseAnalysisForm
 from application.helper import get_unique_id, save_user_avatar_thumbnail, save_case_avatar_thumbnail
 import os
@@ -32,9 +32,7 @@ def analysis(username):
     case_photo_2 = case_analysis_form.case_photo_2.data
     case_photo_3 = case_analysis_form.case_photo_3.data
     case_photo_4 = case_analysis_form.case_photo_4.data
-    print(case_photo_1)
     if case_photo_1:
-      print(case_photo_1)
       unique_case_photo_1_name = get_unique_id() + ".png"
       case_photo_1_path = os.path.join(current_app.config['CASE_PHOTO_DIR'], unique_case_photo_1_name)
       save_case_avatar_thumbnail(case_photo_1, case_photo_1_path)
@@ -104,7 +102,8 @@ def edit(username):
 @blueprint.route('/treatment/<username>', methods=['GET'])
 def treatment(username):
   user = User.query.filter(User.username == username).first_or_404()
-  return render_template('user/treatment.html', user=user.to_dict())
+  prescription = Prescription.query.filter((Prescription.author==5) & (Prescription.patient_id==user.id))
+  return render_template('user/treatment.html', user=user.to_dict(), prescription=prescription)
 
 
 @blueprint.route('/create', methods=['GET', 'POST'])
@@ -159,7 +158,7 @@ def data():
     for s in sort.split(','):
       direction = s[0]
       name = s[1:]
-      if name not in ['username', 'fullname', 'dob_str', 'sex', 'active']:
+      if name not in ['username', 'fullname', 'dob', 'sex', 'active']:
         name = 'username'
       col = getattr(User, name)
       if direction == '-':

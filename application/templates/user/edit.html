@@ -24,7 +24,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="row">
+<div class="row mb-4">
   <div class="col-xl-6 mb-4">
     {{ render_form(form, action=url_for('user_bp.edit', username=user.username), method='post', novalidate=1) }}
   </div>

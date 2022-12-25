@@ -1,0 +1,54 @@
+<div class="card mb-3">
+  <div class="card-header d-flex justify-content-between">
+    <span><b>Prescription</b></span>
+    <a data-bs-toggle="collapse" data-bs-target="#patient-prescription" aria-expanded="false" href="javascript:void(0)" class="border px-3 text-muted">
+      <i class="fa-solid fa-bars"></i>
+    </a>
+  </div>
+  <div class="row g-0 collapse show" id="patient-prescription">
+    <div class="row">
+      <div class="col-6 p-3">
+        <input class="form-control" id="prescription-search" type="text" placeholder="Search Prescription...">
+      </div>
+      <div class="col-6 p-3 text-end">
+        <a class="btn btn-dark" href="{{ url_for('prescription_bp.create', patient_id=user.id) }}"> {{render_icon('journal-plus') }} &nbsp;Add Prescription</a>
+      </div>
+      <div class="col-12">
+        <hr>
+      </div>
+    </div>
+    <div class="col-12">
+      <ul class="list-group list-group-flush list-group-prescription">
+        {% for presc in prescription %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{{ url_for('prescription_bp.view', prescription_id=presc.id) }}">
+            <span class="badge bg-primary pill"><small>Prescription ID</small><br>
+              {{ '%05d' % presc.id }}</span>
+          </a>
+          <span class="badge bg-secondary pill"><small>Prescription Date</small><br>{{presc.created_at|local_datetime('d')}}</span>
+          <span class="badge bg-warning text-dark pill"><small>Follow Up date</small><br>{{presc.follow_up_date|local_datetime('d')}}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    let searchBox = document.querySelector('#prescription-search');
+    let listGroup = document.querySelector('.list-group-prescription');
+    let listItems = listGroup.getElementsByTagName('li');
+    searchBox.addEventListener('keyup', (e) => {
+      let searchKey = e.target.value.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+      let searchPatter = new RegExp(searchKey, 'i');
+      for (var i = 0; i < listItems.length; i++) {
+        var item = listItems[i];
+        if (searchPatter.test(item.innerText.replace('\n', ' ') )) {
+          item.classList.remove("d-none");
+        } else {
+          item.classList.add("d-none");
+        }
+      }
+    });
+  });
+</script>

@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col">
+    <div class="card mb-3">
+      <div class="card-header d-flex justify-content-between">
+        <span><b>Analysis</b></span>
+        <a data-bs-toggle="collapse" data-bs-target="#patient-analysis" aria-expanded="false" href="javascript:void(0)" class="border px-3 text-muted">
+          <i class="fa-solid fa-bars"></i>
+        </a>
+      </div>
+      
+      <div class="row g-0 collapse show" id="patient-analysis">
+        <div class="col-md-8">
+          <div class="p-3">
+          {{user.analysis|safe}}
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="d-flex justify-content-evenly p-3">
+          <img src="{{user.case_photo_1}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Click to Enlarge" data-bs-toggle="modal" data-bs-target="#case_photo_1" >
+          <img src="{{user.case_photo_2}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Click to Enlarge" data-bs-toggle="modal" data-bs-target="#case_photo_2" >
+          </div>
+          <div class="d-flex justify-content-evenly p-3">
+          <img src="{{user.case_photo_3}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Click to Enlarge" data-bs-toggle="modal" data-bs-target="#case_photo_3" >
+          <img src="{{user.case_photo_4}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Click to Enlarge" data-bs-toggle="modal" data-bs-target="#case_photo_4" >
+          </div>
+        </div>
+        <div class="col-12 p-3 text-center text-md-start">
+          <a class="btn btn-dark mt-1" href="{{ url_for('user_bp.analysis', username=user.username) }}">{{render_icon('journal-medical')}} &nbsp;Case Analysis</a>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+{{case_photo_modal('case_photo_1',user.fullname, user.case_photo_1)}}
+{{case_photo_modal('case_photo_2',user.fullname, user.case_photo_2)}}
+{{case_photo_modal('case_photo_3',user.fullname, user.case_photo_3)}}
+{{case_photo_modal('case_photo_4',user.fullname, user.case_photo_4)}}
+

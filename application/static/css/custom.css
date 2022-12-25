@@ -9,3 +9,14 @@
   max-width: 100px;
   cursor: pointer;
 }
+
+.list-group-prescription{
+  max-height: 300px;
+  margin-bottom: 10px;
+  overflow:scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bi {
+  margin-bottom: 4px;
+}

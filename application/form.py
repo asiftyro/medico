@@ -74,3 +74,18 @@ class CaseAnalysisForm(FlaskForm):
   case_photo_3 = FileField('Case Photo 3', validators=[FileAllowed(['jpg', 'png'], 'Allowed JPG or PNG Images only.')])
   case_photo_4 = FileField('Case Photo 4', validators=[FileAllowed(['jpg', 'png'], 'Allowed JPG or PNG Images only.')])
   save = SubmitField('Save')
+
+
+class PrescriptionCreateForm(FlaskForm):
+  prescription = TextAreaField('Prescription',
+                               validators=[Optional(strip_whitespace=True),
+                                           Length(max=2048)],
+                               filters=[lambda x: x or None],
+                               render_kw={'rows': 10})
+  follow_up_date = DateField('Follow up date',
+                             validators=[Optional(strip_whitespace=True)],
+                             filters=[lambda x: x or None])
+  save = SubmitField('Save')
+
+class PrescriptionEditForm(PrescriptionCreateForm):
+  pass

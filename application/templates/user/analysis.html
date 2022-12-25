@@ -28,7 +28,7 @@
 
 {% include 'user/_patient_info.html' %}
 
-<div class="card">
+<div class="card mb-4">
   <div class="card-header"><b>Case Analysis Notes</b></div>
   <div class="card-body">
     <form method="post" action="{{url_for('user_bp.analysis', username=user.username)}}" method='post' enctype="multipart/form-data" role="form" novalidate=1>
@@ -83,11 +83,6 @@
         </div>
       </div>
     </form>
-
-
-
-
-
   </div>
 </div>
 

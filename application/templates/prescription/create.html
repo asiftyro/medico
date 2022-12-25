@@ -5,17 +5,17 @@
 
 {% block javascript %} {% endblock javascript %}
 
-{% block title %}Patient Treatment{% endblock title %}
+{% block title %}Add New Prescription{% endblock title %}
 
 
 {% block breadcrumb %}
 
-{{ breadcrumb({'Patient':  url_for('user_bp.index'), 'Treatment: ' + user.username: ''} ) }}
+{{ breadcrumb({'Patient':  url_for('user_bp.index'), 'New prescription: ' + user.username: ''} ) }}
 {% endblock breadcrumb %}
 
 {% block pageheader %}
 <div class="d-flex justify-content-between">
-  <div class="h2 mt-1">Patient Treatment </div>
+  <div class="h2 mt-1">New Prescription</div>
   <div>
     <a class="btn btn-success mt-1" href="{{ url_for('user_bp.view', username=user.username) }}"><i class="fa-solid fa-circle-info"></i>&nbsp;Patient info</a>
     <a class="btn btn-primary mt-1" href="{{ url_for('user_bp.edit', username=user.username) }}"><i class="fa-solid fa-user-pen"></i>&nbsp;Edit patient info</a>
@@ -26,16 +26,22 @@
 {% block content %}
 
 {% include 'user/_patient_info.html' %}
-{% include 'user/_patient_analysis.html' %}
 
 
-<div class="row mb-4">
-  <div class="col-md-6">
-    {% include 'user/_patient_prescription.html' %}
+
+
+<div class="card mb-4">
+  <div class="card-header d-flex justify-content-between">
+    <span><b>Prescription</b></span>
+    <a data-bs-toggle="collapse" data-bs-target="#patient-prescription" aria-expanded="false" href="javascript:void(0)" class="border px-3 text-muted">
+      {{render_icon('distribute-vertical')}}
+    </a>
   </div>
-  <div class="col-md-6">
-    {% include 'user/_patient_conversation.html' %}
-  </div>  
+  <div class="row g-0 collapse show" id="patient-prescription">
+    <div class="col p-3">
+    {{ render_form(form, action=url_for('prescription_bp.create', patient_id=user.id), method='post', novalidate=1) }}
+    </div>
+  </div>
 </div>
 
 
