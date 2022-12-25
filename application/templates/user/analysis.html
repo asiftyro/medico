@@ -1,0 +1,94 @@
+{% extends 'layout/layout.html' %}
+{% from 'layout/helper.html' import breadcrumb %}
+
+{% block style %}{% endblock style %}
+
+{% block javascript %}{% endblock javascript %}
+
+{% block title %}Case Analysis{% endblock title %}
+
+
+{% block breadcrumb %}
+
+{{ breadcrumb({'Patient':  url_for('user_bp.index'), 'Treatment: ' + user.username: ''} ) }}
+{% endblock breadcrumb %}
+
+{% block pageheader %}
+<div class="d-flex justify-content-between">
+  <div class="h2 mt-1">Case Analysis</div>
+  <div>
+    <a class="btn btn-success mt-1" href="{{ url_for('user_bp.treatment', username=user.username) }}"> {{render_icon('journal-medical')}} Treatment</a>
+    <a class="btn btn-secondary mt-1" href="{{ url_for('user_bp.view', username=user.username) }}"> {{render_icon('info-square')}} Patient info</a>
+    <a class="btn btn-primary mt-1" href="{{ url_for('user_bp.edit', username=user.username) }}"> {{render_icon('file-person')}} Edit patient info</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+{% include 'user/_patient_info.html' %}
+
+<div class="card">
+  <div class="card-header"><b>Case Analysis Notes</b></div>
+  <div class="card-body">
+    <form method="post" action="{{url_for('user_bp.analysis', username=user.username)}}" method='post' enctype="multipart/form-data" role="form" novalidate=1>
+      <div class="row">
+        <div class="col-md-8">
+          {{ form.csrf_token() }}
+          {{ render_field(form.analysis) }}
+          <hr>
+          <button class="btn btn-primary btn-md" id="save" name="save" type="submit" value="Save">
+            {{ render_icon('save') }} Save
+          </button>
+        </div>
+        <div class="col-md-4">
+          <div class="row pt-4">
+            <div class="col">
+              {{ render_field(form.case_photo_1) }}
+            </div>
+            <div class="col text-end">
+            <img src="{{user.case_photo_1}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Case Photo">
+          </div>
+          <hr>
+          </div>
+          <div class="row">
+     
+        <div class="col">
+          {{ render_field(form.case_photo_2) }}
+        </div>
+        <div class="col text-end">
+          <img src="{{user.case_photo_2}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Case Photo">
+        </div>
+        <hr>
+        </div>
+        <div class="row">
+     
+        <div class="col">
+          {{ render_field(form.case_photo_3) }}
+        </div>
+        <div class="col text-end">
+          <img src="{{user.case_photo_3}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Case Photo">
+        </div>
+        <hr>
+        </div>
+        <div class="row">
+     
+        <div class="col">
+          {{ render_field(form.case_photo_4) }}
+        </div>
+        <div class="col text-end">
+          <img src="{{user.case_photo_4}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Case Photo">
+        </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+
+
+
+
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,7 +1,9 @@
 
 # Misc
 devdocs
+del/
 del.html
+todo.txt
 # Migrations
 migrations
 
@@ -10,6 +12,8 @@ migrations
 
 # uploaded test files
 user-avatar/
+case-photo/
+
 
 
 # Byte-compiled / optimized / DLL files

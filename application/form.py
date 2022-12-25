@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, DateField, SelectField, BooleanField, SubmitField
+from wtforms import StringField, DateField, SelectField, SubmitField, TextAreaField
 from wtforms.validators import ValidationError, Email, InputRequired, Optional, Length
-from flask_wtf.file import FileField, FileAllowed, FileRequired, FileSize
+from flask_wtf.file import FileField, FileAllowed
 from application.model import User
 
 
@@ -38,11 +38,10 @@ class CreateUserForm(FlaskForm):
                                   Length(max=64)],
                       filters=[lambda x: x or None])
   address = StringField("Address", validators=[Length(max=64)])
-  photo = FileField('Photo', validators=[FileAllowed(['jpg', 'png'], 'Allowed JPG or PNG Images only.')])
+  avatar = FileField('Patient\' Photo', validators=[FileAllowed(['jpg', 'png'], 'Allowed JPG or PNG Images only.')])
   active = SelectField('Active', choices=[(1, "Yes"), (0, "No")])
   admin = SelectField('Admin', choices=[(0, "No"), (1, "Yes")])
   save = SubmitField('Save')
-
 
 
 class EditUserForm(FlaskForm):
@@ -58,7 +57,20 @@ class EditUserForm(FlaskForm):
                                   Length(max=64)],
                       filters=[lambda x: x or None])
   address = StringField("Address", validators=[Length(max=64)])
-  photo = FileField('Photo', validators=[FileAllowed(['jpg', 'png'], 'Allowed JPG or PNG Images only.')])
+  avatar = FileField('Patient\'s Photo', validators=[FileAllowed(['jpg', 'png'], 'Allowed JPG or PNG Images only.')])
   active = SelectField('Active', choices=[(1, "Yes"), (0, "No")])
   admin = SelectField('Admin', choices=[(0, "No"), (1, "Yes")])
+  save = SubmitField('Save')
+
+
+class CaseAnalysisForm(FlaskForm):
+  analysis = TextAreaField('Case Analysis',
+                           validators=[Optional(strip_whitespace=True),
+                                       Length(max=2048)],
+                           filters=[lambda x: x or None],
+                           render_kw={'rows': 10})
+  case_photo_1 = FileField('Case Photo 1', validators=[FileAllowed(['jpg', 'png'], 'Allowed JPG or PNG Images only.')])
+  case_photo_2 = FileField('Case Photo 2', validators=[FileAllowed(['jpg', 'png'], 'Allowed JPG or PNG Images only.')])
+  case_photo_3 = FileField('Case Photo 3', validators=[FileAllowed(['jpg', 'png'], 'Allowed JPG or PNG Images only.')])
+  case_photo_4 = FileField('Case Photo 4', validators=[FileAllowed(['jpg', 'png'], 'Allowed JPG or PNG Images only.')])
   save = SubmitField('Save')
