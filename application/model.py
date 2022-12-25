@@ -1,6 +1,7 @@
 import datetime
 from dateutil.relativedelta import relativedelta
-from flask import url_for, jsonify
+from flask import url_for
+import markdown
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 # from application.routes.authentication.login_manager import login_manager
@@ -21,10 +22,15 @@ class User(db.Model, UserMixin):
   reference = db.Column(db.String(64))
   email = db.Column(db.String(64), nullable=True, unique=True)
   address = db.Column(db.String(64))
-  photo = db.Column(db.String(128))
+  avatar = db.Column(db.String(128))
+  analysis = db.Column(db.Text)
+  case_photo_1 = db.Column(db.String(128))
+  case_photo_2 = db.Column(db.String(128))
+  case_photo_3 = db.Column(db.String(128))
+  case_photo_4 = db.Column(db.String(128))
   admin = db.Column(db.SmallInteger, nullable=False, default=0)
   active = db.Column(db.SmallInteger, nullable=False, default=0)
-  author = db.Column(db.Integer, db.ForeignKey("user.id"), default=1) # TODO: get from logged in user
+  author = db.Column(db.Integer, db.ForeignKey("user.id"), default=1)  # TODO: get from logged in user
   created_at = db.Column(db.DateTime, default=datetime.datetime.now(datetime.timezone.utc))
   modified_at = db.Column(db.DateTime, onupdate=datetime.datetime.now(datetime.timezone.utc))
   author_desc = db.relationship("User", remote_side=[id])
@@ -54,14 +60,19 @@ class User(db.Model, UserMixin):
 
   def to_dict(self):
     avatar = ''
-    if self.photo:
-      avatar = url_for('static', filename=f'img/user-avatar/{self.photo}')
-    elif not self.photo and self.sex == 'M':
+    if self.avatar:
+      avatar = url_for('static', filename=f'img/user-avatar/{self.avatar}')
+    elif not self.avatar and self.sex == 'M':
       avatar = url_for('static', filename='img/default-avatar-male.png')
-    elif not self.photo and self.sex == 'F':
+    elif not self.avatar and self.sex == 'F':
       avatar = url_for('static', filename='img/default-avatar-female.png')
     else:
       avatar = url_for('static', filename='img/default-avatar-other.png')
+
+    case_photo_1 = 'img/case-photo/' + self.case_photo_1 if self.case_photo_1 else 'img/default-case-photo.png'
+    case_photo_2 = 'img/case-photo/' + self.case_photo_2 if self.case_photo_2 else 'img/default-case-photo.png'
+    case_photo_3 = 'img/case-photo/' + self.case_photo_3 if self.case_photo_3 else 'img/default-case-photo.png'
+    case_photo_4 = 'img/case-photo/' + self.case_photo_4 if self.case_photo_4 else 'img/default-case-photo.png'
 
     return {
         'id': self.id,
@@ -69,13 +80,18 @@ class User(db.Model, UserMixin):
         'fullname': self.fullname,
         'dob': self.dob,
         'dob_str': self.dob.strftime("%Y-%m-%d"),
-        'age': "{0.years}y {0.months}m {0.days}d".format(  relativedelta(datetime.date.today(), self.dob)),
+        'age': "{0.years}y {0.months}m {0.days}d".format(relativedelta(datetime.date.today(), self.dob)),
         'sex': self.sex,
         'blood': self.blood,
         'reference': self.reference,
         'email': self.email,
         'address': self.address,
-        'photo': avatar,
+        'avatar': avatar,
+        'analysis': markdown.markdown(self.analysis or "", extensions=['fenced_code']),
+        'case_photo_1': url_for('static', filename=case_photo_1),
+        'case_photo_2': url_for('static', filename=case_photo_2),
+        'case_photo_3': url_for('static', filename=case_photo_3),
+        'case_photo_4': url_for('static', filename=case_photo_4),
         'admin': self.admin,
         'active': self.active,
         'author': self.author,
