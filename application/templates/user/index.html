@@ -12,7 +12,7 @@
 <div class="d-flex justify-content-between">
   <div class="h2 mt-1">Patient Index</div> 
   <div>
-    <a class="btn btn-primary mt-1" href="{{ url_for('user_bp.create') }}"><i class="fa-solid fa-user-plus"></i>&nbsp;Add new patient</a>
+    <a class="btn btn-primary mt-1" href="{{ url_for('user_bp.create') }}">{{render_icon('person-plus')}}&nbsp;Add new patient</a>
   </div>  
 </div>  
 {% endblock %}
@@ -43,7 +43,7 @@
     columns: [{
         id: 'username',
         name: 'Username',
-        formatter: (cell) => gridjs.html(`<a class='text-dark' href='{{ url_for('user_bp.view', username='' )}}${cell}'><i class="fa-regular fa-circle-check"></i>&nbsp;<b>${cell}</b></a>`),
+        formatter: (cell) => gridjs.html(`<a style='text-decoration:none' class='text-dark' href='{{ url_for('user_bp.view', username='' )}}${cell}'>{{render_icon('person-circle')}} <b>${cell}</b></a>`),
       },
       {
         id: 'fullname',

@@ -17,8 +17,8 @@
 <div class="d-flex justify-content-between">
   <div class="h2 mt-1">View Prescription</div>
   <div>
-    <a class="btn btn-success mt-1" href="{{ url_for('user_bp.view', username=user.username) }}"><i class="fa-solid fa-circle-info"></i>&nbsp;Patient info</a>
-    <a class="btn btn-primary mt-1" href="{{ url_for('user_bp.edit', username=user.username) }}"><i class="fa-solid fa-user-pen"></i>&nbsp;Edit patient info</a>
+    <a class="btn btn-success mt-1" href="{{ url_for('user_bp.view', username=user.username) }}">{{render_icon('info-circle')}}&nbsp;Patient info</a>
+    <a class="btn btn-primary mt-1" href="{{ url_for('user_bp.edit', username=user.username) }}">{{render_icon('pencil-square')}}&nbsp;Edit patient info</a>
   </div>
 </div>
 {% endblock %}

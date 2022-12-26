@@ -14,8 +14,8 @@
 <div class="d-flex justify-content-between">
   <div class="h2 mt-1">Patient Details </div> 
   <div>
-    <a class="btn btn-success mt-1" href="{{ url_for('user_bp.treatment', username=user.username) }}"><i class="fa-solid fa-stethoscope"></i>&nbsp;Treatment</a>
-    <a class="btn btn-primary mt-1" href="{{ url_for('user_bp.edit', username=user.username) }}"><i class="fa-solid fa-user-pen"></i>&nbsp;Edit patient info</a>
+    <a class="btn btn-success mt-1" href="{{ url_for('user_bp.treatment', username=user.username) }}">{{render_icon('capsule-pill')}}&nbsp;Treatment</a>
+    <a class="btn btn-primary mt-1" href="{{ url_for('user_bp.edit', username=user.username) }}">{{render_icon('pencil-square')}}&nbsp;Edit patient info</a>
   </div>  
   </div>  
     {% endblock %}
@@ -26,8 +26,8 @@
     <div class="card mb-3">
       <div class="card-header d-flex justify-content-between">  
         <span><b>Patient Id:</b>&nbsp;{{user.id}}</span>
-        <a data-bs-toggle="collapse" data-bs-target="#patient-info" aria-expanded="false" href="javascript:void(0)" class="border px-3 text-muted">
-          <i class="fa-solid fa-bars"></i>
+        <a data-bs-toggle="collapse" data-bs-target="#patient-info" aria-expanded="false" href="javascript:void(0)" class="border px-2 text-muted">
+          {{render_icon('layout-sidebar')}}
         </a>
       </div>
       <div class="row g-0 collapse show" id="patient-info">
@@ -88,8 +88,8 @@
     <div class="card">
       <div class="card-header d-flex justify-content-between">
         <span><b>Status</b></span>
-        <a data-bs-toggle="collapse" data-bs-target="#patient-status" aria-expanded="false" href="javascript:void(0)" class="border px-3 text-muted">
-          <i class="fa-solid fa-bars"></i>
+        <a data-bs-toggle="collapse" data-bs-target="#patient-status" aria-expanded="false" href="javascript:void(0)" class="border px-2 text-muted">
+          {{render_icon('layout-sidebar')}}
         </a>
       </div>
         <div class="collapse show"id="patient-status">

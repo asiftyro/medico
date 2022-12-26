@@ -7,12 +7,14 @@
 <html lang="en">
 
 <head>
+  <!-- Meta Start -->
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="description" content="Medico" />
   <meta name="author" content="Asif R. Porosh" />
-
+  <!-- Meta end -->
+  <!-- Favicon start -->
   <link rel="apple-touch-icon" sizes="180x180" href='{{ url_for("static", filename="img/favicon/apple-touch-icon.png" ) }}'>
   <link rel="icon" type="image/png" sizes="32x32" href='{{ url_for("static", filename="img/favicon/favicon-32x32.png" ) }}'>
   <link rel="icon" type="image/png" sizes="16x16" href='{{ url_for("static", filename="img/favicon/favicon-16x16.png" ) }}'>
@@ -22,11 +24,14 @@
   <meta name="msapplication-TileColor" content="#ffc40d">
   <meta name="msapplication-config" content="{{ url_for("static", filename="img/favicon/browserconfig.xml" ) }}">
   <meta name="theme-color" content="#ffffff">
-  {# {{ bootstrap.load_css() }} #}
+  <!-- Favicon end -->
+
+  <!-- Stylesheets start -->
   <link href='{{ url_for("static", filename="css/styles.css") }}' rel="stylesheet" />
   <link href='{{ url_for("static", filename="css/custom.css") }}' rel="stylesheet" />
-
+  <!-- Stylesheets end -->
   <title>{{config.APP_NAME}} - {% block title %}{% endblock title%}</title>
+
   {% block style %}{% endblock style %}
 </head>
 
@@ -50,9 +55,8 @@
       {% include 'layout/_footer.html' %}
     </div>
   </div>
-  <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+
   {{ bootstrap.load_js() }}
-  {# <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script> #}
   <script src='{{ url_for("static", filename="js/scripts.js")}}'></script>
 
   {% block javascript %}{% endblock javascript %}
