@@ -1,0 +1,38 @@
+<div class="row mb-4">
+  <div class="offset-md-6 col-md-6">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between">
+        <span><b>Status</b></span>
+        <a data-bs-toggle="collapse" data-bs-target="#patient-status" aria-expanded="false" href="javascript:void(0)" class="border px-2 text-muted">
+          {{render_icon('layout-sidebar')}}
+        </a>
+      </div>
+        <div class="collapse show"id="patient-status">
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
+              <span class="small">Active</span>
+              <span>{{ 'Yes' if user.active else 'No'}}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
+              <span class="small">Admin</span>
+              <span>{{ 'Yes' if user.admin else 'No'}}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
+              <span class="small">Created By</span>
+              <span>{{user.author_username}}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
+              <span class="small">Created At</span>
+              <span>{{user.created_at}}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
+              <span class="small">Modified At</span>
+              <span>{{user.modified_at or '-'}}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

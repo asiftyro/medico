@@ -18,7 +18,6 @@ def login():
 
   login_form = LoginForm()
   if login_form.validate_on_submit():
-    print(login_form.username.data)
     user = load_user(login_form.username.data)
     if user is None:
       flash('Please check your login details and try again (1).', 'error')

@@ -4,17 +4,18 @@
 {% block title %}Patients{% endblock title %}
 
 {% block breadcrumb %}
+
 {{ breadcrumb({'Patient': 'javascript:void(0)'}) }}
 {% endblock breadcrumb %}
 
 
 {% block pageheader %}
 <div class="d-flex justify-content-between">
-  <div class="h2 mt-1">Patient Index</div> 
+  <div class="h2 mt-1">Patient Index</div>
   <div>
     <a class="btn btn-primary mt-1" href="{{ url_for('user_bp.create') }}">{{render_icon('person-plus')}}&nbsp;Add new patient</a>
-  </div>  
-</div>  
+  </div>
+</div>
 {% endblock %}
 
 {% block content %}
@@ -42,12 +43,25 @@
     },
     columns: [{
         id: 'username',
-        name: 'Username',
-        formatter: (cell) => gridjs.html(`<a style='text-decoration:none' class='text-dark' href='{{ url_for('user_bp.view', username='' )}}${cell}'>{{render_icon('person-circle')}} <b>${cell}</b></a>`),
+        name: 'Action',
+        sort: {
+          enabled: false
+        },
+        formatter: (cell) => gridjs.html(
+          `<div class="btn-group btn-group-sm" role="group" aria-label="Action">
+  <a class="btn btn-outline-success" href='{{url_for("user_bp.treatment", username="")}}${cell}'>{{render_icon('capsule-pill')}}</a>
+  <a class="btn btn-outline-primary" href='{{url_for("user_bp.view", username="")}}${cell}'>{{render_icon('info-circle')}}</a>
+  <a class="btn btn-outline-dark" >{{render_icon('chat-right-dots')}}</a>
+</div>`
+        ),
       },
       {
         id: 'fullname',
         name: 'Fullname'
+      },      
+      {
+        id: 'username',
+        name: 'Username',
       },
       {
         id: 'dob_str',
@@ -82,7 +96,7 @@
       multiColumn: true,
       server: {
         url: (prev, columns) => {
-          const columnIds = ['username', 'fullname','dob_str', 'sex', 'active'];
+          const columnIds = ['id', 'username', 'fullname', 'dob_str', 'sex', 'active'];
           const sort = columns.map(col => (col.direction === 1 ? '+' : '-') + columnIds[col.index]);
           return updateUrl(prev, {
             sort
