@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, DateField, SelectField, SubmitField, TextAreaField
+from wtforms import StringField, DateField, SelectField, SubmitField, TextAreaField, PasswordField, BooleanField
 from wtforms.validators import ValidationError, Email, InputRequired, Optional, Length
 from flask_wtf.file import FileField, FileAllowed
 from application.model import User
@@ -87,5 +87,13 @@ class PrescriptionCreateForm(FlaskForm):
                              filters=[lambda x: x or None])
   save = SubmitField('Save')
 
+
 class PrescriptionEditForm(PrescriptionCreateForm):
   pass
+
+
+class LoginForm(FlaskForm):
+  username = StringField('Mobile/Username', validators=[InputRequired()])
+  password = PasswordField('Password', validators=[InputRequired()])
+  remember = BooleanField('Remember me')
+  submit = SubmitField('Log In')

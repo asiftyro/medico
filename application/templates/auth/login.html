@@ -1,0 +1,49 @@
+{% extends 'layout/layout_secondary.html' %}
+
+{% block title %}Login{% endblock title%}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-5 shadow mt-5">
+    <div class="p-4 p-md-5">
+      <div class="login-header-icon d-flex align-items-center justify-content-center bg-dark">
+        {{render_icon('person', size='3em', color='white')}}
+      </div>
+      <h4 class="text-center mb-4 text-dark text-uppercase">Log in to {{config.APP_NAME}}</h4>
+      {{ render_messages(dismissible=1,dismiss_animate=1) }}
+      <div>
+        <form method="post" action="{{url_for('auth_bp.login')}}" novalidate>
+          {{ form.csrf_token() }}
+          {{ render_field(form.username) }}
+          {{ render_field(form.password) }}
+          {{ render_field(form.remember) }}
+          <div class="d-grid gap-2">
+            <button class="btn btn-dark btn-md d-block text-uppercase" id="submit" name="submit" type="submit" value="Log In"><b>Log In</b></button>
+          </div>
+        </form>
+      </div>
+      <div class="mt-4 text-center small">
+        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#forgot-password">Forgot Password?</a>
+        <hr>
+        {% include 'layout/_footer.html' %}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="forgot-password" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Forgot Password</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Please contact Administrator.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content%}

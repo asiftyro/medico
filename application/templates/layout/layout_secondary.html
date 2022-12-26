@@ -1,0 +1,29 @@
+{% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'bootstrap5/form.html' import render_field %}
+{% from 'bootstrap5/utils.html' import render_messages %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include 'layout/_html_header.html' %}
+
+  <title>{{config.APP_NAME}} - {% block title %}{% endblock title%}</title>
+
+  {% block style %}{% endblock style %}
+</head>
+
+<body>
+
+  <div class="container">
+    {% block content %}
+      
+    {% endblock content %}
+  </div>
+
+  {{ bootstrap.load_js() }}
+  {% block javascript %}{% endblock javascript %}
+</body>
+
+
+
+</html>

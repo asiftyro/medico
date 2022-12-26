@@ -20,3 +20,15 @@
 .bi {
   margin-bottom: 4px;
 }
+
+.login-header-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.http_error_handler_img {
+  max-height: 500px;
+}

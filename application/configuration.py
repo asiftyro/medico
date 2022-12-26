@@ -42,7 +42,7 @@ class BaseConfiguration:
 class DevelopmentConfiguration(BaseConfiguration):
   # Application
   DEBUG = True
-  APP_NAME = '~{0}'.format(BaseConfiguration.APP_NAME)
+  APP_NAME = f"{BaseConfiguration.APP_NAME} {{δ}}"
   # Template debugging
   TEMPLATES_AUTO_RELOAD = True
   EXPLAIN_TEMPLATE_LOADING = False

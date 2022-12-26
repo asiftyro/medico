@@ -1,0 +1,25 @@
+{% extends 'layout/layout.html' %}
+{% from 'layout/helper.html' import breadcrumb %}
+
+{% block style %} {% endblock style %}
+
+{% block javascript %} {% endblock javascript %}
+
+{% block title %} Boilerplate {% endblock title %}
+
+
+{% block breadcrumb %}
+{{ breadcrumb({'Boiler':  '/', 'Plate': ''} ) }}
+{% endblock breadcrumb %}
+
+{% block pageheader %}User Home{% endblock pageheader %}
+
+{% block content %}
+<div class="row">
+  <div class="col">
+    {{ lipsum(n=5, html=True, min=20, max=100) }}
+  </div>
+</div>
+
+
+{% endblock content %}
