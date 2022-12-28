@@ -15,7 +15,14 @@
   overflow:scroll;
   -webkit-overflow-scrolling: touch;
 }
-
+.list-group-conversation-details {
+  margin-bottom: 10px;
+}
+.list-group-conversation-details-wrapper {
+  max-height: 300px;
+  overflow:scroll;
+  -webkit-overflow-scrolling: touch; 
+}
 .bi {
   margin-bottom: 4px;
 }

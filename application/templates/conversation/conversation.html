@@ -1,0 +1,83 @@
+{% extends 'layout/layout.html' %}
+{% from 'layout/helper.html' import breadcrumb, case_photo_modal %}
+{% 
+  set READ_STATUS = {
+    0: '&#9679; Mark as read'|safe,
+    1: '&#9711; Mark as unread'|safe
+  }
+%}
+
+
+{% block style %} {% endblock style %}
+
+
+
+{% block title %}Conversation{% endblock title %}
+
+
+{% block breadcrumb %}
+
+{{ breadcrumb({'Patient':  url_for('user_bp.index'), 'Conversation: ' + user.username: ''} ) }}
+
+{% endblock breadcrumb %}
+
+{% block pageheader %}
+<div class="d-flex justify-content-between">
+  <div class="h2 mt-1">Conversation</div>
+  <div>
+    <a class="btn btn-success mt-1" href="{{ url_for('user_bp.view', username=user.username) }}">{{render_icon('info-circle')}}&nbsp;Patient info</a>
+    <a class="btn btn-primary mt-1" href="{{ url_for('user_bp.edit', username=user.username) }}">{{render_icon('pencil-square')}}&nbsp;Edit patient info</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+{% include 'user/_patient_info.html' %}
+
+<div class="card mb-3">
+  <div class="card-header d-flex justify-content-between">
+    <span><b>Conversation</b></span>
+    <a data-bs-toggle="collapse" data-bs-target="#patient-conversation" aria-expanded="false" href="javascript:void(0)" class="border px-2 text-muted">
+      {{render_icon('layout-sidebar')}}
+    </a>
+  </div>
+  <div class="row g-0 collapse show" id="patient-conversation">
+    <!-- conversation form -->
+    <div class="row">
+      <div class="col-12 px-3 pt-2">
+        <form method="post" action="{{url_for('conversation_bp.conversation', username=user.username)}}" novalidate>
+          {{ form.csrf_token() }}
+          {{ render_field(form.conversation) }}
+          <button class="btn btn-dark" id="submit" name="submit" type="submit" value="Send"><b>Send</b> {{render_icon('send-check') }}</button>
+        </form>
+        <hr>
+      </div>
+    </div>
+    <!-- conversation list  -->
+    <div class="row mb-3 list-group-conversation-details-wrapper">
+      {% for conv_item in conversation %}
+      <div class="list-group list-group-flush px-3 mb-2">
+        <div class="list-group-item border rounded-start rounded-end">
+          <div class="d-flex justify-content-between">
+            <small class="text-muted">
+              <b>{{conv_item.author_desc.fullname}} | {{conv_item.author_desc.username}}</b> <br>&#9632;{{conv_item.created_at|local_datetime('a')}}
+            </small>
+            <small class="text-muted">
+              <a href="javascript:void(0)" data-id="{{conv_item.id}}" data-status="{{conv_item.read}}" class="read-status text-decoration-none">{{READ_STATUS[conv_item.read]}}</a>
+            </small>
+          </div>
+          <p class="mt-1 mb-1">{{conv_item.conversation}}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block javascript %}
+<script>
+
+</script>
+{% endblock javascript %}

@@ -7,6 +7,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_bootstrap import Bootstrap5
 import datetime
 import pytz
+from dateutil.relativedelta import relativedelta
 
 from application.database import db
 from application.authentication import login_manager
@@ -31,22 +32,33 @@ def local_datetime(dttm, format='s'):
     dttm = datetime.datetime(dttm.year, dttm.month, dttm.day, 0, 0, 0, 0, tzinfo=datetime.timezone.utc)
   local_tzone = current_app.config['LOCAL_TIMEZONE']
   local_timezone = pytz.timezone(local_tzone)
-  if format == 's':
+  if format == 's':  # short ISO like date time
     return dttm.replace(tzinfo=pytz.utc).astimezone(local_timezone).strftime('%Y-%m-%d %H:%M:%S')
-  elif format == 'l':
+  elif format == 'l':  # long local format date time
     return dttm.replace(tzinfo=pytz.utc).astimezone(local_timezone).strftime('%c')
-  elif format == 'd':
+  elif format == 'd':  # ISO date only
     return dttm.replace(tzinfo=pytz.utc).astimezone(local_timezone).strftime('%Y-%m-%d')
-  elif format == 't':
+  elif format == 't':  # 24h time
     return dttm.replace(tzinfo=pytz.utc).astimezone(local_timezone).strftime('%H:%M:%S')
-  elif format == 'dd':
+  elif format == 'dd':  # long custom format datetime
     return dttm.replace(tzinfo=pytz.utc).astimezone(local_timezone).strftime('%A, %B %d, %Y')
+  elif format == 'a':  # time ago
+    dif = relativedelta(datetime.datetime.now(datetime.timezone.utc), dttm.replace(tzinfo=pytz.utc).astimezone(pytz.utc))
+    ago = " ".join([
+        f'{dif.years} year' if dif.years else "",
+        f'{dif.months} month' if dif.months else "",
+        f'{dif.days} day' if dif.days else "",
+        f'{dif.hours} hour' if dif.hours else "",
+        f'{dif.minutes} min' if dif.minutes else "",
+        f'{dif.seconds} sec' if dif.seconds else "",
+    ]) + ' ago'
+    return ago
 
 
 def context_processors():
   return {
-    "utcnow": datetime.datetime.utcnow(), 
-    "copyright_year": int(datetime.datetime.utcnow().strftime("%Y")) + 10,
+      "utcnow": datetime.datetime.utcnow(),
+      "copyright_year": int(datetime.datetime.utcnow().strftime("%Y")) + 10,
   }
 
 
@@ -66,7 +78,7 @@ def create_app(configuration):
   Migrate(app, db)
   Bootstrap5(app)
   # Register routes/apps
-  for route in ['auth', 'user_home', 'dashboard', 'user', 'prescription']:
+  for route in ['auth', 'user_home', 'dashboard', 'user', 'prescription', 'conversation']:
     bp = import_module(f'application.routes.{route}').blueprint
     app.register_blueprint(bp)
 

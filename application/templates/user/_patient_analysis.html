@@ -11,7 +11,7 @@
       <div class="row g-0 collapse show" id="patient-analysis">
         <div class="col-md-8">
           <div class="p-3">
-          {{user.analysis|safe}}
+          {{user.analysis|safe or "Add analysis notes..."}}
           </div>
         </div>
         <div class="col-md-4">

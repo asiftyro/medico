@@ -18,26 +18,26 @@
               <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
                   <div class="small text-muted">Fullname</div>
-                  <div>{{user.fullname}}</div>
+                  <div>{{user.fullname or "-"}}</div>
                 </div>
               </li>
          
               <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
                   <div class="small text-muted">Date of Birth (Age)</div>
-                  <div><small>{{user.dob}}</small> ({{user.age}})</div>
+                  <div><small>{{user.dob or "-"}}</small> ({{user.age or "-"}})</div>
                 </div>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
                   <div class="small text-muted">Sex</div>
-                  <div>{{user.sex}}</div>
+                  <div>{{user.sex or "-"}}</div>
                 </div>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
                   <div class="small text-muted">Blood Group</div>
-                  <div>{{user.blood}}</div>
+                  <div>{{user.blood or "-"}}</div>
                 </div>
               </li>
             </ul>
@@ -49,25 +49,25 @@
               <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
                   <div class="small text-muted">Mobile/Username</div>
-                  <div>{{user.username}}</div>
+                  <div>{{user.username or "-"}}</div>
                 </div>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
                   <div class="small text-muted">Email</div>
-                  <div>{{user.email}}</div>
+                  <div>{{user.email or "-"}}</div>
                 </div>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
                   <div class="small text-muted">Address</div>
-                  <div>{{user.address}}</div>
+                  <div>{{user.address or "-"}}</div>
                 </div>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
                   <div class="small text-muted">Reference</div>
-                  <div>{{user.reference}}</div>
+                  <div>{{user.reference or "-"}}</div>
                 </div>
               </li>
             </ul>

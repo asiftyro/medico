@@ -134,13 +134,16 @@ class Conversation(db.Model):
   __tablename__ = "conversation"
 
   id = db.Column(db.Integer, primary_key=True)
-  conversation = db.Column(db.Text)
+  conversation = db.Column(db.String(128))
+  read = db.Column(db.SmallInteger, default=0)
   patient_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+  admin_id = db.Column(db.Integer, db.ForeignKey("user.id"))
   author = db.Column(db.Integer, db.ForeignKey("user.id"))
   created_at = db.Column(db.DateTime, default=datetime.datetime.now(datetime.timezone.utc))
   modified_at = db.Column(db.DateTime, onupdate=datetime.datetime.now(datetime.timezone.utc))
   author_desc = db.relationship("User", foreign_keys=author)
   patient_desc = db.relationship("User", foreign_keys=patient_id)
+  admin_desc = db.relationship("User", foreign_keys=admin_id)
 
   def __repr__(self):
     return f'<Conversation: {self.id}>'
@@ -154,7 +157,8 @@ class Conversation(db.Model):
         'created_at': self.created_at,
         'modified_at': self.modified_at,
         "author_username": self.author_desc.username,
-        "patient_username": self.patient_desc.username
+        "patient_username": self.patient_desc.username,
+        "admin_username": self.admin_desc.username,
     }
 
 

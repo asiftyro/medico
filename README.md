@@ -22,6 +22,7 @@ pytz==2022.6
 Bootstrap-Flask==2.2.0
 python-dateutil==2.8.2
 Markdown==3.4.1
+weasyprint==57.2
 # for code formatting:
 yapf==0.32.0
 ```

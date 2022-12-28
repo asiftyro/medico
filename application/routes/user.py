@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, current_app, flash
 from application.database import db
-from application.model import User, Prescription
+from application.model import User, Prescription, Conversation
 from application.form import CreateUserForm, EditUserForm, CaseAnalysisForm
 from application.helper import get_unique_id, save_user_avatar_thumbnail, save_case_avatar_thumbnail
+from flask_login import current_user
 import os
 import copy
 
@@ -102,8 +103,18 @@ def edit(username):
 @blueprint.route('/treatment/<username>', methods=['GET'])
 def treatment(username):
   user = User.query.filter(User.username == username).first_or_404()
-  prescription = Prescription.query.filter((Prescription.author==5) & (Prescription.patient_id==user.id))
-  return render_template('user/treatment.html', user=user.to_dict(), prescription=prescription)
+  prescription = Prescription.query.filter((Prescription.author == 5) & (Prescription.patient_id == user.id))
+
+  admin_id = current_user.id
+  patient_id = user.id
+  # Following query is to retrieve conversations between patients and doctor/admin
+  # where patient was created by logged in doctor/admin (User.author field is the
+  # creator of user)
+  conversation = Conversation.query.filter((Conversation.patient_id == patient_id)
+                                           & (Conversation.admin_id == admin_id)).order_by(
+                                               Conversation.created_at.desc()).limit(10).all()
+
+  return render_template('user/treatment.html', user=user.to_dict(), prescription=prescription, conversation=conversation)
 
 
 @blueprint.route('/create', methods=['GET', 'POST'])
@@ -140,7 +151,7 @@ def index():
   return render_template('user/index.html')
 
 
-@blueprint.route('/api/list')
+@blueprint.route('/list-all')
 def data():
   query = User.query.filter(User.admin == 0)
 

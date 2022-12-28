@@ -44,6 +44,7 @@ class CreateUserForm(FlaskForm):
   save = SubmitField('Save')
 
 
+
 class EditUserForm(FlaskForm):
   fullname = StringField('Full Name', validators=[InputRequired(), Length(min=4, max=64)])
   dob = DateField('Date of Birth', validators=[InputRequired()])
@@ -97,3 +98,7 @@ class LoginForm(FlaskForm):
   password = PasswordField('Password', validators=[InputRequired()])
   remember = BooleanField('Remember me')
   submit = SubmitField('Log In')
+
+class ConversationForm(FlaskForm):
+  conversation = StringField('Message', validators=[InputRequired(), Length(max=128)])
+  submit = SubmitField('Send')

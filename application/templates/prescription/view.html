@@ -28,33 +28,33 @@
 {% include 'user/_patient_info.html' %}
 
 
+<div class="row">
+  <div class="col">
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between">
+        <span><b>Prescription</b></span>
+        <a data-bs-toggle="collapse" data-bs-target="#patient-prescription" aria-expanded="false" href="javascript:void(0)" class="border px-3 text-muted">
+          {{render_icon('layout-sidebar')}}
+        </a>
+      </div>
+      <div class="row g-0 collapse show mb-4" id="patient-prescription">
+        <div class="col-12 p-3">
+          <h1 class="h5">Rx</h1>
+        </div>
 
-
-<div class="card mb-4">
-  <div class="card-header d-flex justify-content-between">
-    <span><b>Prescription</b></span>
-    <a data-bs-toggle="collapse" data-bs-target="#patient-prescription" aria-expanded="false" href="javascript:void(0)" class="border px-3 text-muted">
-      {{render_icon('distribute-vertical')}}
-    </a>
-  </div>
-  <div class="row g-0 collapse show mb-4" id="patient-prescription">
-    <div class="col-12 p-3">
-      <h1 class="h5">Rx</h1>
-    </div>
-    
-    <div class="col-12 p-3">
-      {{prescription.prescription|safe}}
-    </div>
-    <div class="col-12 p-3">
-      Follow up date: <b>{{prescription.follow_up_date|local_datetime('dd') }}</b>
-   </div>
-    <div class="col-12 px-3 text-center text-md-start">
-      <hr>
-      <a class="btn btn-dark mt-1" href="{{ url_for('prescription_bp.edit', prescription_id=prescription.id) }}">{{render_icon('pencil-square')}} &nbsp;Edit</a>
-      <a class="btn btn-secondary mt-1" href="#">{{render_icon('printer')}} &nbsp;Print</a>
+        <div class="col-12 p-3">
+          {{prescription.prescription|safe}}
+        </div>
+        <div class="col-12 p-3">
+          Follow up date: <b>{{prescription.follow_up_date|local_datetime('dd') }}</b>
+        </div>
+        <div class="col-12 px-3 text-center text-md-start">
+          <hr>
+          <a class="btn btn-dark mt-1" href="{{ url_for('prescription_bp.edit', prescription_id=prescription.id) }}">{{render_icon('pencil-square')}} &nbsp;Edit</a>
+          <a class="btn btn-secondary mt-1" href="#">{{render_icon('printer')}} &nbsp;Print</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
-
 {% endblock content %}
