@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required
+from flask_weasyprint import HTML, render_pdf
 from application.authentication import admin_required
 from application.database import db
 from application.model import User, Prescription
@@ -55,4 +56,10 @@ def edit(prescription_id):
     flash('Please check form fields.', 'error')
   return render_template('prescription/edit.html', user=user.to_dict(), prescription=prescription.to_dict(), form=prescription_edit_form)
 
+@blueprint.route('/print-view/<prescription_id>', methods=['GET'])
+@login_required
+def print_view(prescription_id):
+  prescription = Prescription.query.filter(Prescription.id == prescription_id).first_or_404()
+  html = render_template('prescription/print_view.html', prescription=prescription.to_dict())
 
+  return render_pdf(HTML(string=html)) 

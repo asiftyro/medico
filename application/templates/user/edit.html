@@ -17,8 +17,8 @@
 <div class="d-flex justify-content-between">
   <div class="h2 mt-1">Edit Patient Info</div> 
   <div>
-    <a class="btn btn-success mt-1" href="{{ url_for('user_bp.view', username=user.username) }}">{{render_icon('info-circle')}}&nbsp;Patient info</a>
-    <a class="btn btn-primary mt-1" href="{{ url_for('user_bp.index') }}">{{render_icon('pencil-square')}}&nbsp;Patient index</a>
+    <a class="btn btn-outline-dark mt-1" href="{{ url_for('user_bp.view', username=user.username) }}">{{render_icon('info-circle')}}&nbsp;Patient info</a>
+    <a class="btn btn-outline-dark mt-1" href="{{ url_for('user_bp.index') }}">{{render_icon('card-list')}}&nbsp;Patient index</a>
   </div>  
 </div>  
 {% endblock %}

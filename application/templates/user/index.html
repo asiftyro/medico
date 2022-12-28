@@ -13,7 +13,7 @@
 <div class="d-flex justify-content-between">
   <div class="h2 mt-1">Patient Index</div>
   <div>
-    <a class="btn btn-primary mt-1" href="{{ url_for('user_bp.create') }}">{{render_icon('person-plus')}}&nbsp;Add new patient</a>
+    <a class="btn btn-outline-dark mt-1" href="{{ url_for('user_bp.create') }}">{{render_icon('person-plus')}}&nbsp;Add new patient</a>
   </div>
 </div>
 {% endblock %}
@@ -61,7 +61,7 @@
       },
       {
         id: 'username',
-        name: 'Username',
+        name: 'Mobile/Username',
       },
       {
         id: 'dob_str',

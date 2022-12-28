@@ -51,7 +51,7 @@
         <div class="col-12 px-3 text-center text-md-start">
           <hr>
           <a class="btn btn-dark mt-1" href="{{ url_for('prescription_bp.edit', prescription_id=prescription.id) }}">{{render_icon('pencil-square')}} &nbsp;Edit</a>
-          <a class="btn btn-secondary mt-1" href="#">{{render_icon('printer')}} &nbsp;Print</a>
+          <a class="btn btn-secondary mt-1" href="{{ url_for('prescription_bp.print_view', prescription_id=prescription.id) }}">{{render_icon('printer')}} &nbsp;Print</a>
         </div>
       </div>
     </div>

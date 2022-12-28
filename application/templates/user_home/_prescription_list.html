@@ -11,7 +11,7 @@
         <input class="form-control" id="prescription-search" type="text" placeholder="Search Prescription...">
       </div>
       <div class="col-6 p-3 text-end">
-        <a class="btn btn-dark" href="{{ url_for('prescription_bp.create', patient_id=user.id) }}"> {{render_icon('journal-plus') }} &nbsp;Add Prescription</a>
+        &nbsp;
       </div>
       <div class="col-12">
         <hr>
@@ -22,7 +22,7 @@
         {% if not prescription %} <p class="p-3">Add prescription...</p> {%endif%}
         {% for presc in prescription %}
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a href="{{ url_for('prescription_bp.view', prescription_id=presc.id) }}">
+          <a href="{{ url_for('prescription_bp.print_view', prescription_id=presc.id) }}">
             <span class="badge bg-primary pill"><small>Prescription ID</small><br>
               {{ '%05d' % presc.id }}</span>
           </a>

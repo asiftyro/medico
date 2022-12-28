@@ -22,7 +22,7 @@ pytz==2022.6
 Bootstrap-Flask==2.2.0
 python-dateutil==2.8.2
 Markdown==3.4.1
-weasyprint==57.2
+flask_weasyprint==1.0.0
 # for code formatting:
 yapf==0.32.0
 ```
@@ -41,6 +41,10 @@ yapf==0.32.0
 Mobified [Start Bootstrap - SB Admin](https://startbootstrap.com/template/sb-admin/) built on bootstrap5
 
 ## Dev Notes
+
+### to use flask_weasyprint==1.0.0 on Mac
+
+```brew install weasyprint```
 
 ### Install mysql-client on macOS
 

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import current_user
 
 
@@ -12,4 +12,5 @@ def index():
       return redirect(url_for('dashboard_bp.index'))
     else:
       return redirect(url_for('user_home_bp.index'))
+      
   return render_template('index/index.html')

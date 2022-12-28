@@ -36,6 +36,7 @@ class BaseConfiguration:
   LOCAL_TIMEZONE = os.getenv('LOCAL_TIMEZONE', 'Asia/Dhaka')
   # Bootstrap
   BOOTSTRAP_SERVE_LOCAL = True
+  BOOTSTRAP_BTN_STYLE = 'dark'
   # BOOTSTRAP_BOOTSWATCH_THEME='cerulean'
 
 

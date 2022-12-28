@@ -17,9 +17,9 @@
 <div class="d-flex justify-content-between">
   <div class="h2 mt-1">Case Analysis</div>
   <div>
-    <a class="btn btn-success mt-1" href="{{ url_for('user_bp.treatment', username=user.username) }}"> {{render_icon('journal-medical')}} Treatment</a>
-    <a class="btn btn-secondary mt-1" href="{{ url_for('user_bp.view', username=user.username) }}"> {{render_icon('info-square')}} Patient info</a>
-    <a class="btn btn-primary mt-1" href="{{ url_for('user_bp.edit', username=user.username) }}"> {{render_icon('file-person')}} Edit patient info</a>
+    <a class="btn btn-outline-success mt-1" href="{{ url_for('user_bp.treatment', username=user.username) }}"> {{render_icon('capsule-pill')}} Treatment</a>
+    <a class="btn btn-outline-dark mt-1" href="{{ url_for('user_bp.view', username=user.username) }}"> {{render_icon('info-circle')}} Patient info</a>
+    <a class="btn btn-outline-dark mt-1" href="{{ url_for('user_bp.index') }}">{{render_icon('card-list')}}&nbsp;Patient index</a>
   </div>
 </div>
 {% endblock %}
@@ -37,7 +37,7 @@
           {{ form.csrf_token() }}
           {{ render_field(form.analysis) }}
           <hr>
-          <button class="btn btn-primary btn-md" id="save" name="save" type="submit" value="Save">
+          <button class="btn btn-dark btn-md" id="save" name="save" type="submit" value="Save">
             {{ render_icon('save') }} Save
           </button>
         </div>
