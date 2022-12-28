@@ -25,6 +25,7 @@
     </div>
 
       <div class="row mb-3 list-group-conversation-details-wrapper">
+      {% if conversation %}
       {% for conv_item in conversation %}
       <div class="list-group list-group-flush px-3 mb-2">
         <div class="list-group-item border rounded-start rounded-end">
@@ -33,13 +34,18 @@
               <b>{{conv_item.author_desc.fullname}} | {{conv_item.author_desc.username}}</b> <br>&#9632;{{conv_item.created_at|local_datetime('a')}}
             </small>
             <small class="text-muted">
+              {% if conv_item.author != current_user.id %}
               <a href="javascript:void(0)" data-id="{{conv_item.id}}" data-status="{{conv_item.read}}" class="read-status text-decoration-none">{{READ_STATUS[conv_item.read]}}</a>
+              {% endif %}
             </small>
           </div>
           <p class="mt-1 mb-1">{{conv_item.conversation}}</p>
         </div>
       </div>
       {% endfor %}
+      {% else %}
+      <span>No conversation yet...</span>
+      {% endif %}
     </div>
 
 

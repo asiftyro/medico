@@ -145,7 +145,7 @@ def view(username):
   user = User.query.filter(User.username == username).first_or_404()
   return render_template('user/view.html', user=user.to_dict())
 
-
+# Patient list
 @blueprint.route('/', methods=['GET'])
 def index():
   return render_template('user/index.html')
@@ -153,7 +153,7 @@ def index():
 
 @blueprint.route('/list-all')
 def data():
-  query = User.query.filter(User.admin == 0)
+  query = User.query.filter((User.admin == 0) & User.author==current_user.id)
 
   # search filter
   search = request.args.get('search')

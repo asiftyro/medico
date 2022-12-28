@@ -63,21 +63,28 @@ window.addEventListener('DOMContentLoaded', event => {
 
   const getUnreadMessageList = async () => {
     let api_url = `/conversation/unread`;
-    let response = await fetch(api_url)
-    let unreadMsgList = await response.json();
-    unreadMsgMenuCount.innerHTML = unreadMsgList.length;
-    let menuItems = '';
-    if (unreadMsgList.length) {
-      unreadMsgMenuColor.classList.remove("bg-danger");
-      unreadMsgMenuColor.classList.add("bg-danger");
-      for (u of unreadMsgList) {
-        let tmpl = `<li><a class="dropdown-item" href="/conversation/${u.patient_username}">${u.patient_fullname} - ${u.patient_username} - ${u.created_at}</a></li>`
-        menuItems += tmpl;
+    try {
+      let response = await fetch(api_url);
+      let unreadMsgList = await response.json();
+
+      unreadMsgMenuCount.innerHTML = unreadMsgList.length;
+      let menuItems = '';
+      if (unreadMsgList.length) {
+        unreadMsgMenuColor.classList.remove("bg-danger");
+        unreadMsgMenuColor.classList.add("bg-danger");
+        for (u of unreadMsgList) {
+          let tmpl = `<li><a class="dropdown-item" href="/conversation/${u.patient_username}">${u.patient_fullname} - ${u.patient_username} - ${u.created_at}</a></li>`
+          menuItems += tmpl;
+        }
+        unreadMsgMenuList.innerHTML = menuItems;
+      } else {
+        unreadMsgMenuColor.classList.remove("bg-danger");
+        unreadMsgMenuList.innerHTML = `<li><a class="dropdown-item" href="javascript:void(0)">No unread message.</a></li>`;
       }
-      unreadMsgMenuList.innerHTML = menuItems;
-    } else {
-      unreadMsgMenuColor.classList.remove("bg-danger");
-      unreadMsgMenuList.innerHTML = `<li><a class="dropdown-item" href="javascript:void(0)">No unread message.</a></li>`;
+    } catch (e) {
+      console.log('Could not retrieve latest conversation.');
+      console.log('Retrying...');
+      return [];
     }
   }
 
@@ -99,8 +106,8 @@ window.addEventListener('DOMContentLoaded', event => {
   }
 
   // =================== show unread message count in regullar interval =============
-  let unreadFetchInterval= (5 * 60 * 1000) // 5 min
-  
+  let unreadFetchInterval = (5 * 60 * 1000) // 5 min
+
   let dataFetcher = new SmartInterval(
     async () => {
       await getUnreadMessageList();

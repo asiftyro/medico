@@ -54,7 +54,7 @@ def unread():
   admin_id = current_user.id
   local_tzone = current_app.config['LOCAL_TIMEZONE']
   local_timezone = pytz.timezone(local_tzone)
-  conversation = Conversation.query.filter((Conversation.admin_id == admin_id) & (Conversation.read == 0)).order_by(
+  conversation = Conversation.query.filter((Conversation.admin_id == admin_id) & (Conversation.read == 0) &  (Conversation.author != admin_id)).order_by(
       Conversation.created_at.desc()).all()
 
   return_json = []
