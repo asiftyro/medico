@@ -39,7 +39,7 @@
   </div>
   <div class="row g-0 collapse show" id="patient-prescription">
     <div class="col p-3">
-    {{ render_form(form, action=url_for('prescription_bp.edit', prescription_id=prescription.id), method='post', novalidate=1) }}
+    {{ render_form(form, action=url_for('prescription_bp.edit', prescription_id=prescription.id), method='post') }}
     </div>
   </div>
 </div>

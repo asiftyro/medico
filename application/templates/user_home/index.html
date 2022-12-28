@@ -1,18 +1,12 @@
-{% extends 'layout/layout.html' %}
-{% from 'layout/helper.html' import breadcrumb %}
+{% extends 'layout/layout_secondary.html' %}
 
 {% block style %} {% endblock style %}
 
 {% block javascript %} {% endblock javascript %}
 
-{% block title %} Boilerplate {% endblock title %}
+{% block title %} Patient Home {% endblock title %}
 
-
-{% block breadcrumb %}
-{{ breadcrumb({'Boiler':  '/', 'Plate': ''} ) }}
-{% endblock breadcrumb %}
-
-{% block pageheader %}User Home{% endblock pageheader %}
+{% block pageheader %}Patient Home{% endblock pageheader %}
 
 {% block content %}
 <div class="row">

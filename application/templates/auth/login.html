@@ -3,16 +3,17 @@
 {% block title %}Login{% endblock title%}
 
 {% block content %}
+<div class="container">
 <div class="row justify-content-center">
   <div class="col-md-6 col-lg-5 shadow mt-5">
     <div class="p-4 p-md-5">
-      <div class="login-header-icon d-flex align-items-center justify-content-center bg-dark">
+      <a class="login-header-icon d-flex align-items-center justify-content-center bg-dark" href="{{url_for('index_bp.index')}}">
         {{render_icon('person', size='3em', color='white')}}
-      </div>
+      </a>
       <h4 class="text-center mb-4 text-dark text-uppercase">Log in to {{config.APP_NAME}}</h4>
       {{ render_messages(dismissible=1,dismiss_animate=1) }}
       <div>
-        <form method="post" action="{{url_for('auth_bp.login')}}" novalidate>
+        <form method="post" action="{{url_for('auth_bp.login')}}">
           {{ form.csrf_token() }}
           {{ render_field(form.username) }}
           {{ render_field(form.password) }}
@@ -45,5 +46,6 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 {% endblock content%}

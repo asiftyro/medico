@@ -1,17 +1,21 @@
+import os
+import copy
 from flask import Blueprint, render_template, request, redirect, url_for, current_app, flash
+from flask_login import current_user
+from flask_login import login_required
+from application.authentication import admin_required
 from application.database import db
 from application.model import User, Prescription, Conversation
 from application.form import CreateUserForm, EditUserForm, CaseAnalysisForm
 from application.helper import get_unique_id, save_user_avatar_thumbnail, save_case_avatar_thumbnail
-from flask_login import current_user
-import os
-import copy
 
 
 blueprint = Blueprint('user_bp', __name__, url_prefix='/user')
 
 
 @blueprint.route('/analysis/<username>', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def analysis(username):
   user = User.query.filter(User.username == username).first_or_404()
   fresh_user_dict = copy.deepcopy(user.to_dict())
@@ -75,6 +79,8 @@ def analysis(username):
 
 
 @blueprint.route('/edit/<username>', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def edit(username):
   user = User.query.filter(User.username == username).first_or_404()
   fresh_user_dict = copy.deepcopy(user.to_dict())
@@ -101,6 +107,8 @@ def edit(username):
 
 
 @blueprint.route('/treatment/<username>', methods=['GET'])
+@login_required
+@admin_required
 def treatment(username):
   user = User.query.filter(User.username == username).first_or_404()
   prescription = Prescription.query.filter((Prescription.author == 5) & (Prescription.patient_id == user.id))
@@ -114,10 +122,15 @@ def treatment(username):
                                            & (Conversation.admin_id == admin_id)).order_by(
                                                Conversation.created_at.desc()).limit(10).all()
 
-  return render_template('user/treatment.html', user=user.to_dict(), prescription=prescription, conversation=conversation)
+  return render_template('user/treatment.html',
+                         user=user.to_dict(),
+                         prescription=prescription,
+                         conversation=conversation)
 
 
 @blueprint.route('/create', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def create():
   create_user_form = CreateUserForm()
   if create_user_form.validate_on_submit():
@@ -141,19 +154,26 @@ def create():
 
 
 @blueprint.route('/<username>', methods=['GET'])
+@login_required
+@admin_required
 def view(username):
   user = User.query.filter(User.username == username).first_or_404()
   return render_template('user/view.html', user=user.to_dict())
 
-# Patient list
+
+# Patient list depends on route /list-alll
 @blueprint.route('/', methods=['GET'])
+@login_required
+@admin_required
 def index():
   return render_template('user/index.html')
 
 
 @blueprint.route('/list-all')
+@login_required
+@admin_required
 def data():
-  query = User.query.filter((User.admin == 0) & User.author==current_user.id)
+  query = User.query.filter((User.admin == 0) & User.author == current_user.id)
 
   # search filter
   search = request.args.get('search')

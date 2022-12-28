@@ -78,7 +78,7 @@ def create_app(configuration):
   Migrate(app, db)
   Bootstrap5(app)
   # Register routes/apps
-  for route in ['auth', 'user_home', 'dashboard', 'user', 'prescription', 'conversation']:
+  for route in ['index', 'auth', 'user_home', 'dashboard', 'user', 'prescription', 'conversation']:
     bp = import_module(f'application.routes.{route}').blueprint
     app.register_blueprint(bp)
 

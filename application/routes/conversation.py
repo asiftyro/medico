@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app, jsonify, json
-from flask_login import current_user
+from flask_login import current_user, login_required
+from application.authentication import admin_required
 from application.database import db
 from application.model import User, Conversation
 from application.form import ConversationForm
@@ -10,6 +11,8 @@ blueprint = Blueprint('conversation_bp', __name__, url_prefix='/conversation')
 
 
 @blueprint.route('/<username>', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def conversation(username):
   conv_form = ConversationForm()
   user = User.query.filter(User.username == username).first_or_404()
@@ -39,6 +42,8 @@ def conversation(username):
 
 
 @blueprint.route('/read-status/<id>/<read_status>', methods=['GET'])
+@login_required
+@admin_required
 def set_read_status(id, read_status):
   conversation_item = Conversation.query.get(id)
   read_status = 0 if read_status == '1' else 1
@@ -50,6 +55,8 @@ def set_read_status(id, read_status):
 
 
 @blueprint.route('/unread', methods=['GET'])
+@login_required
+@admin_required
 def unread():
   admin_id = current_user.id
   local_tzone = current_app.config['LOCAL_TIMEZONE']

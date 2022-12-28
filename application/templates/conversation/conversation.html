@@ -46,7 +46,7 @@
     <!-- conversation form -->
     <div class="row">
       <div class="col-12 px-3 pt-2">
-        <form method="post" action="{{url_for('conversation_bp.conversation', username=user.username)}}" novalidate>
+        <form method="post" action="{{url_for('conversation_bp.conversation', username=user.username)}}">
           {{ form.csrf_token() }}
           {{ render_field(form.conversation) }}
           <button class="btn btn-dark" id="submit" name="submit" type="submit" value="Send"><b>Send</b> {{render_icon('send-check') }}</button>

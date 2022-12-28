@@ -35,3 +35,11 @@ def admin_required(view):
       abort(403)
     return view(**kwargs)
   return wrapped_view
+
+def non_admin_required(view):
+  @functools.wraps(view)
+  def wrapped_view(**kwargs):
+    if current_user.is_admin():
+      abort(403)
+    return view(**kwargs)
+  return wrapped_view  

@@ -1,0 +1,41 @@
+  {% extends 'layout/layout_secondary.html' %}
+
+  {% block style %} {% endblock style %}
+
+  {% block javascript %} {% endblock javascript %}
+
+  {% block title %}Home {% endblock title %}
+
+  {% block content %}
+  <main class="flex-shrink-0">
+
+    <header class="pb-3 mb-4 mt-4 border-bottom">
+      <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+        <img style="width: 35px;" class="me-2" src="{{url_for('static', filename='/img/favicon/android-chrome-192x192.png')}}" alt="">
+        <span class="fs-4">{{config.APP_NAME}}</span>
+      </a>
+    </header>
+
+    <div class="d-flex flex-row justify-content-center mb-3">
+      <div class="card mb-3" style="max-width: 750px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{url_for('static', filename='/img/logo.png')}}" class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h1 class="card-title">{{config.APP_NAME}}</h1>
+              <h3 class="card-text">Patient Case Management system.</h3>
+              <p class="card-text fw-bold">We are part of you and so we ensure you get the best medical care from us again and again..</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </main>
+
+  {% include '/layout/_footer.html'   %}
+  {% endblock content %}
