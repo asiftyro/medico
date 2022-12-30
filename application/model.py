@@ -4,7 +4,6 @@ from flask import url_for
 import markdown
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
-# from application.routes.authentication.login_manager import login_manager
 from application.database import db
 
 
@@ -107,6 +106,7 @@ class Prescription(db.Model):
 
   id = db.Column(db.Integer, primary_key=True)
   prescription = db.Column(db.Text)
+  note = db.Column(db.Text)
   follow_up_date = db.Column(db.Date)
   patient_id = db.Column(db.Integer, db.ForeignKey("user.id"))
   author = db.Column(db.Integer, db.ForeignKey("user.id"))
@@ -122,6 +122,7 @@ class Prescription(db.Model):
     return {
         'id': self.id,
         'prescription': markdown.markdown(self.prescription or "", extensions=['fenced_code', 'nl2br']),
+        'note': markdown.markdown(self.note or "", extensions=['fenced_code', 'nl2br']),
         'follow_up_date': self.follow_up_date,
         'author': self.author,
         'created_at': self.created_at,
@@ -161,4 +162,32 @@ class Conversation(db.Model):
         "author_username": self.author_desc.username,
         "patient_username": self.patient_desc.username,
         "admin_username": self.admin_desc.username,
+    }
+
+
+class Medicine(db.Model):
+
+  __tablename__ = "medicine"
+
+  id = db.Column(db.Integer, primary_key=True)
+  short_name = db.Column(db.String(128), unique=True)
+  medicine = db.Column(db.String(128), unique=True)
+  author = db.Column(db.Integer, db.ForeignKey("user.id"))
+  created_at = db.Column(db.DateTime, default=datetime.datetime.now(datetime.timezone.utc))
+  modified_at = db.Column(db.DateTime, onupdate=datetime.datetime.now(datetime.timezone.utc))
+  author_desc = db.relationship("User", foreign_keys=author)
+
+  def __repr__(self):
+    return f'<Medicine: {self.id}>'
+
+  def to_dict(self):
+    return {
+        'id': self.id,
+        'medicine': self.medicine,
+        'short_name': self.short_name,
+        'author': self.author,
+        'created_at': self.created_at,
+        'modified_at': self.modified_at,
+        "author_username": self.author_desc.username,
+        "patient_username": self.patient_desc.username
     }

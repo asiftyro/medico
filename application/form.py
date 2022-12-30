@@ -106,6 +106,11 @@ class PrescriptionCreateForm(FlaskForm):
   follow_up_date = DateField('Follow up date',
                              validators=[Optional(strip_whitespace=True)],
                              filters=[lambda x: x or None])
+  note = TextAreaField('Notes/Outcome/Observation',
+                               validators=[Optional(strip_whitespace=True),
+                                           Length(max=2048)],
+                               filters=[lambda x: x or None],
+                               render_kw={'rows': 10})                             
   save = SubmitField('Save')
 
 

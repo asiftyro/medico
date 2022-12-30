@@ -1,14 +1,58 @@
 {% extends 'layout/layout.html' %}
 {% from 'layout/helper.html' import breadcrumb, case_photo_modal %}
 
-{% block style %} {% endblock style %}
+{% block style %}
 
-{% block javascript %} {% endblock javascript %}
+<link href='{{ url_for("static", filename="css/tribute.css") }}' rel="stylesheet" />
+{% endblock style %}
+
+{% block javascript %}
+
+<script src='{{ url_for("static", filename="js/tribute.js")}}'></script>
+
+<script>
+  var tribute = new Tribute({
+    collection: [{
+      // symbol or string that starts the lookup
+      trigger: '@',
+      // function called on select that returns the content to insert
+      selectTemplate: function(item) {
+        return item.original.value;
+      },
+      // column to search against in the object (accepts function or string)
+      lookup: 'key',
+      // REQUIRED: array of objects to match or a function that returns data (see 'Loading remote data' for an example)
+      values: [{
+          key: "Phil Heartman",
+          value: "Phil Heartman"
+        },
+        {
+          key: "Gordon Ramsey",
+          value: "Phil Heartman"
+        },
+        {
+          key: "a b",
+          value: "and book"
+        }
+      ],
+      // specify whether a space is allowed in the middle of mentions
+      allowSpaces: true,
+
+    }]
+  });
+
+
+
+
+  tribute.attach(document.getElementById("prescription"));
+</script>
+{% endblock javascript %}
 
 {% block title %}Add New Prescription{% endblock title %}
 
 
 {% block breadcrumb %}
+
 {{
   breadcrumb({
     'Patients':  url_for('user_bp.index'), 
@@ -45,7 +89,7 @@
   </div>
   <div class="row g-0 collapse show" id="patient-prescription">
     <div class="col p-3">
-    {{ render_form(form, action=url_for('prescription_bp.create', patient_id=user.id), method='post') }}
+      {{ render_form(form, action=url_for('prescription_bp.create', patient_id=user.id), method='post') }}
     </div>
   </div>
 </div>

@@ -49,13 +49,37 @@
         <div class="col-12 p-3">
           Follow up date: <b>{{prescription.follow_up_date|local_datetime('dd') }}</b>
         </div>
-        <div class="col-12 px-3 text-center text-md-start">
-          <hr>
-          <a class="btn btn-dark mt-1" href="{{ url_for('prescription_bp.edit', prescription_id=prescription.id) }}">{{render_icon('pencil-square')}} &nbsp;Edit</a>
-          <a target="_blank" class="btn btn-secondary mt-1" href="{{ url_for('prescription_bp.print_view', prescription_id=prescription.id) }}">{{render_icon('printer')}} &nbsp;Print</a>
-        </div>
+ 
       </div>
     </div>
+  </div>
+</div>
+
+
+
+<div class="row">
+  <div class="col">
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between">
+        <span><b>Note/Outcome/Effect/Observation</b></span>
+        <a data-bs-toggle="collapse" data-bs-target="#patient-prescription-outcome" aria-expanded="false" href="javascript:void(0)" class="border px-3 text-muted">
+          {{render_icon('layout-sidebar')}}
+        </a>
+      </div>
+      <div class="row g-0 collapse show mb-4" id="patient-prescription-outcome">
+        <div class="col-12 p-3">
+          {{prescription.note|safe}}
+        </div>   
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col-12 px-3 text-center text-md-start">
+    <hr>
+    <a class="btn btn-dark mt-1" href="{{ url_for('prescription_bp.edit', prescription_id=prescription.id) }}">{{render_icon('pencil-square')}} &nbsp;Edit</a>
+    <a target="_blank" class="btn btn-secondary mt-1" href="{{ url_for('prescription_bp.print_view', prescription_id=prescription.id) }}">{{render_icon('printer')}} &nbsp;Print</a>
   </div>
 </div>
 {% endblock content %}

@@ -77,7 +77,7 @@ def conversation(username):
     db.session.commit()
     flash("Message sent.", 'success')
     return redirect(url_for('conversation_bp.conversation', username=username))
-  return render_template('conversation/conversation.html',
+  return render_template('conversation/index.html',
                          user=user.to_dict(),
                          form=conv_form,
                          conversation=conversation)

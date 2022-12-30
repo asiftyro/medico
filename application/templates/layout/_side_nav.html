@@ -3,49 +3,55 @@
     <div class="nav">
       <div class="sb-sidenav-menu-heading">Dashboard</div>
       <a class="nav-link" href="{{ url_for('dashboard_bp.index') }}">
-        <div class="sb-nav-link-icon">{{render_icon('journals')}}</div>
+        <div class="sb-nav-link-icon">{{render_icon('bar-chart')}}</div>
         Dashboard
       </a>
 
 
       <div class="sb-sidenav-menu-heading">Patient</div>
       <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-        <div class="sb-nav-link-icon">{{render_icon('journals')}}</div>
+        <div class="sb-nav-link-icon">{{render_icon('person-plus')}}</div>
         Patients
         <div class="sb-sidenav-collapse-arrow">{{render_icon('chevron-double-down')}}</div>
       </a>
-      <div class="collapse show" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+      <div class="collapse show" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion2">
         <nav class="sb-sidenav-menu-nested nav">
           <a class="nav-link" href="{{ url_for('user_bp.index') }}">
-            <div class="sb-nav-link-icon">{{render_icon('journals')}}</div>
+            <div class="sb-nav-link-icon">{{render_icon('person-square')}}</div>
             Index
           </a>
           <a class="nav-link" href="{{ url_for('user_bp.create') }}">
-            <div class="sb-nav-link-icon">{{render_icon('journals')}}</div>
+            <div class="sb-nav-link-icon">{{render_icon('person-plus')}}</div>
             Add
           </a>
         </nav>
       </div>
 
+      <div class="sb-sidenav-menu-heading">Medicine</div>
+      <a class="nav-link" href="{{ url_for('medicine_bp.index') }}">
+        <div class="sb-nav-link-icon">{{render_icon('capsule-pill')}}</div>
+        Medicine
+      </a>
+
 
       <div class="sb-sidenav-menu-heading">Admin</div>
-      <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-        <div class="sb-nav-link-icon">{{render_icon('journals')}}</div>
+      <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts2">
+        <div class="sb-nav-link-icon">{{render_icon('gear')}}</div>
         Admin
         <div class="sb-sidenav-collapse-arrow">{{render_icon('chevron-double-down')}}</div>
       </a>
-      <div class="collapse show" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+      <div class="collapse show" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion1">
         <nav class="sb-sidenav-menu-nested nav">
           <a class="nav-link" href="{{ url_for('admin_bp.index') }}">
-            <div class="sb-nav-link-icon">{{render_icon('journals')}}</div>
+            <div class="sb-nav-link-icon">{{render_icon('wrench')}}</div>
             Admin Settings
           </a>          
           <a class="nav-link" href="{{ url_for('auth_bp.change_password') }}">
-            <div class="sb-nav-link-icon">{{render_icon('journals')}}</div>
+            <div class="sb-nav-link-icon">{{render_icon('key')}}</div>
             Change Password
           </a>
           <a class="nav-link" href="{{ url_for('auth_bp.logout') }}">
-            <div class="sb-nav-link-icon">{{render_icon('journals')}}</div>
+            <div class="sb-nav-link-icon">{{render_icon('box-arrow-right')}}</div>
             Logout
           </a>
         </nav>
