@@ -111,10 +111,11 @@ def edit(username):
 @admin_required
 def treatment(username):
   user = User.query.filter(User.username == username).first_or_404()
-  prescription = Prescription.query.filter((Prescription.author == 5) & (Prescription.patient_id == user.id))
-
   admin_id = current_user.id
   patient_id = user.id
+  prescription = Prescription.query.filter((Prescription.author == current_user.id) & (Prescription.patient_id == user.id))
+
+
   # Following query is to retrieve conversations between patients and doctor/admin
   # where patient was created by logged in doctor/admin (User.author field is the
   # creator of user)
@@ -143,6 +144,7 @@ def create():
       user_avatar_path = os.path.join(current_app.config['USER_AVATAR_DIR'], unique_avatar_name)
       save_user_avatar_thumbnail(avatar, user_avatar_path)
       user.avatar = unique_avatar_name
+    user.author = current_user.id
     db.session.add(user)
     db.session.commit()
     flash('Patient information added.', 'success')

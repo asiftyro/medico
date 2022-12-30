@@ -5,11 +5,16 @@
 
 {% block javascript %} {% endblock javascript %}
 
-{% block title %} Boilerplate {% endblock title %}
+{% block title %} Dashboard {% endblock title %}
 
 
 {% block breadcrumb %}
-{{ breadcrumb({'Boiler':  '/', 'Plate': ''} ) }}
+{{
+  breadcrumb({
+    'Admin':  url_for('admin_bp.index'), 
+    'Dashboard': url_for('dashboard_bp.index' )
+  }) 
+}}
 {% endblock breadcrumb %}
 
 {% block pageheader %}Dashboard{% endblock pageheader %}

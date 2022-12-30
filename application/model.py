@@ -30,7 +30,7 @@ class User(db.Model, UserMixin):
   case_photo_4 = db.Column(db.String(128))
   admin = db.Column(db.SmallInteger, nullable=False, default=0)
   active = db.Column(db.SmallInteger, nullable=False, default=0)
-  author = db.Column(db.Integer, db.ForeignKey("user.id"), default=5)  # TODO: get from logged in user
+  author = db.Column(db.Integer, db.ForeignKey("user.id"))
   created_at = db.Column(db.DateTime, default=datetime.datetime.now(datetime.timezone.utc))
   modified_at = db.Column(db.DateTime, onupdate=datetime.datetime.now(datetime.timezone.utc))
   author_desc = db.relationship("User", remote_side=[id])
@@ -100,6 +100,7 @@ class User(db.Model, UserMixin):
         "author_username": self.author_desc.username,
     }
 
+
 class Prescription(db.Model):
 
   __tablename__ = "prescription"
@@ -107,8 +108,8 @@ class Prescription(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   prescription = db.Column(db.Text)
   follow_up_date = db.Column(db.Date)
-  patient_id = db.Column(db.Integer, db.ForeignKey("user.id"), default=1)
-  author = db.Column(db.Integer, db.ForeignKey("user.id"), default=5)  # TODO: get from logged in user
+  patient_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+  author = db.Column(db.Integer, db.ForeignKey("user.id"))
   created_at = db.Column(db.DateTime, default=datetime.datetime.now(datetime.timezone.utc))
   modified_at = db.Column(db.DateTime, onupdate=datetime.datetime.now(datetime.timezone.utc))
   author_desc = db.relationship("User", foreign_keys=author)
@@ -128,6 +129,7 @@ class Prescription(db.Model):
         "author_username": self.author_desc.username,
         "patient_username": self.patient_desc.username
     }
+
 
 class Conversation(db.Model):
 
@@ -160,8 +162,3 @@ class Conversation(db.Model):
         "patient_username": self.patient_desc.username,
         "admin_username": self.admin_desc.username,
     }
-
-
-# @login_manager.user_loader
-# def load_user(user_id):
-#   return User.query.filter_by(username=user_id).first()

@@ -5,15 +5,15 @@
 
 {% block breadcrumb %}
 
-{{ breadcrumb({'Patient': 'javascript:void(0)'}) }}
+{{ breadcrumb({'Patients': ''}) }}
 {% endblock breadcrumb %}
 
 
 {% block pageheader %}
-<div class="d-flex justify-content-between">
+<div class="d-flex justify-content-between flex-wrap">
   <div class="h2 mt-1">Patient Index</div>
   <div>
-    <a class="btn btn-outline-dark mt-1" href="{{ url_for('user_bp.create') }}">{{render_icon('person-plus')}}&nbsp;Add new patient</a>
+    <a class="btn btn-outline-dark mt-1 mt-md-0" href="{{ url_for('user_bp.create') }}">{{render_icon('person-plus')}}&nbsp;Add new patient</a>
   </div>
 </div>
 {% endblock %}

@@ -12,4 +12,6 @@ Bootstrap-Flask==2.2.0
 python-dateutil==2.8.2
 Markdown==3.4.1
 flask_weasyprint==1.0.0
+# downgrade weasyprint
+weasyprint==52.5
 yapf==0.32.0

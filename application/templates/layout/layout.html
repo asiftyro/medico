@@ -3,22 +3,26 @@
 {% from 'bootstrap5/form.html' import render_form %}
 {% from 'bootstrap5/form.html' import render_field %}
 {% from 'bootstrap5/utils.html' import render_messages %}
+{% from 'bootstrap5/nav.html' import render_breadcrumb_item %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   {% include 'layout/_html_header.html' %}
-  
+  <!-- Stylesheets start -->
+  <link href='{{ url_for("static", filename="css/styles.css") }}' rel="stylesheet" />
+  <link href='{{ url_for("static", filename="css/custom.css") }}' rel="stylesheet" />
+  <!-- Stylesheets end -->
   <title>{{config.APP_NAME}} - {% block title %}{% endblock title%}</title>
 
   {% block style %}{% endblock style %}
 </head>
 
 <body class="sb-nav-fixed">
-  {% include 'layout/_topnav.html' %}
+  {% include 'layout/_top_nav.html' %}
   <div id="layoutSidenav">
     <div id="layoutSidenav_nav">
-      {% include 'layout/_sidenav.html'   %}
+      {% include 'layout/_side_nav.html'   %}
     </div>
     <div id="layoutSidenav_content">
       <main>

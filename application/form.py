@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, DateField, SelectField, SubmitField, TextAreaField, PasswordField, BooleanField
-from wtforms.validators import ValidationError, Email, InputRequired, Optional, Length
+from wtforms.validators import ValidationError, Email, InputRequired, Optional, Length, EqualTo
 from flask_wtf.file import FileField, FileAllowed
 from application.model import User
 
@@ -40,7 +40,7 @@ class CreateUserForm(FlaskForm):
   address = StringField("Address", validators=[Length(max=64)])
   avatar = FileField('Patient\' Photo', validators=[FileAllowed(['jpg', 'png'], 'Allowed JPG or PNG Images only.')])
   active = SelectField('Active', choices=[(1, "Yes"), (0, "No")])
-  admin = SelectField('Admin', choices=[(0, "No"), (1, "Yes")])
+  # admin = SelectField('Admin', choices=[(0, "No"), (1, "Yes")])
   save = SubmitField('Save')
 
 
@@ -60,7 +60,7 @@ class EditUserForm(FlaskForm):
   address = StringField("Address", validators=[Length(max=64)])
   avatar = FileField('Patient\'s Photo', validators=[FileAllowed(['jpg', 'png'], 'Allowed JPG or PNG Images only.')])
   active = SelectField('Active', choices=[(1, "Yes"), (0, "No")])
-  admin = SelectField('Admin', choices=[(0, "No"), (1, "Yes")])
+  # admin = SelectField('Admin', choices=[(0, "No"), (1, "Yes")])
   save = SubmitField('Save')
 
 
@@ -102,3 +102,9 @@ class LoginForm(FlaskForm):
 class ConversationForm(FlaskForm):
   conversation = StringField('Message', validators=[InputRequired(), Length(max=128)])
   submit = SubmitField('Send')
+
+
+class ChangePasswordForm(FlaskForm):
+  password = PasswordField('New Password', validators=[InputRequired(), Length(min=4, max=16)])
+  verify_password = PasswordField('Verify new Password',validators=[EqualTo('password', message='Password must match.')])
+  submit = SubmitField('Change')  

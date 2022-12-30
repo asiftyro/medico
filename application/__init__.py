@@ -53,6 +53,14 @@ def local_datetime(dttm, format='s'):
         f'{dif.seconds} sec' if dif.seconds else "",
     ]) + ' ago'
     return ago
+  elif format == 'age':  # time ago
+    dif = relativedelta(datetime.datetime.now(datetime.timezone.utc), dttm.replace(tzinfo=pytz.utc).astimezone(pytz.utc))
+    age = " ".join([
+        f'{dif.years} year' if dif.years else "",
+        f'{dif.months} month' if dif.months else "",
+        f'{dif.days} day' if dif.days else ""
+    ]) 
+    return age    
 
 
 def context_processors():
@@ -78,7 +86,7 @@ def create_app(configuration):
   Migrate(app, db)
   Bootstrap5(app)
   # Register routes/apps
-  for route in ['index', 'auth', 'user_home', 'dashboard', 'user', 'prescription', 'conversation']:
+  for route in ['index','admin', 'auth', 'user_home', 'dashboard', 'user', 'prescription', 'conversation']:
     bp = import_module(f'application.routes.{route}').blueprint
     app.register_blueprint(bp)
 

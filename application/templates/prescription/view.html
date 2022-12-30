@@ -14,11 +14,12 @@
 {% endblock breadcrumb %}
 
 {% block pageheader %}
-<div class="d-flex justify-content-between">
+<div class="d-flex justify-content-between flex-wrap">
   <div class="h2 mt-1">View Prescription</div>
   <div>
-    <a class="btn btn-success mt-1" href="{{ url_for('user_bp.view', username=user.username) }}">{{render_icon('info-circle')}}&nbsp;Patient info</a>
-    <a class="btn btn-primary mt-1" href="{{ url_for('user_bp.edit', username=user.username) }}">{{render_icon('pencil-square')}}&nbsp;Edit patient info</a>
+    <a class="btn btn-outline-success mt-1 mt-md-0" href="{{ url_for('user_bp.treatment', username=user.username) }}">{{render_icon('capsule-pill')}}&nbsp;Treatment</a>
+    <a class="btn btn-outline-dark mt-1 mt-md-0" href="{{ url_for('user_bp.index', username=user.username) }}">{{render_icon('info-circle')}}&nbsp;Patient info</a>
+    <a class="btn btn-outline-dark mt-1 mt-md-0" href="{{ url_for('user_bp.index') }}">{{render_icon('card-list')}}&nbsp;Patient index</a>
   </div>
 </div>
 {% endblock %}
@@ -51,7 +52,7 @@
         <div class="col-12 px-3 text-center text-md-start">
           <hr>
           <a class="btn btn-dark mt-1" href="{{ url_for('prescription_bp.edit', prescription_id=prescription.id) }}">{{render_icon('pencil-square')}} &nbsp;Edit</a>
-          <a class="btn btn-secondary mt-1" href="{{ url_for('prescription_bp.print_view', prescription_id=prescription.id) }}">{{render_icon('printer')}} &nbsp;Print</a>
+          <a target="_blank" class="btn btn-secondary mt-1" href="{{ url_for('prescription_bp.print_view', prescription_id=prescription.id) }}">{{render_icon('printer')}} &nbsp;Print</a>
         </div>
       </div>
     </div>

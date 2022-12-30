@@ -1,12 +1,16 @@
 {% from 'bootstrap5/utils.html' import render_icon %}
 {% from 'bootstrap5/form.html' import render_field %}
 {% from 'bootstrap5/utils.html' import render_messages %}
+{% from 'bootstrap5/form.html' import render_form %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   {% include 'layout/_html_header.html' %}
-
+<!-- Stylesheets start -->
+<link href='{{ url_for("static", filename="css/styles.css") }}' rel="stylesheet" />
+<link href='{{ url_for("static", filename="css/custom.css") }}' rel="stylesheet" />
+<!-- Stylesheets end -->
   <title>{{config.APP_NAME}} - {% block title %}{% endblock title%}</title>
 
   {% block style %}{% endblock style %}

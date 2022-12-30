@@ -38,13 +38,17 @@ yapf==0.32.0
 
 ## Used theme
 
-Mobified [Start Bootstrap - SB Admin](https://startbootstrap.com/template/sb-admin/) built on bootstrap5
+Modified [Start Bootstrap - SB Admin](https://startbootstrap.com/template/sb-admin/) built on bootstrap5
 
 ## Dev Notes
 
 ### to use flask_weasyprint==1.0.0 on Mac
 
 ```brew install weasyprint```
+
+### downgrade weasyprint to 52.5 depending on host
+
+weasyprint==52.5
 
 ### Install mysql-client on macOS
 

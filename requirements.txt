@@ -39,7 +39,7 @@ rcssmin==1.1.1
 six==1.16.0
 SQLAlchemy==1.4.45
 tinycss2==1.2.1
-weasyprint==57.2
+weasyprint==52.5
 webencodings==0.5.1
 Werkzeug==2.2.2
 WTForms==3.0.1

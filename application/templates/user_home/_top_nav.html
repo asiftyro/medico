@@ -1,0 +1,14 @@
+<header class="pb-3 mb-4 mt-4 border-bottom d-flex flex-row justify-content-between flex-wrap">
+  <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+    <img style="width: 35px;" class="me-2" src="{{url_for('static', filename='/img/favicon/android-chrome-192x192.png')}}" alt="">
+    <span class="fs-4">{{config.APP_NAME}} Patient Portal</span>
+  </a>
+
+  <div class="d-flex align-items-center justify-content-between mt-3 mt-md-0">
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <a class="btn btn-outline-dark text-uppercase" href="{{url_for('user_home_bp.index')}}">{{render_icon('house-heart')}} Home</a>
+      <a class="btn btn-outline-dark text-uppercase" href="{{url_for('user_home_bp.change_password')}}">{{render_icon('key')}} Change Password</a>
+      <a class="btn btn-outline-dark text-uppercase" href="{{url_for('auth_bp.logout')}}">{{render_icon('box-arrow-in-right')}} Logout</a>
+    </div>
+  </div>
+</header> <!-- header -->

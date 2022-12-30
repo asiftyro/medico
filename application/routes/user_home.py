@@ -1,14 +1,30 @@
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_required
 
 from application.authentication import non_admin_required
 from application.model import User, Conversation, Prescription
-from application.form import ConversationForm
+from application.form import ConversationForm, ChangePasswordForm
 from application.database import db
 
 
 blueprint = Blueprint('user_home_bp', __name__, url_prefix='/user-home')
 
+@blueprint.route('/change-password', methods=['GET', 'POST'])
+@login_required
+@non_admin_required
+def change_password():
+  user_id = current_user.id
+  user = User.query.get(user_id)
+  pwd_form = ChangePasswordForm()
+  if pwd_form.validate_on_submit():
+    user.password = pwd_form.password.data
+    db.session.add(user)
+    db.session.commit()
+    flash("Password changed successfully", 'success')
+    return redirect(url_for('user_home_bp.index'))
+  elif request.method == 'POST':
+    flash('Password could not be changed. Please check form fields.', 'error')
+  return render_template('user_home/user_change_password.html', user=user.to_dict(), form=pwd_form)
 
 @blueprint.route('/', methods=['GET', 'POST'])
 @login_required

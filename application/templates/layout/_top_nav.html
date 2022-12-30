@@ -23,7 +23,7 @@
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle fw-bold" id="navbarDropdownUser" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{render_icon('person')}}</a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownUser">
-        <li><a class="dropdown-item" href="#!">Settings</a></li>
+        <li><a class="dropdown-item" href="{{ url_for('auth_bp.change_password') }}">Change my Password</a></li>
         <li><hr class="dropdown-divider" /></li>
         <li><a class="dropdown-item" href="{{ url_for('auth_bp.logout') }}">Logout</a></li>
       </ul>

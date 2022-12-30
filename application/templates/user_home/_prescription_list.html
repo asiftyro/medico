@@ -22,7 +22,7 @@
         {% if not prescription %} <p class="p-3">Add prescription...</p> {%endif%}
         {% for presc in prescription %}
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a href="{{ url_for('prescription_bp.print_view', prescription_id=presc.id) }}">
+          <a target="_blank" href="{{ url_for('prescription_bp.print_view', prescription_id=presc.id) }}">
             <span class="badge bg-primary pill"><small>Prescription ID</small><br>
               {{ '%05d' % presc.id }}</span>
           </a>

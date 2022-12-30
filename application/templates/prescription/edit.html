@@ -14,11 +14,12 @@
 {% endblock breadcrumb %}
 
 {% block pageheader %}
-<div class="d-flex justify-content-between">
+<div class="d-flex justify-content-between flex-wrap">
   <div class="h2 mt-1">Edit Prescription</div>
   <div>
-    <a class="btn btn-success mt-1" href="{{ url_for('user_bp.view', username=user.username) }}">{{render_icon('info-circle')}}&nbsp;Patient info</a>
-    <a class="btn btn-primary mt-1" href="{{ url_for('user_bp.edit', username=user.username) }}">{{render_icon('pencil-square')}}&nbsp;Edit patient info</a>
+    <a class="btn btn-outline-success mt-1 mt-md-0" href="{{ url_for('user_bp.treatment', username=user.username) }}">{{render_icon('capsule-pill')}}&nbsp;Treatment</a>
+    <a class="btn btn-outline-dark mt-1 mt-md-0" href="{{ url_for('user_bp.index', username=user.username) }}">{{render_icon('info-circle')}}&nbsp;Patient info</a>
+    <a class="btn btn-outline-dark mt-1 mt-md-0" href="{{ url_for('user_bp.index') }}">{{render_icon('card-list')}}&nbsp;Patient index</a>
   </div>
 </div>
 {% endblock %}

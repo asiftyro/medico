@@ -1,11 +1,11 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_required
+from flask_login import login_required, current_user
 from flask_weasyprint import HTML, render_pdf
 from application.authentication import admin_required
 from application.database import db
 from application.model import User, Prescription
 from application.form import PrescriptionCreateForm, PrescriptionEditForm
-
+import markdown
 blueprint = Blueprint('prescription_bp', __name__, url_prefix='/prescription')
 
 
@@ -19,6 +19,7 @@ def create(patient_id):
     prescription = Prescription()
     prescription_form.populate_obj(prescription)
     prescription.patient_id = patient.id
+    prescription.author = current_user.id
     db.session.add(prescription)
     db.session.commit()
     flash('Prescription created.', 'success')
@@ -59,7 +60,13 @@ def edit(prescription_id):
 @blueprint.route('/print-view/<prescription_id>', methods=['GET'])
 @login_required
 def print_view(prescription_id):
-  prescription = Prescription.query.filter(Prescription.id == prescription_id).first_or_404()
-  html = render_template('prescription/print_view.html', prescription=prescription.to_dict())
+  prescription = None
+  if current_user.is_admin():
+    prescription = Prescription.query.filter((Prescription.id == prescription_id) & (Prescription.author==current_user.id)).first_or_404()
+  else:
+    prescription = Prescription.query.filter((Prescription.id == prescription_id) & (Prescription.patient_id==current_user.id)).first_or_404()
 
+
+  html = render_template('prescription/print_view.html', prescription=prescription)
+  # return html
   return render_pdf(HTML(string=html)) 

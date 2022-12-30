@@ -9,16 +9,21 @@
 
 
 {% block breadcrumb %}
-{{ breadcrumb({'Patient':  url_for('user_bp.index'), 'Add New': ''} ) }}
+{{
+  breadcrumb({
+    'Patients':  url_for('user_bp.index'),
+    'Add New Patient': ''
+  }) 
+}}
 {% endblock breadcrumb %}
 
 
 
 {% block pageheader %}
-<div class="d-flex justify-content-between">
-  <div class="h2 mt-1">Add new Patient</div> 
+<div class="d-flex justify-content-between flex-wrap">
+  <div class="h2 mt-1">Add New Patient</div> 
   <div>
-    <a class="btn btn-outline-dark mt-1" href="{{ url_for('user_bp.index') }}">{{render_icon('card-list')}}&nbsp;Patient index</a>
+    <a class="btn btn-outline-dark mt-md-0" href="{{ url_for('user_bp.index') }}">{{render_icon('card-list')}}&nbsp;Patient index</a>
   </div>  
 </div>  
 {% endblock %}
