@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, DateField, SelectField, SubmitField, TextAreaField, PasswordField, BooleanField
+from wtforms import StringField, DateField, SelectField, SubmitField, TextAreaField, PasswordField, BooleanField, HiddenField
 from wtforms.validators import ValidationError, Email, InputRequired, Optional, Length, EqualTo
 from flask_wtf.file import FileField, FileAllowed
 from application.model import User
@@ -17,6 +17,19 @@ class Unique(object):
     if query_result:
       raise ValidationError(self.message)
 
+class UniqueUserOnUpdate(object):
+
+  def __init__(self, model, field_name, user_id_field, message='Item already exists.'):
+    self.model = model
+    self.field_name = field_name
+    self.user_id_field = user_id_field
+    self.message = message
+
+  def __call__(self, form, field):
+    user_id = form[self.user_id_field].data
+    query_result = self.model.query.filter(self.field_name == field.data).first()
+    if query_result and (query_result.id != int(user_id.strip())):
+      raise ValidationError(self.message)
 
 class CreateUserForm(FlaskForm):
   username = StringField('Mobile (Username)',
@@ -46,6 +59,13 @@ class CreateUserForm(FlaskForm):
 
 
 class EditUserForm(FlaskForm):
+  id = HiddenField('user_id')
+  username = StringField('Mobile (Username)',
+                         validators=[
+                             UniqueUserOnUpdate(User, User.username, 'id', "Username/Mobile already exists."),
+                             InputRequired(),
+                             Length(min=4, max=16)
+                         ])
   fullname = StringField('Full Name', validators=[InputRequired(), Length(min=4, max=64)])
   dob = DateField('Date of Birth', validators=[InputRequired()])
   sex = SelectField('Sex', choices=[("M", "Male"), ("F", "Female"), ("O", "Other")])
@@ -107,4 +127,25 @@ class ConversationForm(FlaskForm):
 class ChangePasswordForm(FlaskForm):
   password = PasswordField('New Password', validators=[InputRequired(), Length(min=4, max=16)])
   verify_password = PasswordField('Verify new Password',validators=[EqualTo('password', message='Password must match.')])
-  submit = SubmitField('Change')  
+  submit = SubmitField('Change')
+
+class AdminSettingsForm(FlaskForm):
+  id = HiddenField('user_id')
+  username = StringField('Mobile (Username)',
+                         validators=[
+                             UniqueUserOnUpdate(User, User.username, 'id', "Username/Mobile already exists."),
+                             InputRequired(),
+                             Length(min=4, max=16)
+                         ])
+  fullname = StringField('Full Name', validators=[InputRequired(), Length(min=4, max=64)])
+  dob = DateField('Date of Birth', validators=[InputRequired()])
+  sex = SelectField('Sex', choices=[("M", "Male"), ("F", "Female"), ("O", "Other")])
+  blood = SelectField('Blood Group',
+                      choices=[("U", "Unknown"), ("A+", "A+"), ("A-", "A-"), ("B+", "B+"), ("B-", "B-"), ("O+", "O+"),
+                               ("O-", "O-"), ("AB+", "AB+"), ("AB-", "AB-")])
+  email = StringField('Email',
+                      validators=[Email(), Optional(strip_whitespace=True),
+                                  Length(max=64)],
+                      filters=[lambda x: x or None])
+  address = StringField("Address", validators=[Length(max=64)])
+  save = SubmitField('Save')

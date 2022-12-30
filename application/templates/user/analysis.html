@@ -1,13 +1,55 @@
 {% extends 'layout/layout.html' %}
-{% from 'layout/helper.html' import breadcrumb %}
+{% from 'layout/helper.html' import breadcrumb, case_photo_show_on_modal %}
 
 {% block style %}{% endblock style %}
 
-{% block javascript %}{% endblock javascript %}
+{% block javascript %}
+<script>
+  analysis_case_photo_1_preview.onclick = evt => {
+    analysis_case_photo_1_photo_on_modal.src = analysis_case_photo_1_preview.src;
+  }
+  analysis_case_photo_2_preview.onclick = evt => {
+    analysis_case_photo_2_photo_on_modal.src = analysis_case_photo_2_preview.src;
+  }
+  analysis_case_photo_3_preview.onclick = evt => {
+    analysis_case_photo_3_photo_on_modal.src = analysis_case_photo_3_preview.src;
+  }
+  analysis_case_photo_4_preview.onclick = evt => {
+    analysis_case_photo_4_photo_on_modal.src = analysis_case_photo_4_preview.src;
+  }
+
+  case_photo_1.onchange = evt => {
+    const [file] = case_photo_1.files;
+    if (file) {
+      analysis_case_photo_1_preview.src = URL.createObjectURL(file);
+      analysis_case_photo_1_photo_on_modal.src = URL.createObjectURL(file);
+    }
+  }
+  case_photo_2.onchange = evt => {
+    const [file] = case_photo_2.files;
+    if (file) {
+      analysis_case_photo_2_preview.src = URL.createObjectURL(file);
+    }
+  }
+  case_photo_3.onchange = evt => {
+    const [file] = case_photo_3.files;
+    if (file) {
+      analysis_case_photo_3_preview.src = URL.createObjectURL(file);
+    }
+  }
+  case_photo_4.onchange = evt => {
+    const [file] = case_photo_4.files;
+    if (file) {
+      analysis_case_photo_4_preview.src = URL.createObjectURL(file);
+    }
+  }
+</script>
+{% endblock javascript %}
 
 {% block title %}Case Analysis{% endblock title %}
 
 {% block breadcrumb %}
+
 {{
   breadcrumb({
     'Patients':  url_for('user_bp.index'), 
@@ -52,7 +94,7 @@
               {{ render_field(form.case_photo_1) }}
             </div>
             <div class="col text-end">
-              <img src="{{user.case_photo_1}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Case Photo">
+              <img id="analysis_case_photo_1_preview" src="{{user.case_photo_1}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Case Photo" alt="Case Photo" data-bs-toggle="modal" data-bs-target="#analysis_case_photo_1">
             </div>
             <hr>
           </div>
@@ -62,7 +104,7 @@
               {{ render_field(form.case_photo_2) }}
             </div>
             <div class="col text-end">
-              <img src="{{user.case_photo_2}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Case Photo">
+              <img id="analysis_case_photo_2_preview" src="{{user.case_photo_2}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Case Photo" data-bs-toggle="modal" data-bs-target="#analysis_case_photo_2">
             </div>
             <hr>
           </div>
@@ -72,7 +114,7 @@
               {{ render_field(form.case_photo_3) }}
             </div>
             <div class="col text-end">
-              <img src="{{user.case_photo_3}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Case Photo">
+              <img id="analysis_case_photo_3_preview" src="{{user.case_photo_3}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Case Photo" data-bs-toggle="modal" data-bs-target="#analysis_case_photo_3">
             </div>
             <hr>
           </div>
@@ -82,7 +124,7 @@
               {{ render_field(form.case_photo_4) }}
             </div>
             <div class="col text-end">
-              <img src="{{user.case_photo_4}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Case Photo">
+              <img id="analysis_case_photo_4_preview" src="{{user.case_photo_4}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Case Photo" data-bs-toggle="modal" data-bs-target="#analysis_case_photo_4">
             </div>
           </div>
         </div>
@@ -90,5 +132,8 @@
     </form>
   </div>
 </div>
-
+{{case_photo_show_on_modal('analysis_case_photo_1',user.fullname, user.case_photo_1)}}
+{{case_photo_show_on_modal('analysis_case_photo_2',user.fullname, user.case_photo_2)}}
+{{case_photo_show_on_modal('analysis_case_photo_3',user.fullname, user.case_photo_3)}}
+{{case_photo_show_on_modal('analysis_case_photo_4',user.fullname, user.case_photo_4)}}
 {% endblock content %}
