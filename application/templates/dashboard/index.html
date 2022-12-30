@@ -3,12 +3,30 @@
 
 {% block style %} {% endblock style %}
 
-{% block javascript %} {% endblock javascript %}
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/frappe-charts@1.2.4/dist/frappe-charts.min.iife.js"></script>
+<script>
+  data = {
+    labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    datasets: [
+        { values: [18, 40, 30, 35, 8, 52, 17, -4] }
+    ]
+}
+
+new frappe.Chart( "#chart", {
+    data: data,
+    type: 'bar',
+    height: 180,
+    colors: ['red']
+});
+</script>
+{% endblock javascript %}
 
 {% block title %} Dashboard {% endblock title %}
 
 
 {% block breadcrumb %}
+
 {{
   breadcrumb({
     'Admin':  url_for('admin_bp.index'), 
@@ -20,11 +38,52 @@
 {% block pageheader %}Dashboard{% endblock pageheader %}
 
 {% block content %}
-<div class="row">
-  <div class="col">
-    {{ lipsum(n=5, html=True, min=20, max=100) }}
+
+<div class="row mt-4">
+  <div class="col-xl-3 col-md-6">
+    <div class="card text-white mb-4">
+      <div class="card-header bg-primary">Prescriptions today</div>
+      <div class="card-body d-flex align-items-center justify-content-center text-dark p-4">
+          <h3>5</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-md-6">
+    <div class="card text-white mb-4">
+      <div class="card-header bg-warning">New Patient Today</div>
+      <div class="card-body d-flex align-items-center justify-content-center text-dark p-4">
+        <h3>10</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-md-6">
+    <div class="card  text-white mb-4">
+      <div class="card-header bg-success">Total Prescriptions</div>
+      <div class="card-body d-flex align-items-center justify-content-center text-dark p-4">
+        <h3>1000</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-md-6">
+    <div class="card text-white mb-4">
+      <div class="card-header bg-danger">Total Patient</div>
+      <div class="card-body d-flex align-items-center justify-content-center text-dark p-4">
+        <h3>500</h3>
+      </div>
+    </div>
   </div>
 </div>
 
-
+<div class="row mt-4 mb-4">
+  <div class="col">
+    <div class="card">
+      <div class="card-header">
+        Patients Last 7 days
+      </div>
+    <div class="card-body p-4">
+      <div id="chart"></div>
+    </div>
+  </div>
+  </div>
+</div>
 {% endblock content %}
