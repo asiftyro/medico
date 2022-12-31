@@ -62,7 +62,7 @@ window.addEventListener('DOMContentLoaded', event => {
   let unreadMsgMenuCount = document.getElementById('unread-message-menu-count');
 
   const getUnreadMessageList = async () => {
-    let api_url = `/conversation/unread`;
+    let api_url = `/conversation/get-unread`;
     try {
       let response = await fetch(api_url);
       let unreadMsgList = await response.json();
@@ -95,7 +95,7 @@ window.addEventListener('DOMContentLoaded', event => {
     readStatusLink.addEventListener('click', async (event) => {
       let convId = event.target.dataset.id;
       let readStatus = event.target.dataset.status;
-      let api_url = `/conversation/read-status/${convId}/${readStatus}`;
+      let api_url = `/conversation/set-read-status/${convId}/${readStatus}`;
       let response = await fetch(api_url)
       let data = await response.text();
 

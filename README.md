@@ -1,8 +1,7 @@
 # Medico
 
-**Patient/case management system for Doctors.**
-
-*WIP*
+**Patient/case management system.** 
+*(WIP)*
 
 ---
 
@@ -23,32 +22,50 @@ Bootstrap-Flask==2.2.0
 python-dateutil==2.8.2
 Markdown==3.4.1
 flask_weasyprint==1.0.0
-# for code formatting:
-yapf==0.32.0
+
+# # # Downgrade weasyprint
+# pip uninstall weasyprint
+# pip install weasyprint==52.5
+# # weasyprint installs the following dependencies
+# # cairocffi==1.4.0
+# # CairoSVG==2.5.2
+# # defusedxml==0.7.1
+# # WeasyPrint==52.5
+
+# # # Install python formatter 'black'
+black==22.12.0
+# # black installs the following dependencies
+# # mypy-extensions==0.4.3
+# # pathspec==0.10.3
+# # platformdirs==2.6.2
+# # tomli==2.0.1
+# # typing_extensions==4.4.0
 ```
 
-## Handle Error pages
+**\* May need downgrade weasyprint to 52.5 (or lower) depending on host setup.**
 
+```weasyprint==52.5```
+
+## Handle Error pages handled
+
+```bash
 400 Bad Request
 401 Unauthorized
 403 Forbidden
 404 Not Found
 405 Method Not Allowed
 500 Internal Server Error
+```
 
-## Used theme
+## Used html theme
 
-Modified [Start Bootstrap - SB Admin](https://startbootstrap.com/template/sb-admin/) built on bootstrap5
+Modified [Start Bootstrap - SB Admin](https://startbootstrap.com/template/sb-admin/) built on bootstrap v5
 
 ## Dev Notes
 
-### to use flask_weasyprint==1.0.0 on Mac
+### To use flask_weasyprint==1.0.0 on Mac
 
 ```brew install weasyprint```
-
-### downgrade weasyprint to 52.5 depending on host
-
-weasyprint==52.5
 
 ### Install mysql-client on macOS
 
@@ -78,3 +95,7 @@ pkill -f localhost:8888
 # or kill process by pid
 kill -9 1234
 ```
+
+### Uninstall all python packages
+
+```pip freeze | xargs pip uninstall -y```

@@ -1,64 +1,75 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required, current_user
 from application.authentication import admin_required
 from application.database import db
-from application.model import User, Prescription
-from application.form import PrescriptionCreateForm, PrescriptionEditForm
-blueprint = Blueprint('medicine_bp', __name__, url_prefix='/medicine')
+from application.model import Medicine
+from application.form import MedicineForm
+from sqlalchemy import exc
+
+blueprint = Blueprint("medicine_bp", __name__, url_prefix="/medicine")
 
 
-@blueprint.route('/', methods=['GET'])
+@blueprint.route("/search", methods=["GET"])
+@login_required
+@admin_required
+def search():
+    user_id = current_user.id
+    search_arg = request.args.get("q", "", type=str)
+    search_query = (
+        (Medicine.author == user_id) & (Medicine.medicine.like(f"{search_arg}%"))
+        if search_arg != ""
+        else (Medicine.author == user_id)
+    )
+    query = db.select(Medicine).where(search_query)
+    result = db.session.execute(query)
+    names = [{"key": row[0].short_name, "value": row[0].medicine} for row in result]
+    return jsonify(names)
+
+
+@blueprint.route("/", methods=["GET"])
 @login_required
 @admin_required
 def index():
-  return render_template('medicine/index.html')
+    user_id = current_user.id
+    page = request.args.get("page", 1, type=int)
+    search_arg = request.args.get("search", "", type=str).strip()
+    search_query = (
+        (Medicine.author == user_id) & (Medicine.medicine.like(f"%{search_arg}%"))
+        if search_arg != ""
+        else (Medicine.author == user_id)
+    )
+    med = db.paginate(db.select(Medicine).where(search_query).order_by(Medicine.medicine), page=page, per_page=50)
+    return render_template("medicine/index.html", medicine=med, model=Medicine, search_arg=search_arg)
 
 
-@blueprint.route('/create/<patient_id>', methods=['GET', 'POST'])
+@blueprint.route("/create", methods=["GET", "POST"])
 @login_required
 @admin_required
-def create(patient_id):
-  patient = User.query.filter(User.id == patient_id).first_or_404()
-  prescription_form = PrescriptionCreateForm()
-  if prescription_form.validate_on_submit():
-    prescription = Prescription()
-    prescription_form.populate_obj(prescription)
-    prescription.patient_id = patient.id
-    prescription.author = current_user.id
-    db.session.add(prescription)
+def create():
+    med_form = MedicineForm()
+    if med_form.validate_on_submit():
+        new_med = Medicine()
+        new_med.medicine = med_form.medicine.data
+        new_med.short_name = med_form.short_name.data
+        new_med.author = current_user.id
+        try:
+            db.session.add(new_med)
+            db.session.commit()
+            flash("New medicine added.", "success")
+            return redirect(url_for("medicine_bp.index"))
+        except exc.IntegrityError:
+            db.session.rollback()
+            flash("Medicine/Short Name already exist.", "error")
+            return render_template("medicine/create.html", form=med_form)
+    return render_template("medicine/create.html", form=med_form)
+
+
+@blueprint.route("/delete/<id>", methods=["POST"])
+@login_required
+@admin_required
+def delete(id):
+    obj = Medicine.query.filter(Medicine.id == id).one()
+    db.session.delete(obj)
     db.session.commit()
-    flash('Prescription created.', 'success')
-    return redirect(url_for('user_bp.treatment', username=patient.username))
-  elif request.method == 'POST':
-    flash('Please check form fields.', 'error')
-
-  
-  return render_template("prescription/create.html", user=patient.to_dict(), form=prescription_form)
-
-
-@blueprint.route('/<prescription_id>', methods=['GET'])
-@login_required
-@admin_required
-def view(prescription_id):
-  prescription = Prescription.query.filter(Prescription.id == prescription_id).first_or_404()
-  user = User.query.filter(User.id==prescription.patient_id).first_or_404()
-  return render_template('prescription/view.html', user=user.to_dict(), prescription=prescription.to_dict())
-
-@blueprint.route('/edit/<prescription_id>', methods=['GET', 'POST'])
-@login_required
-@admin_required
-def edit(prescription_id):
-  prescription = Prescription.query.filter(Prescription.id == prescription_id).first_or_404()
-  user = User.query.filter(User.id==prescription.patient_id).first_or_404()
-
-  prescription_edit_form = PrescriptionEditForm(obj=prescription)
-  if prescription_edit_form.validate_on_submit():
-    prescription_edit_form.populate_obj(prescription)
-    db.session.add(prescription)
-    db.session.commit()
-    flash('Prescription updated.', 'success')
-    return redirect(url_for('prescription_bp.view', prescription_id=prescription.id))
-  elif request.method == 'POST':
-    flash('Please check form fields.', 'error')
-  return render_template('prescription/edit.html', user=user.to_dict(), prescription=prescription.to_dict(), form=prescription_edit_form)
-
+    flash("Deleted successfully.", "success")
+    return redirect(url_for("medicine_bp.index"))

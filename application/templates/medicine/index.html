@@ -1,1 +1,92 @@
-Medicine
+{% extends 'layout/layout.html' %}
+{% from 'layout/helper.html' import breadcrumb, case_photo_modal %}
+
+{% block style %} {% endblock style %}
+
+{% block javascript %}
+<script>
+  // delete 
+  let deleteForms = document.querySelectorAll("form:not(.med-search-form)");
+  for (frm of deleteForms) {
+    frm.addEventListener('submit', (event) => {
+      if (!confirm("Are you sure to delete?")) event.preventDefault();
+    });
+  }
+  // search
+  let searchForms = document.querySelector("form.med-search-form");
+  searchForms.addEventListener('submit', (event) => {
+    event.preventDefault();
+    let searchKey = document.getElementById('medicine-search-box').value.trim();
+    document.location.href = `/medicine?search=${searchKey}`
+  })
+</script>
+{% endblock javascript %}
+
+{% block title %}Medicine{% endblock title %}
+
+{% block breadcrumb %}
+
+{{
+  breadcrumb({
+    'Admin':  url_for('admin_bp.index'), 
+    'Medicine': ''
+  }) 
+}}
+{% endblock breadcrumb %}
+
+{% block pageheader %}
+<div class="d-flex justify-content-between flex-wrap">
+  <div class="h2 mt-1">Medicine Index</div>
+  <div>
+    <a class="btn btn-outline-dark text-uppercase mt-1 mt-md-0" href="{{url_for('medicine_bp.create')}}">{{render_icon('capsule-pill')}} Add Medicine</a>
+    <a class="btn btn-outline-dark text-uppercase mt-1 mt-md-0" href="{{url_for('dashboard_bp.index')}}">{{render_icon('bar-chart')}} Dashboard</a>
+    <a class="btn btn-outline-dark mt-1 mt-md-0" href="{{ url_for('user_bp.index') }}">{{render_icon('card-list')}}&nbsp;Patients</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+  <div class="col">
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between">
+        <span><b>Medicine Index</b></span>
+        <a data-bs-toggle="collapse" data-bs-target="#medicine-index" aria-expanded="false" href="javascript:void(0)" class="border px-3 text-muted">
+          {{render_icon('layout-sidebar')}}
+        </a>
+      </div>
+      <div class="card-body collapse show mb-4 p-3" id="medicine-index">
+        <div class="row">
+          <div class="col mt-1 mt-md-0">
+            <form class="d-flex med-search-form">
+              <input class="form-control w-50" name="medicine-search-box" id="medicine-search-box" type="text" placeholder="Search..." value="{{search_arg}}">
+              <button type="submit" class="btn btn-dark ms-1" href="javascript:void(0)">{{render_icon('binoculars')}}&nbsp;Search</button>  
+            </form>
+          </div>
+          <div class="col mt-1 mt-md-0">
+            {{ render_pagination(medicine, align='right',args={'search': search_arg}) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{ render_table(
+              medicine,
+              responsive=True,
+              responsive_class='table-responsive',
+              model=model, 
+              titles=[('medicine','Medicine'), ('short_name','Short Name')],
+              show_actions=True,
+              actions_title='Actions',
+              delete_url= ('medicine_bp.delete', [('id', ':id')])
+              )
+            }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

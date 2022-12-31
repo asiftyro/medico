@@ -1,0 +1,50 @@
+{% extends 'layout/layout.html' %}
+{% from 'layout/helper.html' import breadcrumb, case_photo_modal %}
+
+{% block style %} {% endblock style %}
+
+{% block javascript %} {% endblock javascript %}
+
+{% block title %}Add Medicine{% endblock title %}
+
+{% block breadcrumb %}
+
+{{
+  breadcrumb({
+    'Admin':  url_for('admin_bp.index'), 
+    'Medicine': url_for('medicine_bp.index'),
+    'Add New': '',
+  }) 
+}}
+{% endblock breadcrumb %}
+
+{% block pageheader %}
+<div class="d-flex justify-content-between flex-wrap">
+  <div class="h2 mt-1">Add Medicine</div>
+  <div>
+    <a class="btn btn-outline-dark text-uppercase mt-1 mt-md-0" href="{{url_for('dashboard_bp.index')}}">{{render_icon('bar-chart')}} Dashboard</a>
+    <a class="btn btn-outline-dark mt-1 mt-md-0" href="{{ url_for('user_bp.index') }}">{{render_icon('card-list')}}&nbsp;Patients</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+  <div class="col">
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between">
+        <span><b>Add Medicine</b></span>
+        <a aria-expanded="false" href="javascript:void(0)" class="border px-3 text-muted">
+          {{render_icon('layout-sidebar')}}
+        </a>
+      </div>
+      <div class="card-body mb-4 p-3" id="medicine-index">
+        {{ render_form(form, action=url_for('medicine_bp.create'), method='post') }}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -41,7 +41,7 @@ def conversation(username):
                          conversation=conversation)
 
 
-@blueprint.route('/read-status/<id>/<read_status>', methods=['GET'])
+@blueprint.route('/set-read-status/<id>/<read_status>', methods=['GET'])
 @login_required
 @admin_required
 def set_read_status(id, read_status):
@@ -54,10 +54,10 @@ def set_read_status(id, read_status):
   return str(conversation_item.read)
 
 
-@blueprint.route('/unread', methods=['GET'])
+@blueprint.route('/get-unread', methods=['GET'])
 @login_required
 @admin_required
-def unread():
+def get_unread():
   admin_id = current_user.id
   local_tzone = current_app.config['LOCAL_TIMEZONE']
   local_timezone = pytz.timezone(local_tzone)

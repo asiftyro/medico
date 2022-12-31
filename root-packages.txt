@@ -12,6 +12,21 @@ Bootstrap-Flask==2.2.0
 python-dateutil==2.8.2
 Markdown==3.4.1
 flask_weasyprint==1.0.0
-# downgrade weasyprint
-weasyprint==52.5
-yapf==0.32.0
+
+# # # Downgrade weasyprint
+# pip uninstall weasyprint
+# pip install weasyprint==52.5
+# # weasyprint install the followiing
+# # cairocffi==1.4.0
+# # CairoSVG==2.5.2
+# # defusedxml==0.7.1
+# # WeasyPrint==52.5
+
+# # # Install python formatter 'black'
+black==22.12.0
+# # black install the followiing
+# # mypy-extensions==0.4.3
+# # pathspec==0.10.3
+# # platformdirs==2.6.2
+# # tomli==2.0.1
+# # typing_extensions==4.4.0

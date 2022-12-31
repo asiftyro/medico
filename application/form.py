@@ -17,6 +17,7 @@ class Unique(object):
     if query_result:
       raise ValidationError(self.message)
 
+
 class UniqueUserOnUpdate(object):
 
   def __init__(self, model, field_name, user_id_field, message='Item already exists.'):
@@ -30,6 +31,7 @@ class UniqueUserOnUpdate(object):
     query_result = self.model.query.filter(self.field_name == field.data).first()
     if query_result and (query_result.id != int(user_id.strip())):
       raise ValidationError(self.message)
+
 
 class CreateUserForm(FlaskForm):
   username = StringField('Mobile (Username)',
@@ -55,7 +57,6 @@ class CreateUserForm(FlaskForm):
   active = SelectField('Active', choices=[(1, "Yes"), (0, "No")])
   # admin = SelectField('Admin', choices=[(0, "No"), (1, "Yes")])
   save = SubmitField('Save')
-
 
 
 class EditUserForm(FlaskForm):
@@ -107,10 +108,9 @@ class PrescriptionCreateForm(FlaskForm):
                              validators=[Optional(strip_whitespace=True)],
                              filters=[lambda x: x or None])
   note = TextAreaField('Notes/Outcome/Observation',
-                               validators=[Optional(strip_whitespace=True),
-                                           Length(max=2048)],
-                               filters=[lambda x: x or None],
-                               render_kw={'rows': 10})                             
+                       validators=[Optional(strip_whitespace=True), Length(max=2048)],
+                       filters=[lambda x: x or None],
+                       render_kw={'rows': 10})
   save = SubmitField('Save')
 
 
@@ -124,6 +124,7 @@ class LoginForm(FlaskForm):
   remember = BooleanField('Remember me')
   submit = SubmitField('Log In')
 
+
 class ConversationForm(FlaskForm):
   conversation = StringField('Message', validators=[InputRequired(), Length(max=128)])
   submit = SubmitField('Send')
@@ -131,8 +132,10 @@ class ConversationForm(FlaskForm):
 
 class ChangePasswordForm(FlaskForm):
   password = PasswordField('New Password', validators=[InputRequired(), Length(min=4, max=16)])
-  verify_password = PasswordField('Verify new Password',validators=[EqualTo('password', message='Password must match.')])
+  verify_password = PasswordField('Verify new Password',
+                                  validators=[EqualTo('password', message='Password must match.')])
   submit = SubmitField('Change')
+
 
 class AdminSettingsForm(FlaskForm):
   id = HiddenField('user_id')
@@ -153,4 +156,11 @@ class AdminSettingsForm(FlaskForm):
                                   Length(max=64)],
                       filters=[lambda x: x or None])
   address = StringField("Address", validators=[Length(max=64)])
+  save = SubmitField('Save')
+
+
+class MedicineForm(FlaskForm):
+  medicine = StringField('Medicine', validators=[InputRequired(), Length(min=2, max=64)])
+  short_name = StringField('Short Name', validators=[InputRequired(), Length(min=2, max=64)])
+
   save = SubmitField('Save')

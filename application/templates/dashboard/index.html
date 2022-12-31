@@ -30,7 +30,7 @@ new frappe.Chart( "#chart", {
 {{
   breadcrumb({
     'Admin':  url_for('admin_bp.index'), 
-    'Dashboard': url_for('dashboard_bp.index' )
+    'Dashboard': ''
   }) 
 }}
 {% endblock breadcrumb %}
@@ -43,7 +43,7 @@ new frappe.Chart( "#chart", {
   <div class="col-xl-3 col-md-6">
     <div class="card text-white mb-4">
       <div class="card-header bg-primary">Prescriptions today</div>
-      <div class="card-body d-flex align-items-center justify-content-center text-dark p-4">
+      <div class="card-body d-flex align-items-center justify-content-center bg-light text-dark p-4">
           <h3>5</h3>
       </div>
     </div>
@@ -51,7 +51,7 @@ new frappe.Chart( "#chart", {
   <div class="col-xl-3 col-md-6">
     <div class="card text-white mb-4">
       <div class="card-header bg-warning">New Patient Today</div>
-      <div class="card-body d-flex align-items-center justify-content-center text-dark p-4">
+      <div class="card-body d-flex align-items-center justify-content-center bg-light text-dark p-4">
         <h3>10</h3>
       </div>
     </div>
@@ -59,7 +59,7 @@ new frappe.Chart( "#chart", {
   <div class="col-xl-3 col-md-6">
     <div class="card  text-white mb-4">
       <div class="card-header bg-success">Total Prescriptions</div>
-      <div class="card-body d-flex align-items-center justify-content-center text-dark p-4">
+      <div class="card-body d-flex align-items-center justify-content-center bg-light text-dark p-4">
         <h3>1000</h3>
       </div>
     </div>
@@ -67,7 +67,7 @@ new frappe.Chart( "#chart", {
   <div class="col-xl-3 col-md-6">
     <div class="card text-white mb-4">
       <div class="card-header bg-danger">Total Patient</div>
-      <div class="card-body d-flex align-items-center justify-content-center text-dark p-4">
+      <div class="card-body d-flex align-items-center justify-content-center bg-light text-dark p-4">
         <h3>500</h3>
       </div>
     </div>
@@ -75,13 +75,23 @@ new frappe.Chart( "#chart", {
 </div>
 
 <div class="row mt-4 mb-4">
-  <div class="col">
+  <div class="col-12 col-md-6">
     <div class="card">
       <div class="card-header">
         Patients Last 7 days
       </div>
     <div class="card-body p-4">
       <div id="chart"></div>
+    </div>
+  </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card">
+      <div class="card-header">
+        Follow up today
+      </div>
+    <div class="card-body p-4">
+    
     </div>
   </div>
   </div>

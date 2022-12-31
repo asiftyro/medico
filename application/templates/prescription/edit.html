@@ -7,45 +7,8 @@
 
 {% block javascript %} 
 <script src='{{ url_for("static", filename="js/tribute.js")}}'></script>
-
+<script src='{{ url_for("static", filename="js/search_medicine.js")}}'></script>
 <script>
-  var tribute = new Tribute({
-    collection: [{
-      // symbol or string that starts the lookup
-      trigger: '@',
-      // function called on select that returns the content to insert
-      selectTemplate: function(item) {
-        return item.original.value;
-      },
-      // column to search against in the object (accepts function or string)
-      lookup: 'key',
-      // REQUIRED: array of objects to match or a function that returns data (see 'Loading remote data' for an example)
-      values: [{
-          key: "Phil Heartman",
-          value: "Phil Heartman"
-        },
-        {
-          key: "Gordon Ramsey",
-          value: "Phil Heartman"
-        },
-        {
-          key: "a b",
-          value: "and book"
-        },
-        {
-          key: "a b",
-          value: "and book"
-        }
-      ],
-      // specify whether a space is allowed in the middle of mentions
-      allowSpaces: true,
-
-    }]
-  });
-
-
-
-
   tribute.attach(document.getElementById("prescription"));
 </script>
 {% endblock javascript %}
