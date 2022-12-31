@@ -1,49 +1,48 @@
-import sys
-import datetime
-# ------------------------------------------------------------
+import typer
 from werkzeug.security import generate_password_hash
-from application import create_app
-from application.model import User
-from application.configuration import DevelopmentConfiguration
-from application.database import db
-
-if (len(sys.argv) == 3 and sys.argv[1] and sys.argv[2]):
-  usr_name = sys.argv[1]
-  pwd_hash = generate_password_hash(sys.argv[2], method='sha256')
-  
-  print(f'Username: {usr_name}')
-  print(f'Pwd_hash: {pwd_hash}')
-
-  # app = create_app(DevelopmentConfiguration)
-  # with app.app_context():
-  #   user = User.query.filter(User.username==usr_name).first()
-  #   if user:
-  #     print('\n')
-  #     print('User Exists')
-  #     print('\n')
-  #     print(user.to_dict())
-  #     print('\n')
-  #   else:
-  #     user = User(
-  #       username=usr_name,
-  #       password_hash=pwd_hash,
-  #       fullname='Super Admin',
-  #       dob= datetime.date(1983,12,31),
-  #       sex='M',
-  #       author=1,
-  #       admin=1,
-  #       active=1
-  #     )
-  #     db.session.add(user)
-  #     db.session.commit()
-
-else:
-  print('Usage:\n$ python generate.py <username> <password>')      
-# ------------------------------------------------------------
 import secrets
+import os
 
-print('\n')
-print('A Random 32 byte URL-Safe tokeen:')
-print(secrets.token_urlsafe(32))
-print('\n')
-# ------------------------------------------------------------
+app = typer.Typer()
+
+
+@app.command()
+def hashpass(plaintext_password: str):
+    pwd_hash = generate_password_hash(plaintext_password, method="sha256")
+    print(pwd_hash)
+
+
+@app.command()
+def dotenvtemplate(dotenv_path: str):
+    env_template_file = os.path.join(os.path.dirname(dotenv_path), "env.template")
+    env_template_file_content = []
+    try:
+        env_file = open(dotenv_path, "r", encoding="utf-8")
+
+        for line in env_file:
+            cur_line = line.split("=")[0].strip()
+            if cur_line == "":
+                continue
+            if not cur_line.startswith("#"):
+                env_template_file_content.append(cur_line + "=" + "\n")
+            else:
+                env_template_file_content.append(cur_line + "\n")
+        env_file.close()
+        try:
+            env_template_out_file = open(env_template_file, "w", encoding="utf-8")
+            env_template_out_file.writelines(env_template_file_content)
+            env_template_out_file.close()
+            print(f"File written: {env_template_file}")
+        except:
+            print(f"File writing failed: {env_template_file}")
+    except FileNotFoundError:
+        print(f"Not found: {dotenv_path}")
+
+
+@app.command()
+def random32():
+    print(secrets.token_urlsafe(32)[:32])
+
+
+if __name__ == "__main__":
+    app()
