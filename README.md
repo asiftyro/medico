@@ -46,7 +46,7 @@ black==22.12.0
 
 ```weasyprint==52.5```
 
-## Handle Error pages handled
+## Handled Error pages
 
 ```bash
 400 Bad Request
@@ -99,3 +99,33 @@ kill -9 1234
 ### Uninstall all python packages
 
 ```pip freeze | xargs pip uninstall -y```
+
+### change directory permissions
+
+Add permissions:
+
+```chmod +rwx file_or_dir_name```
+
+Remove permissions:
+
+```chmod -rwx file_or_dir_name```
+
+See permission:
+
+```ls -l```
+
+Output description:
+
+```bash
+-rwxrwxrwx 
+drwxrwxrwx 
+lrwxrwxrwx
+-rw-rwxrwx
+
+[- : file / d : dir / l : link][rwx- : owner][rwx- : group][rwx- : others]
+
+r : read
+w : write
+x : excute
+- : No Permission
+```

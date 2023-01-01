@@ -37,7 +37,34 @@ class BaseConfiguration:
     # Bootstrap
     BOOTSTRAP_SERVE_LOCAL = True
     BOOTSTRAP_BTN_STYLE = "dark"
-    # BOOTSTRAP_BOOTSWATCH_THEME='cerulean'
+    # # BOOTSTRAP_BOOTSWATCH_THEME='cerulean'
+    # Logging
+    LOG_TARGET = os.path.join(ROOT_DIR, "log", "logs.log")
+    LOG_SCHEMA = {
+        "version": 1,
+        "formatters": {
+            "default": {
+                "format": "[#] %(asctime)s | %(levelname)s in %(pathname)s:%(module)s:%(lineno)d | %(message)s",
+            }
+        },
+        "handlers": {
+            "wsgi": {
+                "class": "logging.StreamHandler",
+                "stream": "ext://flask.logging.wsgi_errors_stream",
+                "formatter": "default",
+            },
+            "file": {
+                "class": "logging.handlers.RotatingFileHandler",
+                "formatter": "default",
+                "filename": LOG_TARGET,
+                "mode": "a",
+                "encoding": "utf-8",
+                "maxBytes": 5 * 1000000,  # 5 Mega Byte
+                "backupCount": 4,
+            },
+        },
+        "root": {"level": "INFO", "handlers": ["wsgi", "file"]},
+    }
 
 
 class DevelopmentConfiguration(BaseConfiguration):
