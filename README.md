@@ -21,12 +21,13 @@ pytz==2022.6
 Bootstrap-Flask==2.2.0
 python-dateutil==2.8.2
 Markdown==3.4.1
+mysqlclient==2.1.1
 flask_weasyprint==1.0.0
 
 # # # Downgrade weasyprint
 # pip uninstall weasyprint
 # pip install weasyprint==52.5
-# # weasyprint installs the following dependencies
+# # weasyprint install the followiing
 # # cairocffi==1.4.0
 # # CairoSVG==2.5.2
 # # defusedxml==0.7.1
@@ -34,7 +35,7 @@ flask_weasyprint==1.0.0
 
 # # # Install python formatter 'black'
 black==22.12.0
-# # black installs the following dependencies
+# # black install the followiing
 # # mypy-extensions==0.4.3
 # # pathspec==0.10.3
 # # platformdirs==2.6.2

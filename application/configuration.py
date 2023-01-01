@@ -10,6 +10,8 @@ class BaseConfiguration:
     DEBUG = False
     APP_NAME = os.getenv("APP_NAME", "App Name")
     APP_VER = os.getenv("APP_VER", "x.y.z")
+    APP_HOST = os.getenv("APP_HOST", "localhost")
+    APP_PORT = int(os.getenv("APP_PORT", 5000))
     APP_DIR = os.path.abspath(os.path.dirname(__file__))
     ROOT_DIR = os.path.abspath(os.path.join(APP_DIR, os.pardir))
     # Static assets
@@ -85,6 +87,8 @@ class DevelopmentConfiguration(BaseConfiguration):
 class ProductionConfiguration(BaseConfiguration):
     DEBUG = False
     # Session
+    SESSION_COOKIE_HTTPONLY = True
+    REMEMBER_COOKIE_HTTPONLY = True
     REMEMBER_COOKIE_DURATION = 60 * 60 * 24 * 7  # 7 days
     # MySql
     SQLALCHEMY_DATABASE_URI = "{}://{}:{}@{}:{}/{}".format(

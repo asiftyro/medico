@@ -22,12 +22,16 @@ def start_and_end_of_last_7_days_in_str():
 @admin_required
 def index():
     st, ed = start_and_end_of_last_7_days_in_str()
-    res = db.session.query(Prescription).filter((Prescription.author==current_user.id) & (Prescription.follow_up_date==ed)).all()
+    res = (
+        db.session.query(Prescription)
+        .filter((Prescription.author == current_user.id) & (Prescription.follow_up_date == ed))
+        .all()
+    )
     data = []
     for r in res:
-        data.append({"id": r.id, "fullname": r.patient_desc.fullname, "username": r.patient_desc.username })
-    
-    return render_template("dashboard/index.html", follow_up_today = data)
+        data.append({"id": r.id, "fullname": r.patient_desc.fullname, "username": r.patient_desc.username})
+
+    return render_template("dashboard/index.html", follow_up_today=data)
 
 
 @blueprint.route("/total-prescription", methods=["GET"])
@@ -94,13 +98,18 @@ def new_patient_last_7_days():
         data[row[0]] = row[1]
     return jsonify(data)
 
+
 @blueprint.route("/follow_up_today", methods=["GET"])
 @login_required
 @admin_required
 def follow_up_today():
     st, ed = start_and_end_of_last_7_days_in_str()
-    res = db.session.query(Prescription).filter((Prescription.author==current_user.id) & (Prescription.follow_up_date==ed)).all()
+    res = (
+        db.session.query(Prescription)
+        .filter((Prescription.author == current_user.id) & (Prescription.follow_up_date == ed))
+        .all()
+    )
     data = []
     for r in res:
-        data.append({"id": r.id, "fullname": r.patient_desc.fullname, "username": r.patient_desc.username })
+        data.append({"id": r.id, "fullname": r.patient_desc.fullname, "username": r.patient_desc.username})
     return jsonify(data)

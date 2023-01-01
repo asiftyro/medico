@@ -11,9 +11,7 @@ migrations
 # Mac resource fork
 .DS_Store
 
-# uploaded test files
-user-avatar/
-case-photo/
+
 
 
 
