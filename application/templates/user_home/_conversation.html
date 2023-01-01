@@ -1,9 +1,12 @@
 <div class="card mb-3">
   <div class="card-header d-flex justify-content-between">
     <span><b>Conversation</b></span>
+    <div>
+    <span class="small">Unread: <b>(<span class="text-success" id="unreadMsgcount">{{unread_conversation_count}}</span>)</b></span>&nbsp;
     <a data-bs-toggle="collapse" data-bs-target="#patient-conversation" aria-expanded="false" href="javascript:void(0)" class="border px-2 text-muted">
       {{render_icon('layout-sidebar')}}
     </a>
+    </div>
   </div>
   <div class="row g-0 collapse show" id="patient-conversation">
     <div class="row">
@@ -25,6 +28,11 @@
           <div class="d-flex justify-content-between">
             <small class="text-muted">
               <b>{{conv_item.author_desc.fullname}} | {{conv_item.author_desc.username}}</b> <br>&#9632;{{conv_item.created_at|local_datetime('a')}}
+              {% if conv_item.author == conv_item.admin_id and conv_item.read==0 %}
+              <span>
+                &#9632; <a href="javascript:void(0)" class="markMessageAsRead" data-id="{{conv_item.id}}">Mark as Read</a>
+              </span>
+              {% endif %}
             </small>
           </div>
           <p class="mt-1 mb-1">{{conv_item.conversation}}</p>
@@ -35,8 +43,5 @@
       <span>No conversation yet...</span>
       {% endif %}
     </div>
-
-
-
   </div>
 </div>
