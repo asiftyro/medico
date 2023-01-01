@@ -5,6 +5,17 @@ from flask_wtf.file import FileField, FileAllowed
 from application.model import User
 
 
+class NumbersOnly(object):
+
+  def __init__(self, message='Numbers allowed only.'):
+    self.message = message
+
+  def __call__(self, form, field):
+    for c in field.data:
+        if c not in ['0','1','2','3','4','5','6','7','8','9']:
+            raise ValidationError(self.message)
+
+
 class Unique(object):
 
   def __init__(self, model, field_name, message='Item already exists.'):
@@ -36,7 +47,8 @@ class UniqueUserOnUpdate(object):
 class CreateUserForm(FlaskForm):
   username = StringField('Mobile (Username)',
                          validators=[
-                             Unique(User, User.username, "Username/Mobile already exists."),
+                             Unique(User, User.username, "Mobile/Username already exists."),
+                             NumbersOnly(),
                              InputRequired(),
                              Length(min=4, max=16)
                          ])
@@ -63,7 +75,8 @@ class EditUserForm(FlaskForm):
   id = HiddenField('user_id')
   username = StringField('Mobile (Username)',
                          validators=[
-                             UniqueUserOnUpdate(User, User.username, 'id', "Username/Mobile already exists."),
+                             UniqueUserOnUpdate(User, User.username, 'id', "Mobile/Username already exists."),
+                             NumbersOnly(),
                              InputRequired(),
                              Length(min=4, max=16)
                          ])
@@ -142,6 +155,7 @@ class AdminSettingsForm(FlaskForm):
   username = StringField('Mobile (Username)',
                          validators=[
                              UniqueUserOnUpdate(User, User.username, 'id', "Username/Mobile already exists."),
+                             NumbersOnly(),
                              InputRequired(),
                              Length(min=4, max=16)
                          ])
