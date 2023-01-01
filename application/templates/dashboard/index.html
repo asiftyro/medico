@@ -6,19 +6,68 @@
 {% block javascript %}
 <script src="https://cdn.jsdelivr.net/npm/frappe-charts@1.2.4/dist/frappe-charts.min.iife.js"></script>
 <script>
-  data = {
-    labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    datasets: [
-        { values: [18, 40, 30, 35, 8, 52, 17, -4] }
-    ]
-}
+  const fetchDashboardData = async () => {
+    const last_7_dates = () => {
+      let last_7_dates = [];
+      for (let d = 0; d <= 6; d++) {
+        let dt = new Date(Date.now() - d * 24 * 60 * 60 * 1000);
+        last_7_dates[last_7_dates.length] = `${String(dt.getFullYear()).padStart(4, '0')}-${String(parseInt(dt.getMonth())+1).padStart(2, '0')}-${String(dt.getDate()).padStart(2, '0')}`;
+      }
+      return last_7_dates;
+    }
 
-new frappe.Chart( "#chart", {
-    data: data,
-    type: 'bar',
-    height: 180,
-    colors: ['red']
-});
+    let last_seven_dates = last_7_dates();
+    let last_seven_dates_reverse = last_7_dates().reverse()
+    let new_patient_last_7_days = await (await fetch('/dashboard/new-patient-last-7-days')).json();
+    let new_prescription_last_7_days = await (await fetch('/dashboard/new-prescription-last-7-days')).json();
+    let total_patient = await (await fetch('/dashboard/total-patient')).json();
+    let total_prescription = await (await fetch('/dashboard/total-prescription')).json();
+    let new_patient_today = new_patient_last_7_days[last_seven_dates[0]] ?? 0;
+    let new_prescription_today = new_prescription_last_7_days[last_seven_dates[0]] ?? 0;
+    newPatientToday.innerHTML = new_patient_today;
+    newPrescriptionsToday.innerHTML = new_prescription_today;
+    totalPatient.innerHTML = total_patient.count;
+    totalPrescriptions.innerHTML = total_prescription.count;
+    // ------- charts ------------
+
+    // Chart for Prescriptions Last 7 Days
+    let chart_values = []
+    for (let d = 0; d < 7; d++) {
+      chart_values[chart_values.length] = new_prescription_last_7_days[last_seven_dates_reverse[d]] ?? 0;
+    }
+    data = {
+      labels: last_seven_dates_reverse,
+      datasets: [{
+        values: chart_values
+      }]
+    }
+    new frappe.Chart("#chartPrescriptionsLast7Days", {
+      data: data,
+      type: 'bar',
+      height: 250,
+      colors: ['red']
+    });
+    // Chart for Prescriptions Last 7 Days
+    chart_values = []
+    for (let d = 0; d < 7; d++) {
+      chart_values[chart_values.length] = new_patient_last_7_days[last_seven_dates_reverse[d]] ?? 0;
+    }
+    data = {
+      labels: last_seven_dates_reverse,
+      datasets: [{
+        values: chart_values
+      }]
+    }
+    new frappe.Chart("#chartPatientsLast7Days", {
+      data: data,
+      type: 'bar',
+      height: 250,
+      colors: ['blue']
+    });
+
+  };
+
+  fetchDashboardData()
 </script>
 {% endblock javascript %}
 
@@ -44,7 +93,7 @@ new frappe.Chart( "#chart", {
     <div class="card text-white mb-4">
       <div class="card-header bg-primary">Prescriptions today</div>
       <div class="card-body d-flex align-items-center justify-content-center bg-light text-dark p-4">
-          <h3>5</h3>
+        <h3 id="newPrescriptionsToday">Loading...</h3>
       </div>
     </div>
   </div>
@@ -52,7 +101,7 @@ new frappe.Chart( "#chart", {
     <div class="card text-white mb-4">
       <div class="card-header bg-warning">New Patient Today</div>
       <div class="card-body d-flex align-items-center justify-content-center bg-light text-dark p-4">
-        <h3>10</h3>
+        <h3 id="newPatientToday">Loading...</h3>
       </div>
     </div>
   </div>
@@ -60,7 +109,7 @@ new frappe.Chart( "#chart", {
     <div class="card  text-white mb-4">
       <div class="card-header bg-success">Total Prescriptions</div>
       <div class="card-body d-flex align-items-center justify-content-center bg-light text-dark p-4">
-        <h3>1000</h3>
+        <h3 id="totalPrescriptions">Loading...</h3>
       </div>
     </div>
   </div>
@@ -68,7 +117,7 @@ new frappe.Chart( "#chart", {
     <div class="card text-white mb-4">
       <div class="card-header bg-danger">Total Patient</div>
       <div class="card-body d-flex align-items-center justify-content-center bg-light text-dark p-4">
-        <h3>500</h3>
+        <h3 id="totalPatient">Loading...</h3>
       </div>
     </div>
   </div>
@@ -78,22 +127,47 @@ new frappe.Chart( "#chart", {
   <div class="col-12 col-md-6">
     <div class="card">
       <div class="card-header">
-        Patients Last 7 days
+        Follow up today
       </div>
-    <div class="card-body p-4">
-      <div id="chart"></div>
+      <div class="card-body p-4">
+        <ul class="list-group list-group-numbered">
+            {% for follow_up in follow_up_today %}
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">{{follow_up.fullname}}</div>
+              {{follow_up.username}}
+            </div>
+            <a href="{{ url_for('prescription_bp.view', prescription_id=follow_up.id) }}"><span class="badge bg-primary rounded-pill">Presc ID # {{'%05d' % follow_up.id}}</span></a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
-  </div>
   </div>
   <div class="col-12 col-md-6">
     <div class="card">
       <div class="card-header">
-        Follow up today
+        Prescription Last 7 days
       </div>
-    <div class="card-body p-4">
-    
+      <div class="card-body p-4">
+        <div id="chartPrescriptionsLast7Days"></div>
+      </div>
     </div>
   </div>
+</div>
+<div class="row mt-4 mb-4">
+  <div class="col-12 col-md-6">
+    &nbsp
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card">
+      <div class="card-header">
+        New Patient Last 7 days
+      </div>
+      <div class="card-body p-4">
+        <div id="chartPatientsLast7Days"></div>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock content %}
