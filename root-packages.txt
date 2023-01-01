@@ -31,3 +31,8 @@ black==22.12.0
 # # platformdirs==2.6.2
 # # tomli==2.0.1
 # # typing_extensions==4.4.0
+
+# For production
+uWSGI==2.0.21
+# For dev cli
+typer==0.7.0
