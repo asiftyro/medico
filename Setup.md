@@ -1,4 +1,4 @@
-# Setup on Uberspace.de
+# Setup on uberspace.de
 
 Ref: <https://lab.uberspace.de/guide_flask/?highlight=flask>
 
@@ -124,3 +124,91 @@ Delete:
     ```rm ~/etc/services.d/medico.ini```
     ```supervisorctl reread```
     ```supervisorctl update```
+
+
+
+
+
+--------------------------------------------------------------------------------------
+
+
+# Setup on pythonanywhere.com
+
+1. Setup mysql database using pythonanywhere mysql console and mysql_schema.sql, and create first user
+2. From pythonanywhere bash, in user home ~
+```git clone https://github.com/asiftyro/medico.git```
+
+```cd medico```
+
+Make virtual env
+
+```bash
+mkvirtualenv venv --python=/usr/bin/python3.9
+workon venv
+```
+
+Install packages:
+
+```bash
+pip install -r requirements.txt
+# pip uninstall WeasyPrint
+# pip install weasyprint==52.5
+pip install typer==0.7.0
+```
+
+Setup .env
+
+```bash
+cp env.template .env
+nano .env
+```
+
+In .env define follwoing variables (Delete others)
+```
+PRODUCTION=
+APP_NAME=
+APP_VER=
+# 32 bit random string
+SECRET_KEY=
+STATIC_DIR_PATH=
+LOCAL_TIMEZONE=
+# MySQL
+DB_USERNAME=
+DB_PASSWORD=
+DB_HOST=
+DB_NAME=
+```
+
+From Web panel, create a flask app using default
+
+In Code section of Web panel:
+Change Source code:
+```/home/arp/mysite```
+to
+```/home/arp/.virtualenvs/venv```
+
+Click on WSGI configuration file:/var/www/arp_pythonanywhere_com_wsgi.py and change contents as follows
+
+```bash
+import sys
+import os
+from dotenv import load_dotenv
+
+# add your project directory to the sys.path
+project_home = '/home/arp/medico'
+if project_home not in sys.path:
+    sys.path = [project_home] + sys.path
+
+# Load .env
+load_dotenv(os.path.join(project_home, '.env'))
+
+# import flask app but need to call it "application" for WSGI to work
+from boot import app as application  # noqa
+```
+
+In wsgi file editor panel, Press 'Reload arp.pythonanywhere.com' button from top right. [it looks like a refresh button], or from Web panel press 'Reload arp.pythonanywhere.com'. [its the green button and has a refresh icon]
+
+Goto ```https://arp.pythonanywhere.com/``` to test.
+
+To view logs, check Log files section of web panel.
+
