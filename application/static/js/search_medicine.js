@@ -24,6 +24,9 @@ var tribute = new Tribute({
     },
     allowSpaces: true,
     menuItemLimit: 15,
-    loadingItemTemplate:'<span>Loading...</span>'
+    loadingItemTemplate:'<span>Loading...</span>',
+    menuItemTemplate: function (item) {
+      return item.original.key + " - " + item.original.value;
+    },
   }]
 });
