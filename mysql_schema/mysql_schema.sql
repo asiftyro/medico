@@ -1,4 +1,3 @@
-
 USE MEDICO;
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -84,7 +83,7 @@ CREATE TABLE medicine (
 );
 
 
-INSERT INTO medico.`user`
+INSERT INTO `user`
 (
 username, 
 password_hash,
