@@ -28,6 +28,22 @@
 
 {% block style %}
 <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+<style>
+    /* Gridjs fix: avoid column header name to shorten and show elipse (...) */
+  th.gridjs-th-sort .gridjs-th-content {
+    width: auto !important;
+  }
+
+  th.gridjs-th .gridjs-th-content {
+    margin-top: 6px;
+    margin-right: 10px;
+  }
+
+  button.gridjs-sort {
+    float: none !important;
+    margin-top: 4px;
+  }
+</style>
 {% endblock style %}
 
 {% block javascript %}
@@ -93,7 +109,7 @@
       multiColumn: true,
       server: {
         url: (prev, columns) => {
-          const columnIds = ['username' , 'fullname','username', 'dob', 'sex', 'active'];
+          const columnIds = ['username', 'fullname', 'username', 'dob', 'sex', 'active'];
           const sort = columns.map(col => (col.direction === 1 ? '+' : '-') + columnIds[col.index]);
           return updateUrl(prev, {
             sort
