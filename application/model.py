@@ -192,3 +192,36 @@ class Medicine(db.Model):
         "author_username": self.author_desc.username,
         "patient_username": self.patient_desc.username
     }
+
+
+
+class Organization(db.Model):
+
+  __tablename__ = "organization"
+
+  id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String(128))
+  logo = db.Column(db.String(128))
+  description = db.Column(db.String(128))
+  address = db.Column(db.String(128))
+  author = db.Column(db.Integer, db.ForeignKey("user.id"))
+  created_at = db.Column(db.DateTime, default=datetime.datetime.now(datetime.timezone.utc))
+  modified_at = db.Column(db.DateTime, onupdate=datetime.datetime.now(datetime.timezone.utc))
+  author_desc = db.relationship("User", foreign_keys=author)
+
+  def __repr__(self):
+    return f'<Medicine: {self.id}>'
+
+  def to_dict(self):
+    return {
+        'id': self.id,
+        'name': self.name,
+        'logo': url_for('static', filename=f"img/{self.logo}"),
+        'description': self.description,
+        'address': self.address,
+        'author': self.author,
+        'created_at': self.created_at,
+        'modified_at': self.modified_at,
+        "author_username": self.author_desc.username,
+        "patient_username": self.patient_desc.username
+    }

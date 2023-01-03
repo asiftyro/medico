@@ -16,12 +16,12 @@ class BaseConfiguration:
     ROOT_DIR = os.path.abspath(os.path.join(APP_DIR, os.pardir))
     # Static assets
     STATIC_DIR_PATH = os.path.join(APP_DIR, os.getenv("STATIC_DIR_PATH", "static"))
-    USER_AVATAR_DIR = os.path.join(STATIC_DIR_PATH, "img", "user-avatar")
     _app_dir = APP_DIR[:-1] if APP_DIR[-1] == "/" else APP_DIR  # Strip trailing slash
     _static_dir = STATIC_DIR_PATH[1:] if STATIC_DIR_PATH[0] == "/" else STATIC_DIR_PATH  # Strip trailing slash
     _static_dir = _static_dir[:-1] if _static_dir[-1] == "/" else _static_dir  # Strip starting slash
     USER_AVATAR_DIR = _app_dir + "/" + _static_dir + "/img/user-avatar"
     CASE_PHOTO_DIR = _app_dir + "/" + _static_dir + "/img/case-photo"
+    LOGO_DIR = _app_dir + "/" + _static_dir + "/img/logo"
     # Session
     SECRET_KEY = os.getenv("SECRET_KEY", "32_bit_long_random_secret_string")
     SESSION_COOKIE_HTTPONLY = True
