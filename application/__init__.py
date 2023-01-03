@@ -9,7 +9,7 @@ import datetime
 import pytz
 from dateutil.relativedelta import relativedelta
 from application.database import db
-from application.authentication import login_manager
+from application.authentication import login_manager, create_first_admin_user_if_not_exist
 from application.logging import logger
 
 
@@ -22,7 +22,6 @@ def http_error_handler(e):
 
 
 def action_before_first_request():
-    # db.create_all()
     pass
 
 
@@ -127,5 +126,6 @@ def create_app(configuration):
         Compress(app)
         Minify(app=app, html=True, js=True, cssless=True)
 
-    logger.info("Returning from Application factory.")
+    create_first_admin_user_if_not_exist(app)
+
     return app
