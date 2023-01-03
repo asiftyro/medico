@@ -109,6 +109,7 @@ class ProductionConfiguration(BaseConfiguration):
 
 class StagingConfiguration(BaseConfiguration):
     DEBUG = True
+    APP_NAME = f"{BaseConfiguration.APP_NAME} {{σ}}"
     # Session
     SESSION_COOKIE_HTTPONLY = True
     REMEMBER_COOKIE_HTTPONLY = True
