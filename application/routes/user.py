@@ -195,7 +195,7 @@ def data():
         for s in sort.split(","):
             direction = s[0]
             name = s[1:]
-            if name not in ["username", "fullname", "dob", "sex", "active"]:
+            if name not in ["username", "fullname", "dob", "sex",'created_at' "active"]:
                 name = "username"
             col = getattr(User, name)
             if direction == "-":

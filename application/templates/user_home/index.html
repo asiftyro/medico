@@ -2,18 +2,18 @@
 {% block style %}{% endblock style %}
 {% block javascript %}
 <script>
-let markMessageAsRead = document.querySelectorAll('.markMessageAsRead');
+  let markMessageAsRead = document.querySelectorAll('.markMessageAsRead');
   for (readStatusLink of markMessageAsRead) {
     readStatusLink.addEventListener('click', async (event) => {
       let convId = event.target.dataset.id;
       event.target.parentElement.innerHTML = '';
-      unreadMsgcount.innerHTML = parseInt(unreadMsgcount.innerHTML) -1;
+      unreadMsgcount.innerHTML = parseInt(unreadMsgcount.innerHTML) - 1;
       let api_url = `/user-home/set-conversation-as-read/${convId}`;
       let response = await fetch(api_url);
       let data = await response.text();
     });
   }
-</script>  
+</script>
 {% endblock javascript %}
 {% block title %}Home{% endblock title %}
 {% block content %}
@@ -22,12 +22,22 @@ let markMessageAsRead = document.querySelectorAll('.markMessageAsRead');
     {% include 'user_home/_top_nav.html'   %}
     {{ render_messages(dismissible=1,dismiss_animate=1) }}
     {% include 'user/_patient_info.html'   %}
+    <div class="row">
+        <div class="col mb-2">
+            <div class="card">
+                <div class="card-body">
+                  Registration Date: <b>{{user.created_at}}</b>
+                </div>
+              </div>
+        </div>
+    </div>
+
     <div class="row mb-3">
       <div class="col-12 col-md-6">
-          {% include 'user_home/_conversation.html' %}
-        </div>
-        <div class="col-12 col-md-6">
-          {% include 'user_home/_prescription_list.html' %}
+        {% include 'user_home/_conversation.html' %}
+      </div>
+      <div class="col-12 col-md-6">
+        {% include 'user_home/_prescription_list.html' %}
       </div>
     </div>
   </div> <!-- container -->

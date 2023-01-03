@@ -1,11 +1,14 @@
 import datetime
 from dateutil.relativedelta import relativedelta
-from flask import url_for
+from flask import url_for, current_app
 import markdown
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 from application.database import db
+import pytz
+from application.configuration import BaseConfiguration
 
+local_timezone = pytz.timezone(BaseConfiguration.LOCAL_TIMEZONE)
 
 class User(db.Model, UserMixin):
 
@@ -94,7 +97,9 @@ class User(db.Model, UserMixin):
             "admin": self.admin,
             "active": self.active,
             "author": self.author,
-            "created_at": self.created_at,
+            "created_at": self.created_at.replace(tzinfo=pytz.utc)
+            .astimezone(local_timezone)
+            .strftime("%Y-%m-%d %H:%M:%S"),
             "modified_at": self.modified_at,
             "author_username": self.author_desc.username,
         }
