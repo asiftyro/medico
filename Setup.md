@@ -134,6 +134,8 @@ Delete:
 
 # Setup on pythonanywhere.com
 
+**Following steps consider 'arp' as host username.**
+
 1. Setup mysql database using pythonanywhere mysql console and mysql_schema.sql, and create first user
 2. From pythonanywhere bash, in user home ~
 ```git clone https://github.com/asiftyro/medico.git```
@@ -163,8 +165,10 @@ cp env.template .env
 nano .env
 ```
 
-In .env define follwoing variables (Delete others)
-```
+In .env define follwoing variables (Delete unused. Used Variables cannot be undefined.)
+
+```bash
+# Values: 0 - debug, 1 - production, 2 - statging
 PRODUCTION=
 APP_NAME=
 APP_VER=
@@ -172,11 +176,20 @@ APP_VER=
 SECRET_KEY=
 STATIC_DIR_PATH=
 LOCAL_TIMEZONE=
-# MySQL
+APP_HOST=
+APP_PORT=
+# SQLite for Development
+SQLITE_DB_NAME=
+# MySQL (Production)
 DB_USERNAME=
 DB_PASSWORD=
 DB_HOST=
 DB_NAME=
+# MySQL (Staging. i.e. PRODUCTION is 2)
+STAGE_DB_USERNAME=
+STAGE_DB_PASSWORD=
+STAGE_DB_HOST=
+STAGE_DB_NAME=
 ```
 
 From Web panel, create a flask app using default
@@ -208,7 +221,7 @@ from boot import app as application  # noqa
 
 In wsgi file editor panel, Press 'Reload arp.pythonanywhere.com' button from top right. [it looks like a refresh button], or from Web panel press 'Reload arp.pythonanywhere.com'. [its the green button and has a refresh icon]
 
-Goto ```https://arp.pythonanywhere.com/``` to test.
+Test from browser.
 
 To view logs, check Log files section of web panel.
 

@@ -7,7 +7,7 @@ load_dotenv()
 
 class BaseConfiguration:
     # Application
-    DEBUG = False
+    DEBUG = True
     APP_NAME = os.getenv("APP_NAME", "App Name")
     APP_VER = os.getenv("APP_VER", "x.y.z")
     APP_HOST = os.getenv("APP_HOST", "localhost")
@@ -83,6 +83,9 @@ class DevelopmentConfiguration(BaseConfiguration):
     # SQLAlchemy
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    def __str__(self) -> str:
+        return "<Development>"
+
 
 class ProductionConfiguration(BaseConfiguration):
     DEBUG = False
@@ -99,3 +102,26 @@ class ProductionConfiguration(BaseConfiguration):
         os.getenv("DB_PORT", 3306),
         os.getenv("DB_NAME", "mysql_db_name"),
     )
+
+    def __str__(self) -> str:
+        return "<Production>"
+
+
+class StagingConfiguration(BaseConfiguration):
+    DEBUG = True
+    # Session
+    SESSION_COOKIE_HTTPONLY = True
+    REMEMBER_COOKIE_HTTPONLY = True
+    REMEMBER_COOKIE_DURATION = 60 * 60 * 24 * 7  # 7 days
+    # MySql
+    SQLALCHEMY_DATABASE_URI = "{}://{}:{}@{}:{}/{}".format(
+        os.getenv("DB_ENGINE", "mysql"),
+        os.getenv("STAGE_DB_USERNAME", "mysql_db_user"),
+        os.getenv("STAGE_DB_PASSWORD", "mysql_db_user"),
+        os.getenv("STAGE_DB_HOST", "mysql_db_host"),
+        os.getenv("DB_PORT", 3306),
+        os.getenv("STAGE_DB_NAME", "mysql_db_name"),
+    )
+
+    def __str__(self) -> str:
+        return "<Staging>"
