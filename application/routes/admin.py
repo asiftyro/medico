@@ -57,6 +57,7 @@ def index():
             update_org.logo = prev_logo
 
         update_org.name = org_form.name.data
+        update_org.title = org_form.title.data
         update_org.description = org_form.description.data
         update_org.address = org_form.address.data
         update_org.author = current_user.id

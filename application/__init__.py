@@ -1,5 +1,5 @@
 from importlib import import_module
-from flask import Flask, current_app, render_template
+from flask import Flask, current_app, render_template, url_for
 from flask_migrate import Migrate
 from flask_minify import Minify
 from flask_compress import Compress
@@ -10,7 +10,7 @@ import pytz
 from dateutil.relativedelta import relativedelta
 from application.database import db
 from application.authentication import login_manager, create_first_admin_user_if_not_exist
-from application.logging import logger
+from application.model import Organization
 
 
 def action_on_teardown(exception=None):
@@ -75,9 +75,30 @@ def local_datetime(dttm, format="s"):
 
 
 def context_processors():
+    # TODO:
+    # This query should filter organization details based on future implementation of
+    # identifying organization. It can be based on URL e.g. different organization in 
+    # the same domain will have a slug/part of organization - https://medico.com/org_name/user
+    org = Organization.query.first()
+    brand = {
+        "name": current_app.config["APP_NAME"],
+        "description": "We are part of you and so we ensure you get the best medical care from us again and again...",
+        "logo": url_for("static", filename="img/default-logo.png"),
+        "title": "Patient Case Management system.",
+        "address": "Address Line",
+    }
+    if org:
+        logo_path = url_for("static", filename=f"img/logo/{org.logo}") if org.logo else brand["logo"]
+        brand["name"] = org.name if org.name else brand["name"]
+        brand["description"] = org.description if org.description else brand["description"]
+        brand["logo"] = logo_path
+        brand["title"] = org.title if org.title else brand["title"]
+        brand["address"] = org.address if org.address else brand["address"]
+
     return {
         "utcnow": datetime.datetime.utcnow(),
         "copyright_year": int(datetime.datetime.utcnow().strftime("%Y")) + 10,
+        "brand": brand,
     }
 
 

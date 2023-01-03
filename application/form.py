@@ -237,6 +237,7 @@ class AdminSettingsForm(FlaskForm):
 class OrganizationForm(FlaskForm):
     id = HiddenField("user_id")
     name = StringField("Organization Name", validators=[InputRequired(), Length(min=2, max=128)])
+    title = StringField("Title line", validators=[Length(min=2, max=128), Optional(strip_whitespace=True)], filters=[lambda x: x or None])
     description = StringField("Description", validators=[Length(min=2, max=128), Optional(strip_whitespace=True)], filters=[lambda x: x or None])
     address = StringField("Address", validators=[Length(min=2, max=128), Optional(strip_whitespace=True)], filters=[lambda x: x or None])
     logo = FileField("Logo", validators=[FileAllowed(["jpg", "png", "jpeg"], "Allowed JPG or PNG Images only.")])

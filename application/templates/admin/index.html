@@ -44,10 +44,14 @@
   <div class="card-body p-3">
     <div class="row">
       <div class="col-md-6">
+        <b>Admin Information</b>
+        <hr>
         {{ render_form(admin_form, action=url_for('admin_bp.index'), method='post') }}
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-6 border-md-left mt-5 mt-md-0">
+        <b>Organization Information</b>
+        <hr>
         {{ render_form(org_form, action=url_for('admin_bp.index'), method='post') }}
       </div>
     </div>
