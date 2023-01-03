@@ -46,7 +46,7 @@ class BaseConfiguration:
         "version": 1,
         "formatters": {
             "default": {
-                "format": "[#] %(asctime)s | %(levelname)s in %(pathname)s:%(module)s:%(lineno)d | %(message)s",
+                "format": "[#] %(asctime)s | %(levelname)s | %(message)s |  %(pathname)s :: %(module)s :: %(lineno)d",
             }
         },
         "handlers": {
