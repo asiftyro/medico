@@ -1,0 +1,58 @@
+** show patient registration date on patient index and patient info
+** Percel photo attached to precription and percel date
+** Video/Image upload in conversation
+** Delete Image/Manage Old Image (Write a script to get image names from db, then delete others from avatar and case-photo dir)
+** Backup of data
+** Appointment
+** Help page
+** Recaptcha
+** Logo preview in Admin Settiings Page
+
+DONE ** title from org name
+DONE ** Home page logo org name and address attached to admin settings
+DONE ** In place of APP name 'Medico', chamber/organization name will be shown, attached to admin settings
+DONE ** Patient index grid needs to be changed to make mobile view friendly
+
+DONE: medicine potency
+DONE ** Dev tools
+DONE Patient new message indicator
+DONE Add admin settings in top nav
+DONE Logger
+DONE 3. Code formatting
+DONE 12. Mysql test
+        DONE 0. Dashboard
+DONE 1. Create patient's page
+  DONE - Login
+  DONE - Conversation
+  DONE - prescription summary
+  DONE - prescription
+    DONE - View
+    DONE - PDF
+    DONE - Print
+  DONE - Change Password
+
+DONE: 2. Admin's page
+  DONE - Admin can see his own patients only -DOUBLE CHECK ALL ROUTES
+    DONE - Organize Sidemenu 
+    DONE - Organize Button (Add Back/Cancel, Color and position)
+    DONE - Organize Breadcrumb
+    DONE - Organize card header
+  DONE - Dashboard
+    DONE - Change own Password
+    DONE - Change Patient Password
+    DONE - Prescription PDF
+    DONE - Prescription Print
+    DONE - @login required and @admin required
+
+DONE 4. Page titles
+
+DONE 6. On edit analysis page, click on image to enlarge
+DONE 7. On edit analysis page, show uploaded image preview
+DONE 8. Suggest medicine in prescription + observation/outcome field
+DONE 9. Title
+DONE 10. Page headings
+DONE 11. Admin Settings
+DONE 13. Change Mobile number of admin
+DONE 13. Unique validator in form.py - If mobile number is same, ignore; else check for uniquenes
+
+
