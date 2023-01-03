@@ -22,7 +22,7 @@ def http_error_handler(e):
 
 
 def action_before_first_request():
-    pass
+    create_first_admin_user_if_not_exist(current_app)
 
 
 def local_datetime(dttm, format="s"):
@@ -125,7 +125,5 @@ def create_app(configuration):
     if not app.debug:
         Compress(app)
         Minify(app=app, html=True, js=True, cssless=True)
-
-    create_first_admin_user_if_not_exist(app)
 
     return app
