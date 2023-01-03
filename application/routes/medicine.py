@@ -22,7 +22,9 @@ def search():
     )
     query = db.select(Medicine).where(search_query)
     result = db.session.execute(query)
-    names = [{"key": row[0].short_name, "value": row[0].medicine} for row in result]
+    names = [
+        {"key": row[0].short_name, "value": f"{row[0].medicine} {row[0].potency or '' }".strip()} for row in result
+    ]
     return jsonify(names)
 
 
@@ -51,6 +53,7 @@ def create():
         new_med = Medicine()
         new_med.medicine = med_form.medicine.data
         new_med.short_name = med_form.short_name.data
+        new_med.potency = med_form.potency.data
         new_med.author = current_user.id
         try:
             db.session.add(new_med)

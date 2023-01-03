@@ -170,8 +170,9 @@ class Medicine(db.Model):
   __tablename__ = "medicine"
 
   id = db.Column(db.Integer, primary_key=True)
-  short_name = db.Column(db.String(128), unique=True)
   medicine = db.Column(db.String(128), unique=True)
+  potency = db.Column(db.String(128), unique=True)
+  short_name = db.Column(db.String(128), unique=True)
   author = db.Column(db.Integer, db.ForeignKey("user.id"))
   created_at = db.Column(db.DateTime, default=datetime.datetime.now(datetime.timezone.utc))
   modified_at = db.Column(db.DateTime, onupdate=datetime.datetime.now(datetime.timezone.utc))

@@ -73,6 +73,7 @@ CREATE TABLE medicine (
 	id INTEGER NOT NULL AUTO_INCREMENT, 
 	short_name VARCHAR(128), 
 	medicine VARCHAR(128), 
+    potency VARCHAR(128), 
 	author INTEGER, 
 	created_at DATETIME, 
 	modified_at DATETIME, 

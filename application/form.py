@@ -175,6 +175,7 @@ class AdminSettingsForm(FlaskForm):
 
 class MedicineForm(FlaskForm):
   medicine = StringField('Medicine', validators=[InputRequired(), Length(min=2, max=64)])
+  potency = StringField('Potency', validators=[InputRequired(), Length(min=2, max=64)])
   short_name = StringField('Short Name', validators=[InputRequired(), Length(min=2, max=64)])
 
   save = SubmitField('Save')
