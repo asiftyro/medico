@@ -76,7 +76,7 @@ def get_unread():
                 "patient_username": c.patient_desc.username,
                 "patient_fullname": c.patient_desc.fullname,
                 "conversation": c.conversation,
-                "created_at": c.created_at.replace(tzinfo=pytz.utc).astimezone(local_timezone).strftime("%c"),
+                "created_at": c.created_at.replace(tzinfo=pytz.utc).astimezone(local_timezone).strftime("%Y-%m-%d %H:%M:%S"),
             }
         )
     return jsonify(return_json)

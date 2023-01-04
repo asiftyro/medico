@@ -73,7 +73,7 @@ window.addEventListener('DOMContentLoaded', event => {
         unreadMsgMenuColor.classList.remove("bg-danger");
         unreadMsgMenuColor.classList.add("bg-danger");
         for (u of unreadMsgList) {
-          let tmpl = `<li><a class="dropdown-item" href="/conversation/${u.patient_username}">${u.patient_fullname} - ${u.patient_username} - ${u.created_at}</a></li>`
+          let tmpl = `<li class='border-top'><a class="dropdown-item" href="/conversation/${u.patient_username}">${u.patient_fullname}<br><small>${u.created_at}</small></a></li>`
           menuItems += tmpl;
         }
         unreadMsgMenuList.innerHTML = menuItems;
