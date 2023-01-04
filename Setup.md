@@ -125,7 +125,36 @@ Delete:
     ```supervisorctl reread```
     ```supervisorctl update```
 
+--------------------------------------------------------------------------------------
 
+## Update
+
+stop app:
+
+```supervisorctl stop medico```
+
+```cd medico``
+
+```git pull```
+
+```nano .env```
+
+```source ENV/bin/activate```
+
+```pip install -r requirements.txt```
+
+```export FLASK_APP=boot```
+
+```flask db upgrade```
+
+test:
+
+```python boot.py```
+```uwsgi uwsgi.ini```
+
+
+finallly:
+supervisorctl start medico
 
 
 
