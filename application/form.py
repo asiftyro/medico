@@ -83,7 +83,9 @@ class CreateUserForm(FlaskForm):
         "Email", validators=[Email(), Optional(strip_whitespace=True), Length(max=64)], filters=[lambda x: x or None]
     )
     address = StringField("Address", validators=[Length(max=64)])
-    avatar = FileField("Patient' Photo", validators=[FileAllowed(["jpg", "png", "jpeg"], "Allowed JPG or PNG Images only.")])
+    avatar = FileField(
+        "Patient' Photo", validators=[FileAllowed(["jpg", "png", "jpeg"], "Allowed JPG or PNG Images only.")]
+    )
     active = SelectField("Active", choices=[(1, "Yes"), (0, "No")])
     # admin = SelectField('Admin', choices=[(0, "No"), (1, "Yes")])
     save = SubmitField("Save")
@@ -122,7 +124,9 @@ class EditUserForm(FlaskForm):
         "Email", validators=[Email(), Optional(strip_whitespace=True), Length(max=64)], filters=[lambda x: x or None]
     )
     address = StringField("Address", validators=[Length(max=64)])
-    avatar = FileField("Patient's Photo", validators=[FileAllowed(["jpg", "png", "jpeg"], "Allowed JPG or PNG Images only.")])
+    avatar = FileField(
+        "Patient's Photo", validators=[FileAllowed(["jpg", "png", "jpeg"], "Allowed JPG or PNG Images only.")]
+    )
     active = SelectField("Active", choices=[(1, "Yes"), (0, "No")])
     # admin = SelectField('Admin', choices=[(0, "No"), (1, "Yes")])
     save = SubmitField("Save")
@@ -234,11 +238,33 @@ class AdminSettingsForm(FlaskForm):
     address = StringField("Address", validators=[Length(max=64)])
     save_admin_settings_form = SubmitField("Save")
 
+
 class OrganizationForm(FlaskForm):
     id = HiddenField("user_id")
     name = StringField("Organization Name", validators=[InputRequired(), Length(min=2, max=128)])
-    title = StringField("Title line", validators=[Length(min=2, max=128), Optional(strip_whitespace=True)], filters=[lambda x: x or None])
-    description = StringField("Description", validators=[Length(min=2, max=128), Optional(strip_whitespace=True)], filters=[lambda x: x or None])
-    address = StringField("Address", validators=[Length(min=2, max=128), Optional(strip_whitespace=True)], filters=[lambda x: x or None])
+    title = StringField(
+        "Title line",
+        validators=[Length(min=2, max=128), Optional(strip_whitespace=True)],
+        filters=[lambda x: x or None],
+    )
+    description = StringField(
+        "Description",
+        validators=[Length(min=2, max=128), Optional(strip_whitespace=True)],
+        filters=[lambda x: x or None],
+    )
+    address = StringField(
+        "Address", validators=[Length(min=2, max=128), Optional(strip_whitespace=True)], filters=[lambda x: x or None]
+    )
     logo = FileField("Logo", validators=[FileAllowed(["jpg", "png", "jpeg"], "Allowed JPG or PNG Images only.")])
     save_organization_form = SubmitField("Save")
+
+
+class ParcelForm(FlaskForm):
+    id = HiddenField("id")
+    parcel_photo_1 = FileField(
+        "Parcel photo", validators=[FileAllowed(["jpg", "png", "jpeg"], "Allowed JPG or PNG Images only.")]
+    )
+    parcel_date_1 = DateField(
+        "Parcel date", validators=[Optional(strip_whitespace=True)], filters=[lambda x: x or None]
+    )
+    save_parcel_form = SubmitField("Save")

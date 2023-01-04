@@ -22,6 +22,7 @@ class BaseConfiguration:
     USER_AVATAR_DIR = _app_dir + "/" + _static_dir + "/img/user-avatar"
     CASE_PHOTO_DIR = _app_dir + "/" + _static_dir + "/img/case-photo"
     LOGO_DIR = _app_dir + "/" + _static_dir + "/img/logo"
+    PARCEL_PHOTO_DIR = _app_dir + "/" + _static_dir + "/img/parcel-photo"
     # Session
     SECRET_KEY = os.getenv("SECRET_KEY", "32_bit_long_random_secret_string")
     SESSION_COOKIE_HTTPONLY = True

@@ -113,6 +113,8 @@ class Prescription(db.Model):
     prescription = db.Column(db.Text)
     note = db.Column(db.Text)
     follow_up_date = db.Column(db.Date)
+    parcel_date_1 = db.Column(db.Date)
+    parcel_photo_1 = db.Column(db.String(128))
     patient_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     author = db.Column(db.Integer, db.ForeignKey("user.id"))
     created_at = db.Column(db.DateTime, default=datetime.datetime.now(datetime.timezone.utc))
@@ -124,12 +126,15 @@ class Prescription(db.Model):
         return f"<Prescription: {self.id}>"
 
     def to_dict(self):
+        parcel_photo_1 = f"img/parcel-photo/{self.parcel_photo_1}" if self.parcel_photo_1 else "img/default-parcel-photo.png"
         return {
             "id": self.id,
             "prescription": markdown.markdown(self.prescription or "", extensions=["fenced_code", "nl2br"]),
             "note": markdown.markdown(self.note or "", extensions=["fenced_code", "nl2br"]),
             "follow_up_date": self.follow_up_date,
             "author": self.author,
+            "parcel_date_1": self.parcel_date_1,
+            "parcel_photo_1": url_for("static", filename=parcel_photo_1),
             "created_at": self.created_at,
             "modified_at": self.modified_at,
             "author_username": self.author_desc.username,

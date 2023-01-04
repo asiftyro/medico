@@ -8,7 +8,11 @@
   max-width: 100px;
   cursor: pointer;
 }
-
+.thumbnail-parcel-photo {
+    max-height: 200px;
+    max-width: 200px;
+    cursor: pointer;
+  }
 .list-group-prescription{
   max-height: 300px;
   margin-bottom: 10px;

@@ -1,5 +1,5 @@
 {% extends 'layout/layout.html' %}
-{% from 'layout/helper.html' import breadcrumb, case_photo_modal %}
+{% from 'layout/helper.html' import breadcrumb, photo_modal %}
 
 {% block style %} {% endblock style %}
 
@@ -10,7 +10,7 @@
 
 {% block breadcrumb %}
 
-{{ breadcrumb({'Patient':  url_for('user_bp.index'), 'New prescription: ' + user.username: ''} ) }}
+{{ breadcrumb({'Patients':url_for('user_bp.index'), 'Patient Treatment: ' + user.username:  url_for('user_bp.treatment', username=user.username), 'Prescription: ' ~ '%05d' % prescription.id :''} ) }}
 {% endblock breadcrumb %}
 
 {% block pageheader %}
@@ -49,7 +49,7 @@
         <div class="col-12 p-3">
           Follow up date: <b>{{prescription.follow_up_date|local_datetime('dd') }}</b>
         </div>
- 
+
       </div>
     </div>
   </div>
@@ -69,7 +69,7 @@
       <div class="row g-0 collapse show mb-4" id="patient-prescription-outcome">
         <div class="col-12 p-3">
           {{prescription.note|safe}}
-        </div>   
+        </div>
       </div>
     </div>
   </div>
@@ -82,4 +82,33 @@
     <a target="_blank" class="btn btn-secondary mt-1" href="{{ url_for('prescription_bp.print_view', prescription_id=prescription.id) }}">{{render_icon('printer')}} &nbsp;Print</a>
   </div>
 </div>
+
+
+<div class="row">
+  <div class="col">
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between">
+        <span><b>Parcel</b></span>
+        <a data-bs-toggle="collapse" data-bs-target="#patient-parcel" aria-expanded="false" href="javascript:void(0)" class="border px-3 text-muted">
+          {{render_icon('layout-sidebar')}}
+        </a>
+      </div>
+      <div class="row g-0 collapse show mb-4" id="patient-parcel">
+        <div class="col-md-6 p-3">
+          <div class="text-center mt-2">
+            <img src="{{prescription.parcel_photo_1}}" class="img-thumbnail thumbnail-parcel-photo" alt="Case Photo" title="Click to Enlarge" data-bs-toggle="modal" data-bs-target="#_parcel_photo_1">
+            <hr class="mt-5">
+            <span>Parcel Date: <b>{{prescription.parcel_date_1 or "Not Entered"}}</b></span>
+          </div>
+        </div>
+        <div class="col-md-6 p-3 mt-2 border-md-left">
+          <b>Upload Parcel photo</b>
+          <hr>
+          {{ render_form(parcel_form, action=url_for('prescription_bp.parcel_photo_upload', prescription_id=prescription.id), method='post') }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{photo_modal(modal_id='_parcel_photo_1', modal_title='Percell of Presc #' ~ '%05d' % prescription.id, img_src=prescription.parcel_photo_1)}}
 {% endblock content %}

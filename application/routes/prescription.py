@@ -1,12 +1,44 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+import os
+from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app
 from flask_login import login_required, current_user
 from flask_weasyprint import HTML, render_pdf
 from application.authentication import admin_required
 from application.database import db
 from application.model import User, Prescription
-from application.form import PrescriptionCreateForm, PrescriptionEditForm
+from application.form import PrescriptionCreateForm, PrescriptionEditForm, ParcelForm
+from application.helper import get_unique_id, save_case_avatar_thumbnail
 
 blueprint = Blueprint("prescription_bp", __name__, url_prefix="/prescription")
+
+@blueprint.route("/parcel_photo_upload/<prescription_id>", methods=["POST"])
+@login_required
+@admin_required
+def parcel_photo_upload(prescription_id):
+    prescription = Prescription.query.filter(Prescription.id == prescription_id).first_or_404()
+    parcel_form = ParcelForm()
+    if 'save_parcel_form' in  parcel_form and parcel_form.validate_on_submit():
+        parcel_photo = parcel_form.parcel_photo_1.data
+        if parcel_photo:
+            unique_parcel_photo_name = get_unique_id() + ".png"
+            user_avatar_path = os.path.join(current_app.config["PARCEL_PHOTO_DIR"], unique_parcel_photo_name)
+            save_case_avatar_thumbnail(parcel_photo, user_avatar_path)
+            prescription.parcel_photo_1 = unique_parcel_photo_name
+        prescription.parcel_date_1 =parcel_form.parcel_date_1.data
+        db.session.add(prescription)
+        db.session.commit()
+        flash('Parcel photo uploaded successfullly', 'success')
+        return redirect(url_for('prescription_bp.view', prescription_id=prescription.id))
+    return redirect(url_for('prescription_bp.view', prescription_id=prescription.id))
+
+@blueprint.route("/<prescription_id>", methods=["GET"])
+@login_required
+@admin_required
+def view(prescription_id):
+    """"Admin View Prescription with percel"""
+    prescription = Prescription.query.filter(Prescription.id == prescription_id).first_or_404()
+    user = User.query.filter(User.id == prescription.patient_id).first_or_404()
+    parcel_form=ParcelForm()
+    return render_template("prescription/view.html", user=user.to_dict(), prescription=prescription.to_dict(), parcel_form=parcel_form)
 
 
 @blueprint.route("/create/<patient_id>", methods=["GET", "POST"])
@@ -30,13 +62,7 @@ def create(patient_id):
     return render_template("prescription/create.html", user=patient.to_dict(), form=prescription_form)
 
 
-@blueprint.route("/<prescription_id>", methods=["GET"])
-@login_required
-@admin_required
-def view(prescription_id):
-    prescription = Prescription.query.filter(Prescription.id == prescription_id).first_or_404()
-    user = User.query.filter(User.id == prescription.patient_id).first_or_404()
-    return render_template("prescription/view.html", user=user.to_dict(), prescription=prescription.to_dict())
+
 
 
 @blueprint.route("/edit/<prescription_id>", methods=["GET", "POST"])

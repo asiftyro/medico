@@ -1,4 +1,4 @@
-** Percel photo attached to prescription and percel date
+
 ** Video/Image upload in conversation
 ** Payment tracker
 ** Delete Image/Manage Old Image (Write a script to get image names from db, then delete others from avatar and case-photo dir)
@@ -8,6 +8,7 @@
 ** Recaptcha
 ** Logo preview in Admin Settiings Page
 
+DONE: Percel photo attached to prescription and percel date
 DONE ** show patient registration date on patient index and patient info
 DONE ** title from org name
 DONE ** Home page logo org name and address attached to admin settings
