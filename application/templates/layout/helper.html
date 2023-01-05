@@ -44,7 +44,7 @@
 {%- endmacro %}
 
 
-{% macro photo_modal(modal_id, modal_title, img_src, image_width_max='800px') -%}
+{% macro photo_modal(modal_id, modal_title, cont_source, cont_type='image') -%}
 <div class="modal fade" id="{{modal_id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-fullscreen">
     <div class="modal-content">
@@ -53,7 +53,13 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body text-center">
-        <img id="modal_image_of_{{modal_id}}" src="{{img_src}}" alt="Case Photo" style="max-width: {{image_width_max}};">
+        {% if cont_type=='image'%}
+        <img id="modal_item_of_{{modal_id}}" src="{{cont_source}}" alt="Photo" class='cont_width_max'>
+        {% elif cont_type=='video' %}
+        <video id="modal_item_of_{{modal_id}}"  class='cont_width_max' controls>
+            <source src="{{cont_source}}">
+          </video>
+        {% endif %}
       </div>
     </div>
   </div>

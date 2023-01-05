@@ -11,8 +11,13 @@
   <div class="row g-0 collapse show" id="patient-conversation">
     <div class="row">
       <div class="col-12 px-3 pt-2">
-        <form method="post" action="{{url_for('user_home_bp.index')}}">
+        <form method="post" action="{{url_for('user_home_bp.index')}}" enctype="multipart/form-data">
           {{ form.csrf_token() }}
+          {{ render_field(form.conversation_attachment) }}
+          <small style="font-size: .7em;" class="text-info">&#9632; For photo/video, use low resolution. Max file size allowed 50MB at a time.</small>
+          <br>
+          <small style="font-size: .7em;" class="text-info">&#9632; To send photo or video, you must write its description in following Message field.</small>
+          <hr>
           {{ render_field(form.conversation) }}
           <button class="btn btn-dark" id="submit" name="submit" type="submit" value="Send"><b>Send</b> {{render_icon('send-check') }}</button>
         </form>

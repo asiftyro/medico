@@ -1,10 +1,12 @@
+{% from 'layout/helper.html' import photo_modal %}
 {% 
   set READ_STATUS = {
     0: '&#9679; Mark as read'|safe,
     1: '&#9711; Mark as unread'|safe
   }
 %}
-<div class="card mb-3">
+
+<div class="card mb-3" >
   <div class="card-header d-flex justify-content-between">
     <span><b>Conversation</b></span>
     <a data-bs-toggle="collapse" data-bs-target="#patient-conversation" aria-expanded="false" href="javascript:void(0)" class="border px-2 text-muted">
@@ -13,18 +15,19 @@
   </div>
   <div class="row g-0 collapse show" id="patient-conversation">
     <div class="row">
-      <div class="col-6 p-3">
-        &nbsp;
-      </div>
-      <div class="col-6 p-3 text-end">
-        <a class="btn btn-dark" href="{{ url_for('conversation_bp.conversation', username=user.username) }}"> {{render_icon('chat-right-dots') }} &nbsp;Open Messages</a>
+      <div class="col">
+        <form method="post" action="{{url_for('user_bp.sens_conversation_from_admin', username=user.username)}}">
+          {{ conv_form.csrf_token() }}
+          {{ render_field(conv_form.conversation) }}
+          {{ render_field(conv_form.send) }}
+        </form>
       </div>
       <div class="col-12">
         <hr>
       </div>
     </div>
 
-      <div class="row mb-3 list-group-conversation-details-wrapper">
+    <div class="row mb-3 list-group-conversation-details-wrapper">
       {% if conversation %}
       {% for conv_item in conversation %}
       <div class="list-group list-group-flush px-3 mb-2">
@@ -40,10 +43,34 @@
             </small>
           </div>
           <p class="mt-1 mb-1">{{conv_item.conversation}}</p>
+          {% if conv_item.conversation_attachment %}
+          <p class="mt-1 mb-1">
+            <span class="badge bg-primary ">
+              <a href="javascript:void(0)" class="text-white" title="Click to Enlarge" data-bs-toggle="modal" data-bs-target="#_conv_modal_{{loop.index}}">
+                Attachment {{conv_item.conversation_attachment_type|capitalize}}
+              </a>
+
+            </span>
+
+          </p>
+          {% endif %}
+
         </div>
+      </div>
+      <div>
+        {{
+            photo_modal
+            (
+                modal_id='_conv_modal_'~loop.index,
+                modal_title =  'Attachment of Conversation from ' ~ conv_item.author_desc.fullname ~' | ' ~ conv_item.author_desc.username,
+                cont_source="/static/img/conversation-photo/"~conv_item.conversation_attachment,
+                cont_type = conv_item.conversation_attachment_type
+            )   
+        }}
       </div>
       {% endfor %}
       {% else %}
+
       <span>No conversation yet...</span>
       {% endif %}
     </div>

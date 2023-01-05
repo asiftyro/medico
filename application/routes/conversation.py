@@ -10,33 +10,34 @@ import pytz
 blueprint = Blueprint("conversation_bp", __name__, url_prefix="/conversation")
 
 
-@blueprint.route("/<username>", methods=["GET", "POST"])
-@login_required
-@admin_required
-def conversation(username):
-    conv_form = ConversationForm()
-    user = User.query.filter(User.username == username).first_or_404()
-    author_id = current_user.id
-    admin_id = current_user.id
-    patient_id = user.id
-    # Following query is to retrieve conversations between patients and doctor/admin
-    # where patient was created by logged in doctor/admin (User.author field is the
-    # creator of user)
-    conversation = (
-        Conversation.query.filter((Conversation.patient_id == patient_id) & (Conversation.admin_id == admin_id))
-        .order_by(Conversation.created_at.desc())
-        .limit(100)
-        .all()
-    )
-    if conv_form.validate_on_submit():
-        conversation_item = Conversation(
-            conversation=conv_form.conversation.data, read=0, patient_id=patient_id, admin_id=admin_id, author=author_id
-        )
-        db.session.add(conversation_item)
-        db.session.commit()
-        flash("Message sent.", "success")
-        return redirect(url_for("conversation_bp.conversation", username=username))
-    return render_template("conversation/index.html", user=user.to_dict(), form=conv_form, conversation=conversation)
+# @blueprint.route("/<username>", methods=["GET", "POST"])
+# @login_required
+# @admin_required
+# def conversation(username):
+#     """View Admin Coversation and Post new"""
+#     conv_form = ConversationForm()
+#     user = User.query.filter(User.username == username).first_or_404()
+#     author_id = current_user.id
+#     admin_id = current_user.id
+#     patient_id = user.id
+#     # Following query is to retrieve conversations between patients and doctor/admin
+#     # where patient was created by logged in doctor/admin (User.author field is the
+#     # creator of user)
+#     conversation = (
+#         Conversation.query.filter((Conversation.patient_id == patient_id) & (Conversation.admin_id == admin_id))
+#         .order_by(Conversation.created_at.desc())
+#         .limit(100)
+#         .all()
+#     )
+#     if conv_form.validate_on_submit():
+#         conversation_item = Conversation(
+#             conversation=conv_form.conversation.data, read=0, patient_id=patient_id, admin_id=admin_id, author=author_id
+#         )
+#         db.session.add(conversation_item)
+#         db.session.commit()
+#         flash("Message sent.", "success")
+#         return redirect(url_for("conversation_bp.conversation", username=username))
+#     return render_template("conversation/index.html", user=user.to_dict(), form=conv_form, conversation=conversation)
 
 
 @blueprint.route("/set-read-status/<id>/<read_status>", methods=["GET"])
@@ -76,7 +77,7 @@ def get_unread():
                 "patient_username": c.patient_desc.username,
                 "patient_fullname": c.patient_desc.fullname,
                 "conversation": c.conversation,
-                "created_at": c.created_at.replace(tzinfo=pytz.utc).astimezone(local_timezone).strftime("%c"),
+                "created_at": c.created_at.replace(tzinfo=pytz.utc).astimezone(local_timezone).strftime("%Y-%m-%d %H:%M:%S"),
             }
         )
     return jsonify(return_json)

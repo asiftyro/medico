@@ -286,3 +286,14 @@
         border-right: 0 !important;
     }
 }
+
+
+.cont_width_max {
+    max-width: 800px;
+}
+
+@media only screen and (max-width: 600px) {
+    .cont_width_max {
+        max-width: 300px;
+    }
+}

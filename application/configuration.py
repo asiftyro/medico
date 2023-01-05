@@ -23,6 +23,8 @@ class BaseConfiguration:
     CASE_PHOTO_DIR = _app_dir + "/" + _static_dir + "/img/case-photo"
     LOGO_DIR = _app_dir + "/" + _static_dir + "/img/logo"
     PARCEL_PHOTO_DIR = _app_dir + "/" + _static_dir + "/img/parcel-photo"
+    CONVERSATION_PHOTO_DIR = _app_dir + "/" + _static_dir + "/img/conversation-photo"
+    MAX_CONTENT_LENGTH = 200 * 1024 * 1024  # 10MB max-limit.
     # Session
     SECRET_KEY = os.getenv("SECRET_KEY", "32_bit_long_random_secret_string")
     SESSION_COOKIE_HTTPONLY = True

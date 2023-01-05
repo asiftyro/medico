@@ -1,6 +1,6 @@
 import datetime
 from dateutil.relativedelta import relativedelta
-from flask import url_for, current_app
+from flask import url_for
 import markdown
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -151,6 +151,8 @@ class Conversation(db.Model):
     read = db.Column(db.SmallInteger, default=0)
     patient_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     admin_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    conversation_attachment = db.Column(db.String(128))
+    conversation_attachment_type = db.Column(db.String(8))
     author = db.Column(db.Integer, db.ForeignKey("user.id"))
     created_at = db.Column(db.DateTime, default=datetime.datetime.now(datetime.timezone.utc))
     modified_at = db.Column(db.DateTime, onupdate=datetime.datetime.now(datetime.timezone.utc))
@@ -162,9 +164,11 @@ class Conversation(db.Model):
         return f"<Conversation: {self.id}>"
 
     def to_dict(self):
+        conversation_attachment = url_for("static", filename=f"img/conversation-photo/{self.conversation_attachment}")
         return {
             "id": self.id,
             "conversation": self.conversation,
+            "conversation_attachment": self.conversation_attachment,
             "patient_id": self.patient_id,
             "author": self.author,
             "created_at": self.created_at,

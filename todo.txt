@@ -1,13 +1,23 @@
-
-** Video/Image upload in conversation
-** Payment tracker
-** Delete/Manage Old Image 
-** Backup of data
-** Appointment
+DONE ** Video/Image upload in conversation
+DONE ** when click on Msg Count indicator (red) of top nav, anchor to Conversation card of Treatment page of patient
+DONE ** Remove conversation detail view page
+DONE ** pop view content size reponsive
+DONE ** add conversation form in conversation card of Treatment page
+** remove conversation.html [No longer needed]
+** file size exceed notif
+** site home page (design+address+menu+map+contact)
+** logo/brand in patient's page
+** shortcut anchor to prescription, and conversation with home button
+** Action buttons need to be dropdown
+** Payment tracker + Collection Page
+** Payement statistic in home page
+** Delete/Manage Old Image  (Write a script to get image names from db, then delete others from avatar and case-photo dir)
+** Backup of data (DOWNLOAD database and photo/Video)
+** Appointment [Not now]
 ** Help page
 ** Recaptcha
+** Show available space = "quota -gsl" in admin page
 
-(Write a script to get image names from db, then delete others from avatar and case-photo dir)
 
 
 DONE: Percel photo attached to prescription and percel date

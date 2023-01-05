@@ -64,7 +64,7 @@
           `<div class="btn-group btn-group-sm" role="group" aria-label="Action">
             <a class="btn btn-outline-success" href='{{url_for("user_bp.treatment", username="")}}${cell}'>{{render_icon('capsule-pill')}}</a>
             <a class="btn btn-outline-primary" href='{{url_for("user_bp.view", username="")}}${cell}'>{{render_icon('info-circle')}}</a>
-            <a class="btn btn-outline-dark" href='{{url_for("conversation_bp.conversation", username="")}}${cell}'>{{render_icon('envelope')}}</a>
+            <a class="btn btn-outline-dark" href='{{url_for("user_bp.treatment", username="")}}${cell}#patient-conversation'>{{render_icon('envelope')}}</a>
           </div>`
         ),
       },
