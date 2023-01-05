@@ -138,8 +138,9 @@ def create_app(configuration):
     # 403 Forbidden
     # 404 Not Found
     # 405 Method Not Allowed
+    # 413 Transmitted data size exceed
     # 500 Internal Server Error
-    for error_code in [400, 401, 403, 404, 405, 500]:
+    for error_code in [400, 401, 403, 404, 405, 500, 413]:
         app.register_error_handler(error_code, http_error_handler)
 
     # Content-Encoding: gz (compress) and minify
