@@ -20,3 +20,9 @@ def save_case_avatar_thumbnail(source_path, dest_path):
   image = Image.open(source_path)
   image.thumbnail((800, 600), Image.LANCZOS)
   image.save(dest_path, "png")
+
+
+def save_conversation_photo_thumbnail(source_path, dest_path):
+  image = Image.open(source_path)
+  image.thumbnail((800, 600), Image.LANCZOS)
+  image.save(dest_path, "png")

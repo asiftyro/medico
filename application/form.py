@@ -185,8 +185,14 @@ class LoginForm(FlaskForm):
 
 
 class ConversationForm(FlaskForm):
-    conversation = StringField("Message", validators=[InputRequired(), Length(max=128)])
-    submit = SubmitField("Send")
+    conversation = StringField("Send Message", validators=[InputRequired(), Length(max=128)])
+    conversation_attachment = FileField(
+        "Send Photo/Video",
+        validators=[
+            FileAllowed(["jpg", "png", "jpeg", "mpeg", "mpg", "aac", "avi", "mov", "mp4"], "Allowed Images & Video only.")
+        ],
+    )
+    send = SubmitField("Send")
 
 
 class ChangePasswordForm(FlaskForm):

@@ -6,11 +6,33 @@ from flask_login import login_required
 from application.authentication import admin_required
 from application.database import db
 from application.model import User, Prescription, Conversation
-from application.form import CreateUserForm, EditUserForm, CaseAnalysisForm
+from application.form import CreateUserForm, EditUserForm, CaseAnalysisForm, ConversationForm
 from application.helper import get_unique_id, save_user_avatar_thumbnail, save_case_avatar_thumbnail
 
 
 blueprint = Blueprint("user_bp", __name__, url_prefix="/user")
+
+@blueprint.route("/<username>", methods=["GET", "POST"])
+@login_required
+@admin_required
+def sens_conversation_from_admin(username):
+    """Post new Admin Coversation"""
+    conv_form = ConversationForm()
+    user = User.query.filter(User.username == username).first_or_404()
+    author_id = current_user.id
+    admin_id = current_user.id
+    patient_id = user.id
+
+    if conv_form.validate_on_submit():
+        conversation_item = Conversation(
+            conversation=conv_form.conversation.data, read=0, patient_id=patient_id, admin_id=admin_id, author=author_id
+        )
+        db.session.add(conversation_item)
+        db.session.commit()
+        flash("Message sent.", "success")
+        return redirect(url_for("user_bp.treatment", username=username))
+    return redirect(url_for("user_bp.treatment", username=username))
+
 
 
 @blueprint.route("/analysis/<username>", methods=["GET", "POST"])
@@ -116,19 +138,18 @@ def treatment(username):
     prescription = Prescription.query.filter(
         (Prescription.author == current_user.id) & (Prescription.patient_id == user.id)
     )
-
+    conv_form = ConversationForm()
     # Following query is to retrieve conversations between patients and doctor/admin
     # where patient was created by logged in doctor/admin (User.author field is the
     # creator of user)
     conversation = (
         Conversation.query.filter((Conversation.patient_id == patient_id) & (Conversation.admin_id == admin_id))
-        .order_by(Conversation.created_at.desc())
-        .limit(10)
+        .order_by(Conversation.id.desc())
         .all()
     )
 
     return render_template(
-        "user/treatment.html", user=user.to_dict(), prescription=prescription, conversation=conversation
+        "user/treatment.html", user=user.to_dict(), prescription=prescription, conversation=conversation, conv_form=conv_form
     )
 
 
