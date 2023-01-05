@@ -3,10 +3,11 @@ DONE ** when click on Msg Count indicator (red) of top nav, anchor to Conversati
 DONE ** Remove conversation detail view page
 DONE ** pop view content size reponsive
 DONE ** add conversation form in conversation card of Treatment page
+DONE logo/brand in login page
+DONE ** logo/brand in patient's page
 ** remove conversation.html [No longer needed]
-** file size exceed notif
+** file size exceed notif for uploaded file
 ** site home page (design+address+menu+map+contact)
-** logo/brand in patient's page
 ** shortcut anchor to prescription, and conversation with home button
 ** Action buttons need to be dropdown
 ** Payment tracker + Collection Page
