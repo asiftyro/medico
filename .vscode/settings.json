@@ -3,6 +3,7 @@
     "venv/": true,
     "**/__pycache__": true
   },
+  "html.format.templating": true,
   "editor.tabSize": 4,
   "editor.insertSpaces": true,
   "python.formatting.provider": "black",

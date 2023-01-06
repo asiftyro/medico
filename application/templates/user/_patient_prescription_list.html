@@ -7,10 +7,10 @@
   </div>
   <div class="row g-0 collapse show" id="patient-prescription">
     <div class="row">
-      <div class="col-6 p-3">
+      <div class="col-6 p-3 mt-2">
         <input class="form-control" id="prescription-search" type="text" placeholder="Search Prescription...">
       </div>
-      <div class="col-6 p-3 text-end">
+      <div class="col-6 p-3 text-end mt-2">
         <a class="btn btn-dark" href="{{ url_for('prescription_bp.create', patient_id=user.id) }}"> {{render_icon('journal-plus') }} &nbsp;Add Prescription</a>
       </div>
       <div class="col-12">

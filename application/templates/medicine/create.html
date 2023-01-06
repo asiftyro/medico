@@ -19,13 +19,20 @@
 {% endblock breadcrumb %}
 
 {% block pageheader %}
-<div class="d-flex justify-content-between flex-wrap">
-  <div class="h2 mt-1">Add Medicine</div>
-  <div>
-    <a class="btn btn-outline-dark text-uppercase mt-1 mt-md-0" href="{{url_for('dashboard_bp.index')}}">{{render_icon('bar-chart')}} Dashboard</a>
-    <a class="btn btn-outline-dark mt-1 mt-md-0" href="{{ url_for('user_bp.index') }}">{{render_icon('card-list')}}&nbsp;Patients</a>
+<div class="d-flex justify-content-between flex-wrap align-items-center">
+    <div class="h2 mt-1">Add Medicine</div>
+    <!-- Example split danger button -->
+    <div class="btn-group">
+      <a class="btn  btn-outline-dark mt-1 mt-md-0" href="{{url_for('medicine_bp.index')}}">{{render_icon('capsule-pill')}}Medicine Index</a>
+      <button type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="visually-hidden">Toggle Dropdown</span>
+      </button>
+      <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="{{ url_for('user_bp.index') }}">{{render_icon('card-list')}}&nbsp;Patients</a>
+            <li><a class="dropdown-item" href="{{url_for('dashboard_bp.index')}}">{{render_icon('bar-chart')}} Dashboard</a>
+      </ul>
+    </div>
   </div>
-</div>
 {% endblock %}
 
 {% block content %}

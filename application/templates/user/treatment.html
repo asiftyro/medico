@@ -7,8 +7,8 @@
 
 {% block title %}Patient Treatment{% endblock title %}
 
-
 {% block breadcrumb %}
+
 {{
   breadcrumb({
     'Patients':  url_for('user_bp.index'), 
@@ -19,12 +19,20 @@
 {% endblock breadcrumb %}
 
 {% block pageheader %}
-<div class="d-flex justify-content-between flex-wrap">
+<div class="d-flex justify-content-between flex-wrap align-items-center">
   <div class="h2 mt-1">Patient Treatment </div>
-  <div>
-    <a class="btn btn-outline-dark mt-1 mt-md-0" href="{{ url_for('user_bp.view', username=user.username) }}">{{render_icon('info-circle')}}&nbsp;Patient info</a>
-    <a class="btn btn-outline-dark mt-1 mt-md-0" href="{{ url_for('user_bp.edit', username=user.username) }}">{{render_icon('pencil-square')}}&nbsp;Edit patient info</a>
-    <a class="btn btn-outline-dark mt-1 mt-md-0" href="{{ url_for('user_bp.index') }}">{{render_icon('card-list')}}&nbsp;Patient index</a>
+  <!-- Example split danger button -->
+  <div class="btn-group">
+    <a class="btn  btn-outline-dark mt-1 mt-md-0" href="{{ url_for('user_bp.view', username=user.username) }}">{{render_icon('info-circle')}}&nbsp;Patient info</a>
+    <button type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+      <span class="visually-hidden">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="{{ url_for('prescription_bp.create', patient_id=user.id) }}">{{render_icon('journal-plus')}}&nbsp;Add Prescription</a></li>
+      <li><a class="dropdown-item" href="{{ url_for('user_bp.analysis', username=user.username) }}">{{render_icon('clipboard-data')}}&nbsp;Case Analysis</a></li>
+      <li><a class="dropdown-item" href="{{ url_for('user_bp.edit', username=user.username) }}">{{render_icon('pencil-square')}}&nbsp;Edit patient info</a></li>
+      <li><a class="dropdown-item" href="{{ url_for('user_bp.index') }}">{{render_icon('card-list')}}&nbsp;Patient index</a>
+    </ul>
   </div>
 </div>
 {% endblock %}
@@ -34,15 +42,12 @@
 {% include 'user/_patient_info.html' %}
 {% include 'user/_patient_analysis.html' %}
 
-
 <div class="row mb-4">
   <div class="col-md-6">
     {% include 'user/_patient_prescription_list.html' %}
   </div>
   <div class="col-md-6">
     {% include 'user/_patient_conversation_summary.html' %}
-  </div>  
+  </div>
 </div>
-
-
 {% endblock content %}

@@ -7,8 +7,8 @@
 
 {% block title %} Add new Patient {% endblock title %}
 
-
 {% block breadcrumb %}
+
 {{
   breadcrumb({
     'Patients':  url_for('user_bp.index'),
@@ -17,20 +17,16 @@
 }}
 {% endblock breadcrumb %}
 
-
-
 {% block pageheader %}
-<div class="d-flex justify-content-between flex-wrap">
-  <div class="h2 mt-1">Add New Patient</div> 
+<div class="d-flex justify-content-between align-items-center flex-wrap">
+  <div class="h2 mt-1">Add New Patient</div>
   <div>
     <a class="btn btn-outline-dark mt-md-0" href="{{ url_for('user_bp.index') }}">{{render_icon('card-list')}}&nbsp;Patient index</a>
-  </div>  
-</div>  
+  </div>
+</div>
 {% endblock %}
 
 {% block content %}
-
-
 <div class="card mb-4">
   <div class="card-header d-flex justify-content-between">
     <b>Add new Patient</b>
@@ -39,5 +35,4 @@
     {{ render_form(form, action=url_for('user_bp.create'), method='post') }}
   </div>
 </div>
-
 {% endblock content %}

@@ -59,14 +59,20 @@
 }}
 {% endblock breadcrumb %}
 
-
 {% block pageheader %}
-<div class="d-flex justify-content-between flex-wrap">
+<div class="d-flex justify-content-between flex-wrap align-items-center">
   <div class="h2 mt-1">Case Analysis</div>
-  <div>
-    <a class="btn btn-outline-success mt-1 mt-md-0" href="{{ url_for('user_bp.treatment', username=user.username) }}"> {{render_icon('capsule-pill')}} Treatment</a>
-    <a class="btn btn-outline-dark mt-1 mt-md-0" href="{{ url_for('user_bp.view', username=user.username) }}"> {{render_icon('info-circle')}} Patient info</a>
-    <a class="btn btn-outline-dark mt-1 mt-md-0" href="{{ url_for('user_bp.index') }}">{{render_icon('card-list')}}&nbsp;Patient index</a>
+  <!-- Example split danger button -->
+  <div class="btn-group">
+    <a class="btn  btn-outline-dark mt-1 mt-md-0" href="{{ url_for('user_bp.treatment', username=user.username) }}"> {{render_icon('capsule-pill')}} Treatment</a>
+    <button type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+      <span class="visually-hidden">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="{{ url_for('prescription_bp.create', patient_id=user.id) }}">{{render_icon('journal-plus')}}&nbsp;Add Prescription</a></li>
+      <li><a class="dropdown-item" href="{{ url_for('user_bp.index') }}">{{render_icon('card-list')}}&nbsp;Patients</a>
+      <li><a class="dropdown-item" href="{{url_for('dashboard_bp.index')}}">{{render_icon('bar-chart')}} Dashboard</a>
+    </ul>
   </div>
 </div>
 {% endblock %}
@@ -99,7 +105,6 @@
             <hr>
           </div>
           <div class="row">
-
             <div class="col">
               {{ render_field(form.case_photo_2) }}
             </div>
@@ -109,7 +114,6 @@
             <hr>
           </div>
           <div class="row">
-
             <div class="col">
               {{ render_field(form.case_photo_3) }}
             </div>
@@ -119,7 +123,6 @@
             <hr>
           </div>
           <div class="row">
-
             <div class="col">
               {{ render_field(form.case_photo_4) }}
             </div>

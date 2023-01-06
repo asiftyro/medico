@@ -162,6 +162,7 @@ def create():
 @login_required
 @admin_required
 def view(username):
+    print(1)
     user = User.query.filter(User.username == username).first_or_404()
     return render_template("user/view.html", user=user.to_dict())
 
