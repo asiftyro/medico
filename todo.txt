@@ -1,13 +1,15 @@
 DONE ** Video/Image upload in conversation
 DONE: ** data model and form for conversation attachment
-DONE: conversation attachment enllarged and mobile view
+DONE: ** conversation attachment enllarged and mobile view
 DONE ** when click on Msg Count indicator (red) of top nav, anchor to Conversation card of Treatment page of patient
 DONE ** Remove conversation detail view page
 DONE ** pop up view content size reponsive
 DONE ** add conversation form in conversation card of Treatment page
-DONE ** update conversation button action in patiient index
+DONE ** update conversation button action in patient index
 DONE ** file size exceed notif
 DONE ** logo/brand in patient's page
+[***][***] BUG FIX LOGO UPLOADING - Make a different section for branding photo uploading.
+** File uploading progress in patiient chat
 ** In Patient page shortcut anchor to prescription, and conversation with home button
 ** site home page (design+address+menu+map+contact)
 ** remove conversation.html [No longer needed]
