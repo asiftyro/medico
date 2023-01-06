@@ -39,7 +39,7 @@
   <div class="h2 mt-1">Medicine Index</div>
   <!-- Example split danger button -->
   <div class="btn-group">
-    <a class="btn  btn-outline-dark mt-1 mt-md-0" href="{{url_for('medicine_bp.create')}}">{{render_icon('capsule-pill')}} Add Medicine</a>
+    <a class="btn  btn-outline-dark" href="{{url_for('medicine_bp.create')}}">{{render_icon('capsule-pill')}} Add Medicine</a>
     <button type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
       <span class="visually-hidden">Toggle Dropdown</span>
     </button>
@@ -68,7 +68,7 @@
           <div class="col mt-1 mt-md-0">
             <form class="d-flex med-search-form">
               <input class="form-control w-50" name="medicine-search-box" id="medicine-search-box" type="text" placeholder="Search..." value="{{search_arg}}">
-              <button type="submit" class="btn btn-dark ms-1" href="javascript:void(0)">{{render_icon('binoculars')}}&nbsp;Search</button>
+              <button type="submit" class="btn btn-dark ms-1" href="javascript:void(0)">{{render_icon('binoculars')}}<span class="d-none d-md-inline">Search</span></button>
             </form>
           </div>
           <div class="col mt-1 mt-md-0">

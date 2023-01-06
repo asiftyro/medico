@@ -25,7 +25,7 @@
   <div class="h2 mt-1">Edit Prescription</div>
   <!-- Example split danger button -->
   <div class="btn-group">
-    <a class="btn  btn-outline-dark mt-1 mt-md-0" href="{{ url_for('prescription_bp.view', prescription_id=prescription.id) }}">{{render_icon('journal-medical')}} View Prescription</a>
+    <a class="btn  btn-outline-dark" href="{{ url_for('prescription_bp.view', prescription_id=prescription.id) }}">{{render_icon('journal-medical')}} View Prescription</a>
     <button type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
       <span class="visually-hidden">Toggle Dropdown</span>
     </button>

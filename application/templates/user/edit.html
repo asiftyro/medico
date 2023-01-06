@@ -23,7 +23,7 @@
   <div class="h2 mt-1">Edit Patient Info</div>
   <!-- Example split danger button -->
   <div class="btn-group">
-    <a class="btn  btn-outline-dark mt-1 mt-md-0" href="{{ url_for('auth_bp.change_password_on_behalf', username=user.username) }}">{{render_icon('key')}}&nbsp;Change Password</a>
+    <a class="btn  btn-outline-dark" href="{{ url_for('auth_bp.change_password_on_behalf', username=user.username) }}">{{render_icon('key')}}&nbsp;Change Password</a>
     <button type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
       <span class="visually-hidden">Toggle Dropdown</span>
     </button>

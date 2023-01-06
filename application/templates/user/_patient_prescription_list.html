@@ -11,7 +11,7 @@
         <input class="form-control" id="prescription-search" type="text" placeholder="Search Prescription...">
       </div>
       <div class="col-6 p-3 text-end mt-2">
-        <a class="btn btn-dark" href="{{ url_for('prescription_bp.create', patient_id=user.id) }}"> {{render_icon('journal-plus') }} &nbsp;Add Prescription</a>
+        <a class="btn btn-dark" href="{{ url_for('prescription_bp.create', patient_id=user.id) }}"> {{render_icon('journal-plus') }} &nbsp;Add <span class="d-none d-md-inline">Prescription</span></a>
       </div>
       <div class="col-12">
         <hr>
