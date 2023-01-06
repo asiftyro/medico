@@ -10,7 +10,7 @@ DONE ** file size exceed notif
 DONE ** logo/brand in patient's page
 [***][***] BUG FIX LOGO UPLOADING - Make a different section for branding photo uploading.
 ** File uploading progress in patiient chat
-** In Patient page shortcut anchor to prescription, and conversation with home button
+DONE ** In Patient page shortcut anchor to prescription, and conversation with home button
 ** site home page (design+address+menu+map+contact)
 ** remove conversation.html [No longer needed]
 ** Action buttons need to be dropdown
@@ -75,3 +75,45 @@ DONE 13. Change Mobile number of admin
 DONE 13. Unique validator in form.py - If mobile number is same, ignore; else check for uniquenes
 
 
+
+Fix buttons:
+admin_bp.index                             GET, POST  /admin/
+auth_bp.change_password                    GET, POST  /auth/change-password
+auth_bp.change_password_on_behalf          GET, POST  /auth/change-password-on-behalf/<username>
+auth_bp.login                              GET, POST  /auth/login
+auth_bp.logout                             GET, POST  /auth/logout
+bootstrap.static                           GET        /bootstrap/static/<path:filename>
+conversation_bp.get_unread                 GET        /conversation/get-unread
+conversation_bp.set_read_status            GET        /conversation/set-read-status/<id>/<read_status>
+dashboard_bp.follow_up_today               GET        /dashboard/follow_up_today
+dashboard_bp.index                         GET        /dashboard/
+dashboard_bp.new_patient_last_7_days       GET        /dashboard/new-patient-last-7-days
+dashboard_bp.new_prescription_last_7_days  GET        /dashboard/new-prescription-last-7-days
+dashboard_bp.total_patient                 GET        /dashboard/total-patient
+dashboard_bp.total_prescription            GET        /dashboard/total-prescription
+index_bp.index                             GET        /
+medicine_bp.create                         GET, POST  /medicine/create
+medicine_bp.delete                         POST       /medicine/delete/<id>
+medicine_bp.index                          GET        /medicine/
+medicine_bp.search                         GET        /medicine/search
+prescription_bp.create                     GET, POST  /prescription/create/<patient_id>
+prescription_bp.edit                       GET, POST  /prescription/edit/<prescription_id>
+prescription_bp.parcel_photo_upload        POST       /prescription/parcel_photo_upload/<prescription_id>
+prescription_bp.print_view                 GET        /prescription/print-view/<prescription_id>
+prescription_bp.view                       GET        /prescription/<prescription_id>
+static                                     GET        /static/<path:filename>
+user_bp.analysis                           GET, POST  /user/analysis/<username>
+user_bp.create                             GET, POST  /user/create
+user_bp.data                               GET        /user/list-all
+user_bp.edit                               GET, POST  /user/edit/<username>
+user_bp.index                              GET        /user/
+user_bp.send_conversation_from_admin       GET, POST  /user/<username>
+user_bp.treatment                          GET        /user/treatment/<username>
+user_bp.view                               GET        /user/<username>
+user_home_bp.change_password               GET, POST  /user-home/change-password
+user_home_bp.index                         GET, POST  /user-home/
+user_home_bp.set_conversation_as_read      GET        /user-home/set-conversation-as-read/<convId>
+
+
+Routing fix:
+DONE: conversation_bp.send_conversation_from_admin was wronly mapped with /user, hence user info page was not showing

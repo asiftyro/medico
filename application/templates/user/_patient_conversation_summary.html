@@ -16,7 +16,7 @@
   <div class="row g-0 collapse show" id="patient-conversation">
     <div class="row">
       <div class="col">
-        <form method="post" action="{{url_for('user_bp.sens_conversation_from_admin', username=user.username)}}">
+        <form method="post" action="{{url_for('conversation_bp.send_conversation_from_admin', username=user.username)}}">
           {{ conv_form.csrf_token() }}
           {{ render_field(conv_form.conversation) }}
           {{ render_field(conv_form.send) }}

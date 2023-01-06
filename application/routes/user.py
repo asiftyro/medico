@@ -12,27 +12,6 @@ from application.helper import get_unique_id, save_user_avatar_thumbnail, save_c
 
 blueprint = Blueprint("user_bp", __name__, url_prefix="/user")
 
-@blueprint.route("/<username>", methods=["GET", "POST"])
-@login_required
-@admin_required
-def sens_conversation_from_admin(username):
-    """Post new Admin Coversation"""
-    conv_form = ConversationForm()
-    user = User.query.filter(User.username == username).first_or_404()
-    author_id = current_user.id
-    admin_id = current_user.id
-    patient_id = user.id
-
-    if conv_form.validate_on_submit():
-        conversation_item = Conversation(
-            conversation=conv_form.conversation.data, read=0, patient_id=patient_id, admin_id=admin_id, author=author_id
-        )
-        db.session.add(conversation_item)
-        db.session.commit()
-        flash("Message sent.", "success")
-        return redirect(url_for("user_bp.treatment", username=username))
-    return redirect(url_for("user_bp.treatment", username=username))
-
 
 
 @blueprint.route("/analysis/<username>", methods=["GET", "POST"])
@@ -194,7 +173,7 @@ def view(username):
 def index():
     return render_template("user/index.html")
 
-
+# api
 @blueprint.route("/list-all")
 @login_required
 @admin_required
