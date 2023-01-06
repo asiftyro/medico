@@ -18,7 +18,6 @@
 
 {% block title %}Add New Prescription{% endblock title %}
 
-
 {% block breadcrumb %}
 
 {{
@@ -31,12 +30,19 @@
 {% endblock breadcrumb %}
 
 {% block pageheader %}
-<div class="d-flex justify-content-between flex-wrap">
+<div class="d-flex justify-content-between flex-wrap align-items-center">
   <div class="h2 mt-1">New Prescription</div>
-  <div>
-    <a class="btn btn-outline-success mt-1 mt-md-0" href="{{ url_for('user_bp.treatment', username=user.username) }}"> {{render_icon('capsule-pill')}} Treatment</a>
-    <a class="btn btn-outline-dark mt-1 mt-md-0" href="{{ url_for('user_bp.view', username=user.username) }}"> {{render_icon('info-circle')}} Patient info</a>
-    <a class="btn btn-outline-dark mt-1 mt-md-0" href="{{ url_for('user_bp.index') }}">{{render_icon('card-list')}}&nbsp;Patient index</a>
+  <!-- Example split danger button -->
+  <div class="btn-group">
+    <a class="btn  btn-outline-dark" href="{{ url_for('user_bp.treatment', username=user.username) }}"> {{render_icon('capsule-pill')}} Treatment</a>
+    <button type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+      <span class="visually-hidden">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="{{ url_for('user_bp.analysis', username=user.username) }}">{{render_icon('clipboard-data')}}&nbsp;Case Analysis</a></li>
+      <li><a class="dropdown-item" href="{{ url_for('user_bp.view', username=user.username) }}"> {{render_icon('info-circle')}} Patient info</a></li>
+      <li><a class="dropdown-item" href="{{ url_for('user_bp.index') }}">{{render_icon('card-list')}}&nbsp;Patient index</a></li>
+    </ul>
   </div>
 </div>
 {% endblock %}
@@ -44,9 +50,6 @@
 {% block content %}
 
 {% include 'user/_patient_info.html' %}
-
-
-
 
 <div class="card mb-4">
   <div class="card-header d-flex justify-content-between">
@@ -57,13 +60,11 @@
   </div>
   <div class="row g-0 collapse show" id="patient-prescription">
     <div class="col-12 p-3 text-end">
-        <span class="small text-muted">&#9632; To prescribe a medicine from database, press &#64; to retrieve name.</span>
+      <span class="small text-muted">&#9632; To prescribe a medicine from database, press &#64; to retrieve name.</span>
     </div>
     <div class="col p-3">
       {{ render_form(form, action=url_for('prescription_bp.create', patient_id=user.id), method='post') }}
     </div>
   </div>
 </div>
-
-
 {% endblock content %}

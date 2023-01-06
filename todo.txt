@@ -10,7 +10,7 @@ DONE ** file size exceed notif
 DONE ** logo/brand in patient's page
 [***][***] BUG FIX LOGO UPLOADING - Make a different section for branding photo uploading.
 ** File uploading progress in patiient chat
-** In Patient page shortcut anchor to prescription, and conversation with home button
+DONE ** In Patient page shortcut anchor to prescription, and conversation with home button
 ** site home page (design+address+menu+map+contact)
 ** remove conversation.html [No longer needed]
 ** Action buttons need to be dropdown
@@ -19,6 +19,12 @@ DONE ** logo/brand in patient's page
 ** Delete/Manage Old Image  (Write a script to get image names from db, then delete others from avatar and case-photo dir)
 ** Backup of data (DOWNLOAD database and photo/Video)
 ** Appointment [Not now]
+** Stock and Consumption by Parcel or direct sell with invoice
+    Direct Sell invoice
+    Parcel Sell invoice
+    Address sticker print
+** Invoice maker
+    for visit
 ** Help page
 ** Recaptcha
 ** Show available space = "quota -gsl" in admin page
@@ -74,4 +80,24 @@ DONE 11. Admin Settings
 DONE 13. Change Mobile number of admin
 DONE 13. Unique validator in form.py - If mobile number is same, ignore; else check for uniquenes
 
+Fix hide alerts after some time
 
+startbootstrap: experiment with dev tools
+
+DONE: Fix nav brand name inside admin panel
+
+DONE 
+all buttins under flex gets fatter i.e. heigh gets bigger. fix iit with -
+<div class="d-flex align-items-start">...</div>
+<div class="d-flex align-items-end">...</div>
+<div class="d-flex align-items-center">...</div>
+<div class="d-flex align-items-baseline">...</div>
+<div class="d-flex align-items-stretch">...</div>
+
+DONE Fix navigation buttons inside page : make split button
+
+*** minimize redundand function
+
+DONE in admin page - organization section - upload photo and save db if photo file field is not empty, otherwise delete from organization object and save
+
+DONE Routing fix: DONE: conversation_bp.send_conversation_from_admin was wronly mapped with /user, hence user info page was not showing
