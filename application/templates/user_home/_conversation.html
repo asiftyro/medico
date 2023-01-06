@@ -19,7 +19,7 @@
           {{ form.csrf_token() }}
           {{ render_field(form.conversation_attachment) }}
           {{ render_field(form.conversation) }}
-          <button class="btn btn-dark" id="submit" name="submit" type="submit" value="Send">
+          <button class="btn btn-dark" id="submitPatientConversation" name="submit" type="submit" value="Send">
             <b>Send</b>
             {{render_icon('send-check') }}
             <span id="patientConversationSendingIndicator" class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -58,5 +58,6 @@
 <script>
   patientConversationForm.addEventListener('submit', () => {
     patientConversationSendingIndicator.classList.remove("d-none");
+    submitPatientConversation.setAttribute('disabled', '');
   });
 </script>
