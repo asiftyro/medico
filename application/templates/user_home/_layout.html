@@ -1,0 +1,60 @@
+{% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'bootstrap5/table.html' import render_table %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% from 'bootstrap5/form.html' import render_form_row %}
+{% from 'bootstrap5/form.html' import render_field %}
+{% from 'bootstrap5/utils.html' import render_messages %}
+{% from 'bootstrap5/nav.html' import render_breadcrumb_item %}
+{% from 'bootstrap5/table.html' import render_table %}
+{% from 'bootstrap5/pagination.html' import render_pagination %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Meta Start -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="Medico" />
+  <meta name="author" content="Asif R. Porosh" />
+  <!-- Meta end -->
+  <!-- Favicon start -->
+  <link rel="apple-touch-icon" sizes="180x180" href='/static/img/favicon/apple-touch-icon.png'>
+  <link rel="icon" type="image/png" sizes="32x32" href='/static/img/favicon/favicon-32x32.png'>
+  <link rel="icon" type="image/png" sizes="16x16" href='/static/img/favicon/favicon-16x16.png'>
+  <link rel="manifest" href='/static/img/favicon/site.webmanifest'>
+  <link rel="mask-icon" href='/static/img/favicon/safari-pinned-tab.svg' color='#5bbad5'>
+  <link rel="shortcut icon" href='/static/img/favicon/favicon.ico'>
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-config" content="/static/img/favicon/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+  <!-- Favicon end -->
+
+  <!-- Stylesheets start -->
+  <link rel="stylesheet" href="/bootstrap/static/css/bootswatch/journal/bootstrap.min.css">
+  <link href='/static/css/custom.css' rel="stylesheet" />
+  <!-- Stylesheets end -->
+  <title>{{brand.name}} - Patient Home</title>
+</head>
+{% include 'user_home/_top_nav.html'   %}
+{{ bootstrap.load_js() }}
+</body>
+
+<main class="flex-shrink-0">
+  <div class="container">
+    <div class="row">
+      <div class="col text-center p-3 border-bottom mb-3">
+        <span id="" class="fw-bold">Online Patient Care</span>
+      </div>
+    </div>
+    {{ render_messages(dismissible=1,dismiss_animate=1) }}
+    {% include 'user/_patient_info.html' %}
+
+    {% block content %} {% endblock %}
+  </div>
+</main>
+
+{% include 'layout/_footer.html'   %}
+{% block javascript %} {% endblock javascript %}
+
+</html>
