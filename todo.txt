@@ -1,3 +1,6 @@
+NOTE:
+<span class="d-none d-md-inline"></span>
+
 DONE ** Video/Image upload in conversation
 DONE: ** data model and form for conversation attachment
 DONE: ** conversation attachment enllarged and mobile view
@@ -8,23 +11,38 @@ DONE ** add conversation form in conversation card of Treatment page
 DONE ** update conversation button action in patient index
 DONE ** file size exceed notif
 DONE ** logo/brand in patient's page
-[***][***] BUG FIX LOGO UPLOADING - Make a different section for branding photo uploading.
-** File uploading progress in patiient chat
+DONE [***][***] BUG FIX LOGO UPLOADING - Make a different section for branding photo uploading.
 DONE ** In Patient page shortcut anchor to prescription, and conversation with home button
-** site home page (design+address+menu+map+contact)
-** remove conversation.html [No longer needed]
-** Action buttons need to be dropdown
-** Payment tracker + Collection Page
+DONE ** Action buttons need to be dropdown
+-
+URGENT: Route fix: 1. in treatment page conversation list should come from conversation.py route file 2. Patient send msg should post in conversation.py route 3. 1. in patient page conversation list should come from conversation.py route file
+-
+** Payment tracker + Collection Page: One table for payment Type, another for payment instruction and payment status that will include patient_id and payment_type_id
 ** Payement statistic in home page
-** Delete/Manage Old Image  (Write a script to get image names from db, then delete others from avatar and case-photo dir)
-** Backup of data (DOWNLOAD database and photo/Video)
-** Appointment [Not now]
-** Stock and Consumption by Parcel or direct sell with invoice
+** Invoice maker: will be generated from selected payment instructions
+    Invoice should have status - draft -> created -> sent -> paid
+-
+--
+** Stock and Consumption by Parcel or direct sell with invoice, for example - 
     Direct Sell invoice
     Parcel Sell invoice
     Address sticker print
-** Invoice maker
-    for visit
+    Flow: Create payment instructin > against this instruction create parcel instruction > deduct from stock > against this parcel instruction make label
+--
+
+
+** File uploading progress in patient chat
+** site home page (design+address+menu+map+contact)
+** remove conversation.html [No longer needed]
+
+    
+
+
+
+** Delete/Manage Old Image  (Write a script to get image names from db, then delete others from avatar and case-photo dir)
+** Backup of data (DOWNLOAD database and photo/Video)
+** Appointment [Not now]
+
 ** Help page
 ** Recaptcha
 ** Show available space = "quota -gsl" in admin page
