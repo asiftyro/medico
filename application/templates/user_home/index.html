@@ -1,5 +1,22 @@
-{% extends 'layout/layout_secondary.html' %}
-{% block style %}{% endblock style %}
+{% extends 'user_home/_layout.html' %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col-12 col-md-6">
+      <div class="p-3">
+        <a id="__prescription" href="#__home" class="text-decoration-none">Home {{render_icon('arrow-up-circle-fill')}}</a>
+      </div>
+      {% include 'user_home/_prescription_list.html' %}
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="p-3">
+        <a id="__conversation" href="#__home" class="text-decoration-none">Home {{render_icon('arrow-up-circle-fill')}}</a>
+      </div>
+      {% include 'user_home/_conversation.html' %}
+    </div>
+  </div>
+{% endblock %}
+
 {% block javascript %}
 <script>
   let markMessageAsRead = document.querySelectorAll('.markMessageAsRead');
@@ -15,33 +32,3 @@
   }
 </script>
 {% endblock javascript %}
-{% block title %}Home{% endblock title %}
-{% block content %}
-<main class="flex-shrink-0">
-  <div class="container">
-    {% include 'user_home/_top_nav.html'   %}
-    {{ render_messages(dismissible=1,dismiss_animate=1) }}
-    {% include 'user/_patient_info.html'   %}
-    <div class="row">
-        <div class="col mb-2">
-            <div class="card">
-                <div class="card-body">
-                  Registration Date: <b>{{user.created_at}}</b>
-                </div>
-              </div>
-        </div>
-    </div>
-
-    <div class="row mb-3">
-      <div class="col-12 col-md-6">
-        {% include 'user_home/_conversation.html' %}
-      </div>
-      <div class="col-12 col-md-6">
-        {% include 'user_home/_prescription_list.html' %}
-      </div>
-    </div>
-  </div> <!-- container -->
-  </div>
-</main>
-{% include '/layout/_footer.html'   %}
-{% endblock content %}

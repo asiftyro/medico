@@ -1,13 +1,44 @@
-<header class="pb-3 mb-4 mt-4 border-bottom d-flex flex-row justify-content-between flex-wrap">
-    <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-      <img style="width: 35px;" class="me-2" src="{{brand.logo}}" alt="">
-      <span class="fs-4">{{brand.name}} Online Patient Portal</span>
-    </a>
-    <div class="d-flex align-items-center justify-content-between mt-3 mt-md-0">
-      <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-        <a class="btn btn-outline-dark text-uppercase" href="{{url_for('user_home_bp.index')}}">{{render_icon('house-heart')}} Home</a>
-        <a class="btn btn-outline-dark text-uppercase" href="{{url_for('user_home_bp.change_password')}}">{{render_icon('key')}} Change Password</a>
-        <a class="btn btn-outline-dark text-uppercase" href="{{url_for('auth_bp.logout')}}">{{render_icon('box-arrow-in-right')}} Logout</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="__home">
+    <div class="container">
+      <a class="navbar-brand" href="/#__home">
+        <img src="{{brand.logo}}" alt="Logo" class="patient-home-menu-logo">
+        <b>{{brand.name}}</b>
+      </a>
+  
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#patient-home-main-top-nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="patient-home-main-top-nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link fw-bold" href="javascript:void(0)" onclick="location.hash='#__home'" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">
+              {{render_icon('house-heart')}} Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-bold" href="javascript:void(0)" onclick="location.hash='#__prescription'" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">
+              {{render_icon('journals')}} Prescription
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-bold" href="javascript:void(0)" onclick="location.hash='#__conversation'" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">
+              {{render_icon('envelope')}} Conversation
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle fw-bold" id="navbarDropdownPatientTopNav" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{render_icon('person-fill')}} {{user.fullname}}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPatientTopNav">
+              <li><a class="dropdown-item" href="{{ url_for('user_home_bp.change_password') }}">Change my Password</a></li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li><a class="dropdown-item" href="{{ url_for('auth_bp.logout') }}">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </div>
-  </header> <!-- header -->
+  </nav>
