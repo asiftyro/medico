@@ -98,6 +98,6 @@ DONE Fix navigation buttons inside page : make split button
 
 *** minimize redundand function
 
-in admin page - organization section - upload photo and save db if photo file field is not emmpty, otherwise delete from organization object and save
+in admin page - organization section - upload photo and save db if photo file field is not empty, otherwise delete from organization object and save
 
 DONE Routing fix: DONE: conversation_bp.send_conversation_from_admin was wronly mapped with /user, hence user info page was not showing

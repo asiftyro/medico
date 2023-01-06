@@ -53,9 +53,9 @@ def index():
             update_org.logo = new_logo_name
             org_logo_path = os.path.join(current_app.config["LOGO_DIR"], new_logo_name)
             save_logo_thumbnail(org_form.logo.data, org_logo_path)
-        else:
-            update_org.logo = prev_logo
 
+            
+        update_org.logo = prev_logo
         update_org.name = org_form.name.data
         update_org.title = org_form.title.data
         update_org.description = org_form.description.data
