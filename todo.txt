@@ -80,11 +80,11 @@ DONE 11. Admin Settings
 DONE 13. Change Mobile number of admin
 DONE 13. Unique validator in form.py - If mobile number is same, ignore; else check for uniquenes
 
-alert fix: hide alerts after some time
+Fix hide alerts after some time
 
 startbootstrap: experiment with dev tools
 
-nav brand name inside admin panel
+DONE: Fix nav brand name inside admin panel
 
 DONE 
 all buttins under flex gets fatter i.e. heigh gets bigger. fix iit with -
@@ -98,6 +98,6 @@ DONE Fix navigation buttons inside page : make split button
 
 *** minimize redundand function
 
-in admin page - organization section - upload photo and save db if photo file field is not empty, otherwise delete from organization object and save
+DONE in admin page - organization section - upload photo and save db if photo file field is not empty, otherwise delete from organization object and save
 
 DONE Routing fix: DONE: conversation_bp.send_conversation_from_admin was wronly mapped with /user, hence user info page was not showing
