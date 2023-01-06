@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, url_for, flash, current_app, jsonify
 from flask_login import current_user, login_required
-from application.authentication import admin_required
+from application.authentication import admin_required, non_admin_required
 from application.database import db
 from application.model import User, Conversation
 from application.form import ConversationForm
@@ -8,6 +8,23 @@ import pytz
 
 
 blueprint = Blueprint("conversation_bp", __name__, url_prefix="/conversation")
+
+# TODO:
+def get_conversation_for_admin():
+    pass
+
+
+# TODO:
+def get_conversation_for_patient():
+    pass
+
+
+# TODO:
+@blueprint.route("/patient/<username>", methods=["GET", "POST"])
+@login_required
+@non_admin_required
+def send_conversation_from_patient(username):
+    pass
 
 
 @blueprint.route("/<username>", methods=["GET", "POST"])
