@@ -1,6 +1,14 @@
 import uuid
 from PIL import Image
+import os
 
+def get_disk_space():
+    stream = os.popen('quota -gsl | grep /')
+    output = stream.read()
+    items = [item for item in output.split(" ") if item!=""]
+    used_space = int(items[1][:-1])
+    total_space = int(items[2][:-1])
+    return (used_space, total_space)
 
 def get_unique_id():
   return uuid.uuid1().hex

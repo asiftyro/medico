@@ -17,6 +17,15 @@ DONE ** Action buttons need to be dropdown
 -
 URGENT: Route fix: 1. in treatment page conversation list should come from conversation.py route file 2. Patient send msg should post in conversation.py route 3. 1. in patient page conversation list should come from conversation.py route file
 -
+Payment tracker simplified:
+		                fk->user.id		
+id	    description	    payee_id	amount	status  created_at  paid_at
+	    Consultation			            0/1
+	    Medicine			
+-
+
+
+Complex: (NOT NOW)
 ** Payment tracker + Collection Page: One table for payment Type, another for payment instruction and payment status that will include patient_id and payment_type_id
 ** Payement statistic in home page
 ** Invoice maker: will be generated from selected payment instructions
@@ -28,10 +37,11 @@ URGENT: Route fix: 1. in treatment page conversation list should come from conve
     Parcel Sell invoice
     Address sticker print
     Flow: Create payment instructin > against this instruction create parcel instruction > deduct from stock > against this parcel instruction make label
+    Print multiple label at a time
 --
 
 
-** File uploading progress in patient chat
+NOT NOW ** File uploading progress in patient chat
 ** site home page (design+address+menu+map+contact)
 ** remove conversation.html [No longer needed]
 
@@ -98,7 +108,7 @@ DONE 11. Admin Settings
 DONE 13. Change Mobile number of admin
 DONE 13. Unique validator in form.py - If mobile number is same, ignore; else check for uniquenes
 
-Fix hide alerts after some time
+NOT POSSIBLE NOW: Fix hide alerts after some time
 
 startbootstrap: experiment with dev tools
 
