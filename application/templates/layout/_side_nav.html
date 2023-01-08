@@ -1,13 +1,15 @@
 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
   <div class="sb-sidenav-menu">
     <div class="nav">
+
+      <!-- Dashboard -->
       <div class="sb-sidenav-menu-heading">Dashboard</div>
       <a class="nav-link" href="{{ url_for('dashboard_bp.index') }}">
         <div class="sb-nav-link-icon">{{render_icon('bar-chart')}}</div>
         Dashboard
       </a>
 
-
+      <!-- Patients -->
       <div class="sb-sidenav-menu-heading">Patient</div>
       <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
         <div class="sb-nav-link-icon">{{render_icon('person-plus')}}</div>
@@ -27,8 +29,7 @@
         </nav>
       </div>
 
-
-
+      <!-- Medicine -->
       <div class="sb-sidenav-menu-heading">Medicine</div>
       <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts2">
         <div class="sb-nav-link-icon">{{render_icon('capsule-pill')}}</div>
@@ -40,7 +41,7 @@
           <a class="nav-link" href="{{ url_for('medicine_bp.index') }}">
             <div class="sb-nav-link-icon">{{render_icon('journal-medical')}}</div>
             Index
-          </a>          
+          </a>
           <a class="nav-link" href="{{ url_for('medicine_bp.create') }}">
             <div class="sb-nav-link-icon">{{render_icon('node-plus')}}</div>
             Add
@@ -48,19 +49,39 @@
         </nav>
       </div>
 
-
-      <div class="sb-sidenav-menu-heading">Admin</div>
+      <!-- Payment Tracker -->
+      <div class="sb-sidenav-menu-heading">Medicine</div>
       <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts3">
-        <div class="sb-nav-link-icon">{{render_icon('gear')}}</div>
-        Admin
+        <div class="sb-nav-link-icon">{{render_icon('coin')}}</div>
+        Payment Tracker
         <div class="sb-sidenav-collapse-arrow">{{render_icon('chevron-double-down')}}</div>
       </a>
       <div class="collapse show" id="collapseLayouts3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion1">
         <nav class="sb-sidenav-menu-nested nav">
+          <a class="nav-link" href="{{ url_for('payment_tracker_bp.instructions') }}">
+            <div class="sb-nav-link-icon">{{render_icon('cash-stack')}}</div>
+            Instructions
+          </a>
+          <a class="nav-link" href="{{ url_for('payment_tracker_bp.create') }}">
+            <div class="sb-nav-link-icon">{{render_icon('cash-coin')}}</div>
+            Create
+          </a>
+        </nav>
+      </div>
+
+      <!-- Admin -->
+      <div class="sb-sidenav-menu-heading">Admin</div>
+      <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts4" aria-expanded="false" aria-controls="collapseLayouts4">
+        <div class="sb-nav-link-icon">{{render_icon('gear')}}</div>
+        Admin
+        <div class="sb-sidenav-collapse-arrow">{{render_icon('chevron-double-down')}}</div>
+      </a>
+      <div class="collapse show" id="collapseLayouts4" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion1">
+        <nav class="sb-sidenav-menu-nested nav">
           <a class="nav-link" href="{{ url_for('admin_bp.index') }}">
             <div class="sb-nav-link-icon">{{render_icon('wrench')}}</div>
             Admin Settings
-          </a>          
+          </a>
           <a class="nav-link" href="{{ url_for('auth_bp.change_password') }}">
             <div class="sb-nav-link-icon">{{render_icon('key')}}</div>
             Change Password
@@ -71,9 +92,6 @@
           </a>
         </nav>
       </div>
-
-
-
     </div>
   </div>
   <div class="sb-sidenav-footer">

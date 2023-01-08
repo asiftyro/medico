@@ -10,6 +10,7 @@ from application.configuration import BaseConfiguration
 
 local_timezone = pytz.timezone(BaseConfiguration.LOCAL_TIMEZONE)
 
+
 class User(db.Model, UserMixin):
 
     __tablename__ = "user"
@@ -126,7 +127,9 @@ class Prescription(db.Model):
         return f"<Prescription: {self.id}>"
 
     def to_dict(self):
-        parcel_photo_1 = f"img/parcel-photo/{self.parcel_photo_1}" if self.parcel_photo_1 else "img/default-parcel-photo.png"
+        parcel_photo_1 = (
+            f"img/parcel-photo/{self.parcel_photo_1}" if self.parcel_photo_1 else "img/default-parcel-photo.png"
+        )
         return {
             "id": self.id,
             "prescription": markdown.markdown(self.prescription or "", extensions=["fenced_code", "nl2br"]),
@@ -225,3 +228,23 @@ class Organization(db.Model):
 
     def __repr__(self):
         return f"<Organization: {self.id}>"
+
+
+class PaymentTracker(db.Model):
+
+    __tablename__ = "paymenttracker"
+
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(128))
+    amount = db.Column(db.Float, default=0)
+    patient_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    payment_status = db.Column(db.Integer, default=0)
+    paid_at = db.Column(db.Date)
+    author = db.Column(db.Integer, db.ForeignKey("user.id"))
+    created_at = db.Column(db.Date, default=datetime.datetime.now(datetime.timezone.utc))
+    modified_at = db.Column(db.Date, onupdate=datetime.datetime.now(datetime.timezone.utc))
+    author_desc = db.relationship("User", foreign_keys=author)
+    patient_desc = db.relationship("User", foreign_keys=patient_id)
+
+    def __repr__(self):
+        return f"<PaymentTracker: {self.id}>"

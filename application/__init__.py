@@ -128,6 +128,7 @@ def create_app(configuration):
         "user",
         "prescription",
         "conversation",
+        "payment_tracker",
     ]:
         bp = import_module(f"application.routes.{route}").blueprint
         app.register_blueprint(bp)

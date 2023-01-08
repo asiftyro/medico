@@ -1,0 +1,12 @@
+# # # Install python formatter 'black'
+black==22.12.0
+# # black install the followiing
+# # mypy-extensions==0.4.3
+# # pathspec==0.10.3
+# # platformdirs==2.6.2
+# # tomli==2.0.1
+# # typing_extensions==4.4.0
+# For dev cli
+typer==0.7.0
+# test/dummy data generator
+Faker==15.3.4

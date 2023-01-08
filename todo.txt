@@ -22,6 +22,16 @@ Payment tracker simplified:
 id	    description	    payee_id	amount	status  created_at  paid_at
 	    Consultation			            0/1
 	    Medicine			
+>>
+create > return to view for single user (menu: view for single patient, list all, treatment)
+list all - filter by paid/unpaid/datestart/dateend/patient/description
+edit - specific payment by payment_id. return to view for single user
+view for single patient: list all payment of patient, show summary (menu: create/list for the user)
+delete: visible in single patient list, list all, return to inception view
+menu in treatment(view), 
+menu in left side bar (list/create)
+dashboard view paid total/unpaid total/paid this month/unpaid this month
+
 -
 
 

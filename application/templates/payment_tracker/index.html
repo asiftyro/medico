@@ -1,0 +1,183 @@
+{% extends 'layout/layout.html' %}
+{% from 'layout/helper.html' import breadcrumb, case_photo_modal %}
+
+{% block style %}{% endblock style %}
+
+{% block javascript %}{% endblock javascript %}
+
+{% block title %}Payment Tracker{% endblock title %}
+
+{% block breadcrumb %}
+
+{{
+  breadcrumb({
+    'Admin':  url_for('admin_bp.index'), 
+    'Payment Tracker': ''
+  }) 
+}}
+{% endblock breadcrumb %}
+
+{% block pageheader %}
+<div class="d-flex justify-content-between flex-wrap align-items-center">
+  <div class="h2 mt-1">Payment Tracker</div>
+  <div class="btn-group">
+    <a class="btn  btn-outline-dark" href="{{url_for('dashboard_bp.index')}}">{{render_icon('bar-chart')}} Dashboard</a>
+    <button type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+      <span class="visually-hidden">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="javascript:void(0)">{{render_icon('card-list')}}&nbsp;TODO</a>
+      <li><a class="dropdown-item" href="javascript:void(0)">{{render_icon('card-list')}}&nbsp;TODO</a>
+    </ul>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+  <div class="col">
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between">
+        <span><b>Payment Instructions</b></span>
+        <a data-bs-toggle="collapse" data-bs-target="#medicine-index" aria-expanded="false" href="javascript:void(0)" class="border px-3 text-muted">
+          {{render_icon('layout-sidebar')}}
+        </a>
+      </div>
+      <div class="card-body collapse show mb-4 p-3" id="medicine-index">
+        <!-- Filter Title -->
+        <div class="row">
+          <div class="col">
+            <small class="fw-bold">Filter:</small>
+            <hr class="mb-0">
+          </div>
+        </div>
+        <!-- Filter Form -->
+        <form class="row" action="{{url_for('payment_tracker_bp.instructions')}}" method="post">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <div class="col-md-3 mt-2">
+            <label for="id" class="form-label">Instruction Id</label>
+            <input class="form-control form-control-sm" name="id" id="id" type="text" value="{{id}}">
+          </div>
+          <div class="col-md-3 mt-2">
+            <label for="patient_id" class="form-label">Patient</label>
+            <select class="form-select form-select-sm" name="patient_id" id="patient_id">
+              <option value="" {{'selected' if patient_id=='' else ''}}></option>
+              {% for pat in patients %}
+              <option value="{{pat.id}}" {{'selected' if pat.id|string==patient_id else ''}}>{{pat.fullname}} - {{pat.username}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-md-3 mt-2">
+            <label for="description" class="form-label">Description</label>
+            <select class="form-select form-select-sm" name="description" id="description">
+              <option value="" {{'selected' if description=='' else ''}}></option>
+              <option value="Consultation" {{'selected' if description=='Consultation' else ''}}>Consultation</option>
+              <option value="Medicine" {{'selected' if description=='Medicine' else ''}}>Medicine</option>
+            </select>
+          </div>
+          <div class="col-md-3 mt-2">
+            <label for="payment_status" class="form-label">Payment Status</label>
+            <select class="form-select form-select-sm" name="payment_status" id="payment_status">
+              <option value="" {{'selected' if payment_status=='' else ''}}></option>
+              <option value="1" {{'selected' if payment_status=='1' else ''}}>Paid</option>
+              <option value="0" {{'selected' if payment_status=='0' else ''}}>Unpaid</option>
+            </select>
+          </div>
+          <div class="col-md-3 mt-2">
+            <label for="created_at_start" class="form-label">Created at Start</label>
+            <input class="form-control form-control-sm" name="created_at_start" id="created_at_start" type="date" value="{{created_at_start}}">
+          </div>
+          <div class="col-md-3 mt-2">
+            <label for="created_at_end" class="form-label">Created at End</label>
+            <input class="form-control form-control-sm" name="created_at_end" id="created_at_end" type="date" value="{{created_at_end}}">
+          </div>
+          <div class="col-md-3 mt-2">
+            <label for="paid_at_start" class="form-label">Paid at Start</label>
+            <input class="form-control form-control-sm" name="paid_at_start" id="paid_at_start" type="date" value="{{paid_at_start}}">
+          </div>
+          <div class="col-md-3 mt-2">
+            <label for="paid_at_end" class="form-label">Paid at End</label>
+            <input class="form-control form-control-sm" name="paid_at_end" id="paid_at_end" type="date" value="{{paid_at_end}}">
+          </div>
+          <div class="col-12 mt-3 text-end">
+            <a name="submit_filter_clear" id="submit_filter_clear" class="btn btn-secondary" href="{{url_for('payment_tracker_bp.instructions')}}">{{render_icon('arrow-repeat')}} Clear Filter</a>
+            <button type="submit" name="submit_filter" id="submit_filter" class="btn btn-dark">{{render_icon('funnel')}} Filter</button>
+          </div>
+        </form>
+        <!-- divider -->
+        <div class="row">
+          <div class="col">
+            <hr>
+          </div>
+        </div>
+        <!-- table -->
+        <div class="row">
+          <div class="col-12">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="table-dark">
+                  <tr>
+                    <th class="text-nowrap">Actions</th>
+                    <th class="text-nowrap">Instruction ID</th>
+                    <th class="text-nowrap">Description</th>
+                    <th class="text-nowrap">Patient</th>
+                    <th class="text-nowrap">Amount</th>
+                    <th class="text-nowrap">Payment Status</th>
+                    <th class="text-nowrap">Created At</th>
+                    <th class="text-nowrap">Paid At</th>
+                  </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                  {% for paym in payment_instr %}
+                  <tr>
+                    <td>
+                      <div class="btn-group align-items-start">
+                        <a class="btn btn-sm  btn-outline-dark" href="#">{{render_icon('folder2-open')}}</a>
+                        <button type="button" class="btn btn-sm btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                          <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">{{render_icon('trash')}}Delete</a></li>
+                        </ul>
+                      </div>
+                    </td>
+                    <td>{{paym.id}}</td>
+                    <td>{{paym.description}}</td>
+                    <td>{{paym.patient_desc.username}} <br><small>{{paym.patient_desc.fullname}}</small> </td>
+                    <td>{{paym.amount}}</td>
+                    <td><span class="badge rounded-pill bg-{{'success' if paym.payment_status else 'danger'}}">{{'Paid' if paym.payment_status else 'Unpaid'}}</span></td>
+                    <td>{{paym.created_at|local_datetime('d')}}</td>
+                    <td>{{paym.paid_at if paym.paid_at else '-'}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="col-12 mt-4">
+            {{ render_pagination(
+                payment_instr, 
+                align='left',
+                args={
+                    'id': id,
+                    'patient_id': patient_id,
+                    'description': description,
+                    'payment_status': payment_status,
+                    'created_at_start': created_at_start,
+                    'created_at_end': created_at_end,
+                    'paid_at_start': paid_at_start,
+                    'paid_at_end': paid_at_end,
+                }) 
+            }}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
