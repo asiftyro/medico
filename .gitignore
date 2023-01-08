@@ -10,7 +10,9 @@ bkp.txt
 .DS_Store
 
 
-
+# server
+uwsgi.ini
+medico.pid
 
 
 # Byte-compiled / optimized / DLL files
