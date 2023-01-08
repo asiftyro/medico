@@ -281,25 +281,25 @@ class ParcelForm(FlaskForm):
     save_parcel_form = SubmitField("Save")
 
 
-class PaymentInstructionForm(FlaskForm):
+class PaymentInstructionCreateForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         usr = [("", "")] + [(u.id, u.fullname + " - " + u.username) for u in User.query.filter((User.admin!=1) & User.active==1).order_by(User.fullname).all()]
         self.patient_id.choices = usr
 
-    on_success_return_to_url = HiddenField("on_success_return_to_url")
     patient_id = SelectField("Patient", validators=[InputRequired()])
     description = SelectField("Description", choices=[("Consultation", "Consultation"), ("Medicine", "Medicine")])
     amount = DecimalField("Amount", validators=[InputRequired()])
     payment_status = SelectField("Payment Status", choices=[(0, "Unpaid"), (1, "Paid")])
     paid_at = DateField("Paid At", validators=[Optional(strip_whitespace=True)], filters=[lambda x: x or None])
-    save_payment_status = SubmitField("Save")
+    save_created_payment_status = SubmitField("Save")
 
-
-class PaymentInstructionSearchForm(FlaskForm):
-    patient = SelectField("Patient", choices=[(0, "Unpaid"), (1, "Paid")])
-    payment_status = SelectField("Payment Status", choices=[(0, "Unpaid"), (1, "Paid")])
-    start_date = DateField("Start Date")
-    end_date = DateField("End Date")
+class PaymentInstructionEditForm(FlaskForm):
     description = SelectField("Description", choices=[("Consultation", "Consultation"), ("Medicine", "Medicine")])
-    search_payment_instruction = SubmitField("Search")
+    amount = DecimalField("Amount", validators=[InputRequired()])
+    payment_status = SelectField("Payment Status", choices=[(0, "Unpaid"), (1, "Paid")])
+    save_edited_payment_status = SubmitField("Save")
+
+
+
+

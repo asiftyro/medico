@@ -5,7 +5,7 @@
 
 {% block javascript %} {% endblock javascript %}
 
-{% block title %}Add Payment Instruction{% endblock title %}
+{% block title %}Edit Payment Instruction{% endblock title %}
 
 {% block breadcrumb %}
 
@@ -13,7 +13,7 @@
     breadcrumb({
         'Admin':  url_for('admin_bp.index'), 
         'Payment Tracker': url_for('payment_tracker_bp.instructions'),
-        'Add Instruction': ''
+        'Edit Instruction # ' ~ paym_instr.id : ''
       }) 
 }}
 {% endblock breadcrumb %}
@@ -40,13 +40,25 @@
   <div class="col">
     <div class="card mb-4">
       <div class="card-header d-flex justify-content-between">
-        <span><b>Create Payment Instruction</b></span>
+        <span><b>Edit Payment Instruction</b></span>
         <a aria-expanded="false" href="javascript:void(0)" class="border px-3 text-muted">
           {{render_icon('layout-sidebar')}}
         </a>
       </div>
       <div class="card-body mb-4 p-3" id="medicine-index">
-        {{ render_form(payment_instr_form, action=url_for('payment_tracker_bp.create'), method='post') }}
+        <div class="p-1 mb-4 w-md-50">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item list-group-item-dark">Payment Instruction: <b>{{paym_instr.id}}</b></li>
+            <li class="list-group-item list-group-item-dark">Patient: <b>{{paym_instr.patient_desc.username}} / {{paym_instr.patient_desc.fullname}}</b></li>
+            <li class="list-group-item list-group-item-dark">Created At: <b>{{paym_instr.created_at|local_datetime('d')}}</b></li>
+            {% if paym_instr.paid_at %}
+            <li class="list-group-item list-group-item-dark">Paid At: <span class="badge bg-success text-bg-primary fw-bold">{{paym_instr.paid_at|local_datetime('d')}}</span></li>
+            {% else %}
+            <li class="list-group-item list-group-item-dark">Paid At: <span class="badge bg-danger text-bg-primary fw-bold">Unpaid</span></b></li>
+            {% endif %}
+          </ul>
+        </div>
+        {{ render_form(payment_instr_edit_form, action=url_for('payment_tracker_bp.edit', id=paym_instr.id), method='post') }}
       </div>
     </div>
   </div>

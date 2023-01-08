@@ -29,7 +29,7 @@ def local_datetime(dttm, format="s"):
     if not dttm:
         return
     if not isinstance(dttm, datetime.datetime):
-        dttm = datetime.datetime(dttm.year, dttm.month, dttm.day, 0, 0, 0, 0, tzinfo=datetime.timezone.utc)
+        dttm = datetime.datetime(dttm.year, dttm.month, dttm.day, 23, 59, 59, 0, tzinfo=datetime.timezone.utc)
     local_tzone = current_app.config["LOCAL_TIMEZONE"]
     local_timezone = pytz.timezone(local_tzone)
     if format == "s":  # short ISO like date time

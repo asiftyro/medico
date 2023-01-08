@@ -3,7 +3,17 @@
 
 {% block style %}{% endblock style %}
 
-{% block javascript %}{% endblock javascript %}
+{% block javascript %}
+<script>
+  let paymDeleteForms = document.querySelectorAll('form.paym-instr-delete-form');
+  paymDeleteForms.forEach((thisDeleteForm) => {
+    thisDeleteForm.addEventListener('submit', (event) => {
+      if (!confirm("Are you sure to delete?")) event.preventDefault();
+      return;
+    });
+  });
+</script>
+{% endblock javascript %}
 
 {% block title %}Payment Tracker{% endblock title %}
 
@@ -21,13 +31,12 @@
 <div class="d-flex justify-content-between flex-wrap align-items-center">
   <div class="h2 mt-1">Payment Tracker</div>
   <div class="btn-group">
-    <a class="btn  btn-outline-dark" href="{{url_for('dashboard_bp.index')}}">{{render_icon('bar-chart')}} Dashboard</a>
+    <a class="btn  btn-outline-dark" href="{{ url_for('payment_tracker_bp.create') }}">{{render_icon('cash-coin')}} Create New</a>
     <button type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
       <span class="visually-hidden">Toggle Dropdown</span>
     </button>
     <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="javascript:void(0)">{{render_icon('card-list')}}&nbsp;TODO</a>
-      <li><a class="dropdown-item" href="javascript:void(0)">{{render_icon('card-list')}}&nbsp;TODO</a>
+      <li><a class="dropdown-item" href="{{ url_for('payment_tracker_bp.instructions') }}">{{render_icon('cash-stack')}}&nbsp;Payment Instructions</a>
     </ul>
   </div>
 </div>
@@ -41,11 +50,11 @@
     <div class="card mb-4">
       <div class="card-header d-flex justify-content-between">
         <span><b>Payment Instructions</b></span>
-        <a data-bs-toggle="collapse" data-bs-target="#medicine-index" aria-expanded="false" href="javascript:void(0)" class="border px-3 text-muted">
+        <a data-bs-toggle="collapse" data-bs-target="#payment-instr-card" aria-expanded="false" href="javascript:void(0)" class="border px-3 text-muted">
           {{render_icon('layout-sidebar')}}
         </a>
       </div>
-      <div class="card-body collapse show mb-4 p-3" id="medicine-index">
+      <div class="card-body collapse show mb-4 p-3" id="payment-instr-card">
         <!-- Filter Title -->
         <div class="row">
           <div class="col">
@@ -132,24 +141,44 @@
                 <tbody class="table-group-divider">
                   {% for paym in payment_instr %}
                   <tr>
-                    <td>
-                      <div class="btn-group align-items-start">
-                        <a class="btn btn-sm  btn-outline-dark" href="#">{{render_icon('folder2-open')}}</a>
-                        <button type="button" class="btn btn-sm btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                          <span class="visually-hidden">Toggle Dropdown</span>
+                    <td class="text-nowrap">
+                      <!-- Payment Status Change -->
+                      <form class="d-inline paym-instr-status-form" method="post" action="{{url_for('payment_tracker_bp.change_payment_status', id=paym.id)}}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="return_url" value="{{ return_url }}">
+                        <button type="submit" class="btn btn-sm btn-dark" href="javascript:void(0)">
+                          {% if paym.payment_status %}
+                          {{render_icon('hand-thumbs-down')}}&nbsp;Mark Unpaid
+                          {% else %}
+                          {{render_icon('hand-thumbs-up')}}&nbsp;Mark Paid
+                          {% endif %}
                         </button>
-                        <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="#">{{render_icon('trash')}}Delete</a></li>
-                        </ul>
-                      </div>
+                      </form>
+                      <!-- Edit -->
+                      <form class="d-inline paym-instr-edit-form" method="post" action="{{url_for('payment_tracker_bp.edit', id=paym.id)}}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="return_url" value="{{ return_url }}">
+                        <button type="submit" class="btn btn-sm btn-dark" href="javascript:void(0)">
+                          {{render_icon('pencil')}}&nbsp;Edit
+                        </button>
+                      </form>
+                      <!-- Delete -->
+                      <form class="d-inline paym-instr-delete-form" method="post" action="{{url_for('payment_tracker_bp.delete', id=paym.id)}}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="return_url" value="{{ return_url }}">
+                        <button type="submit" class="btn btn-sm btn-dark" href="javascript:void(0)">
+                          {{render_icon('trash')}}
+                          &nbsp;Delete
+                        </button>
+                      </form>
                     </td>
-                    <td>{{paym.id}}</td>
-                    <td>{{paym.description}}</td>
-                    <td>{{paym.patient_desc.username}} <br><small>{{paym.patient_desc.fullname}}</small> </td>
-                    <td>{{paym.amount}}</td>
-                    <td><span class="badge rounded-pill bg-{{'success' if paym.payment_status else 'danger'}}">{{'Paid' if paym.payment_status else 'Unpaid'}}</span></td>
-                    <td>{{paym.created_at|local_datetime('d')}}</td>
-                    <td>{{paym.paid_at if paym.paid_at else '-'}}</td>
+                    <td class="text-nowrap">{{paym.id}}</td>
+                    <td class="text-nowrap">{{paym.description}}</td>
+                    <td class="text-nowrap">{{paym.patient_desc.username}} <br><small>{{paym.patient_desc.fullname}}</small> </td>
+                    <td class="text-nowrap">{{paym.amount}}</td>
+                    <td class="text-nowrap"><span class="badge rounded-pill bg-{{'success' if paym.payment_status else 'danger'}}">{{'Paid' if paym.payment_status else 'Unpaid'}}</span></td>
+                    <td class="text-nowrap">{{paym.created_at|local_datetime('d')}}</td>
+                    <td class="text-nowrap">{{paym.paid_at|local_datetime('d') if paym.paid_at else '-'}}</td>
                   </tr>
                   {% endfor %}
                 </tbody>
@@ -160,7 +189,7 @@
           <div class="col-12 mt-4">
             {{ render_pagination(
                 payment_instr, 
-                align='left',
+                align='right',
                 args={
                     'id': id,
                     'patient_id': patient_id,
@@ -173,7 +202,6 @@
                 }) 
             }}
           </div>
-
         </div>
       </div>
     </div>
