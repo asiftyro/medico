@@ -1,0 +1,2 @@
+# For production
+uWSGI==2.0.21

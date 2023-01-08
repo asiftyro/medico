@@ -8,7 +8,10 @@ from wtforms import (
     PasswordField,
     BooleanField,
     HiddenField,
+    DecimalField,
 )
+
+
 from wtforms.validators import ValidationError, Email, InputRequired, Optional, Length, EqualTo
 from flask_wtf.file import FileField, FileAllowed
 from application.model import User
@@ -189,7 +192,9 @@ class ConversationForm(FlaskForm):
     conversation_attachment = FileField(
         "Send Photo/Video",
         validators=[
-            FileAllowed(["jpg", "png", "jpeg", "mpeg", "mpg", "aac", "avi", "mov", "mp4"], "Allowed Images & Video only.")
+            FileAllowed(
+                ["jpg", "png", "jpeg", "mpeg", "mpg", "aac", "avi", "mov", "mp4"], "Allowed Images & Video only."
+            )
         ],
     )
     send = SubmitField("Send")
@@ -274,3 +279,27 @@ class ParcelForm(FlaskForm):
         "Parcel date", validators=[Optional(strip_whitespace=True)], filters=[lambda x: x or None]
     )
     save_parcel_form = SubmitField("Save")
+
+
+class PaymentInstructionCreateForm(FlaskForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        usr = [("", "")] + [(u.id, u.fullname + " - " + u.username) for u in User.query.filter((User.admin!=1) & User.active==1).order_by(User.fullname).all()]
+        self.patient_id.choices = usr
+
+    patient_id = SelectField("Patient", validators=[InputRequired()])
+    description = SelectField("Description", choices=[("Consultation", "Consultation"), ("Medicine", "Medicine")])
+    amount = DecimalField("Amount", validators=[InputRequired()])
+    payment_status = SelectField("Payment Status", choices=[(0, "Unpaid"), (1, "Paid")])
+    paid_at = DateField("Paid At", validators=[Optional(strip_whitespace=True)], filters=[lambda x: x or None])
+    save_created_payment_status = SubmitField("Save")
+
+class PaymentInstructionEditForm(FlaskForm):
+    description = SelectField("Description", choices=[("Consultation", "Consultation"), ("Medicine", "Medicine")])
+    amount = DecimalField("Amount", validators=[InputRequired()])
+    payment_status = SelectField("Payment Status", choices=[(0, "Unpaid"), (1, "Paid")])
+    save_edited_payment_status = SubmitField("Save")
+
+
+
+
