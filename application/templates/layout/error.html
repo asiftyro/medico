@@ -1,14 +1,21 @@
 {% extends 'layout/layout_secondary.html' %}
 {% block title %}
+
 {{ error.name }}
 {% endblock %}
 {% block content %}
 <div class='row'>
   <div class='col text-center mt-5'>
-    <h1>{{ error.code }} - {{ error.name }}</h1>
-    <h5>{{ error.description}}</h5>
+    <h1>
+      {{ error.code }} -
+      {{ error.name }}
+    </h1>
+    <h5>
+      {{ error.description}}
+    </h5>
 
     <h5 class="mt-5">
+      {# if 401-Unauthorized or 440-Login Time-out #}
       {% if error.code == 401 or error.code == 440 %}
       <a class="btn btn-dark" href='{{ url_for("auth_bp.login") }}'><b>&crarr; Login</b></a>
       {% else %}
