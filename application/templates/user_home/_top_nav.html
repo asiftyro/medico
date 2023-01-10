@@ -18,12 +18,12 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link fw-bold" href="javascript:void(0)" onclick="location.hash='#__prescription'" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">
+          <a class="nav-link fw-bold use-scroll" href="#__prescription" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">
             {{render_icon('journals')}} Prescription
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link fw-bold" href="javascript:void(0)" onclick="location.hash='#__conversation'" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">
+          <a class="nav-link fw-bold use-scroll" href="#__conversation" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">
             {{render_icon('envelope')}} Conversation (<span id="navUnreadMsgCount">{{unread_conversation_count}}</span>)
           </a>
         </li>
@@ -32,7 +32,7 @@
             {{render_icon('person-fill')}} {{user.fullname}}
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPatientTopNav">
-            <li><a class="dropdown-item" href="javascript:void(0)" onclick="location.hash='#__payment'">Payments</a></li>
+            <li><a class="dropdown-item use-scroll" href="#__payment" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Payments</a></li>
             <li><a class="dropdown-item" href="{{ url_for('user_home_bp.change_password') }}">Change my Password</a></li>
             <li>
               <hr class="dropdown-divider" />
