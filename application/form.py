@@ -14,7 +14,7 @@ from wtforms import (
 
 from wtforms.validators import ValidationError, Email, InputRequired, Optional, Length, EqualTo
 from flask_wtf.file import FileField, FileAllowed
-from application.model import User
+from application.model import User, PaymentDescription, PaymentMethod
 
 
 class NumbersOnly(object):
@@ -281,25 +281,35 @@ class ParcelForm(FlaskForm):
     save_parcel_form = SubmitField("Save")
 
 
-class PaymentInstructionCreateForm(FlaskForm):
+class PaymentInstructionBaseForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        usr = [("", "")] + [(u.id, u.fullname + " - " + u.username) for u in User.query.filter((User.admin!=1) & User.active==1).order_by(User.fullname).all()]
-        self.patient_id.choices = usr
+        paym_method = [("", "")] + [(p.payment_method, p.payment_method) for p in PaymentMethod.query.all()]
+        paym_desc = [("", "")] + [
+            (p.payment_description, p.payment_description) for p in PaymentDescription.query.all()
+        ]
+        self.payment_method.choices = paym_method
+        self.payment_description.choices = paym_desc
 
-    patient_id = SelectField("Patient", validators=[InputRequired()])
-    description = SelectField("Description", choices=[("Consultation", "Consultation"), ("Medicine", "Medicine")])
+    payment_description = SelectField("Payment Description", validators=[InputRequired()])
+    payment_method = SelectField("Payment Method", validators=[InputRequired()])
     amount = DecimalField("Amount", validators=[InputRequired()])
     payment_status = SelectField("Payment Status", choices=[(0, "Unpaid"), (1, "Paid")])
-    paid_at = DateField("Paid At", validators=[Optional(strip_whitespace=True)], filters=[lambda x: x or None])
+
+
+class PaymentInstructionCreateForm(PaymentInstructionBaseForm):
+    patient_id = SelectField("Patient", validators=[InputRequired()])
     save_created_payment_status = SubmitField("Save")
 
-class PaymentInstructionEditForm(FlaskForm):
-    description = SelectField("Description", choices=[("Consultation", "Consultation"), ("Medicine", "Medicine")])
-    amount = DecimalField("Amount", validators=[InputRequired()])
-    payment_status = SelectField("Payment Status", choices=[(0, "Unpaid"), (1, "Paid")])
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        usr = [("", "")] + [
+            (u.id, u.fullname + " - " + u.username)
+            for u in User.query.filter((User.admin != 1) & User.active == 1).order_by(User.fullname).all()
+        ]
+        self.patient_id.choices = usr
+
+class PaymentInstructionEditForm(PaymentInstructionBaseForm):
+    visible_to_patient = BooleanField('Notify Patient')
     save_edited_payment_status = SubmitField("Save")
-
-
-
 

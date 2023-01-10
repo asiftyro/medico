@@ -1,6 +1,32 @@
 URGENT: Route fix: 1. in treatment page conversation list should come from conversation.py route file 2. Patient send msg should post in conversation.py route 3. 1. in patient page conversation list should come from conversation.py route file
 
+DONE In patient index page, make all Action buttons in Table btn-dark
+
+NOW:
+DONE Upgrade payment tracker:
+DONE update filter: add payment method and if-notified
+DONE in payment tracker instruction (all) page, make action buttons in table smaller
+DONE    take from db:
+DONE        payment method
+DONE        payment description
+DONE    update form:
+DONE        create
+DONE        edit: beside above two field, also add Notify patient check box: it wil update visible_to_patient to 1
+DONE    update list view: add column payment method and description
+DONE                        add action button Notify custommer: mute/unmute icon
+
+Patient View:
+*** Payment Invoice
+DONE    Payment notice in Home page
+DOME    Add section to show historical payment statement
+DONE    Unread message count in menu
+
+*** Add route in payment tracker to add/edit/delete Payment Method amd Payment Description
 ** dashboard view paid total/unpaid total/paid this month/unpaid this month
+--
+
+
+
 ** site home page (design+address+menu+map+contact)
 ** remove conversation.html [No longer needed]
 ** Delete/Manage Old Image  (Write a script to get image names from db, then delete others from avatar and case-photo dir)

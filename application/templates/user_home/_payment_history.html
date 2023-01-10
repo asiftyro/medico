@@ -1,0 +1,44 @@
+<div class="card mb-3">
+  <div class="card-header d-flex justify-content-between">
+    <span><b>Payment History</b></span>
+    <div>
+      <a data-bs-toggle="collapse" data-bs-target="#patient-payment" aria-expanded="false" href="javascript:void(0)" class="border px-2 text-muted">
+        {{render_icon('layout-sidebar')}}
+      </a>
+    </div>
+  </div>
+  <div class="row g-0 collapse show" id="patient-payment">
+    <div class="row mb-3">
+      {% if payment %}
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="text-nowrap">Payment ID</th>
+              <th class="text-nowrap">Status</th>
+              <th class="text-nowrap">Description</th>
+              <th class="text-nowrap">Amount (Tk)</th>
+              <th class="text-nowrap">Billed At</th>
+              <th class="text-nowrap">Settled At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for paym in payment %}
+            <tr>
+              <td class="text-nowrap">{{paym.id}}</td>
+              <td class="text-nowrap"><span class="badge bg-{{'success' if paym.payment_status else 'danger' }} rounded-pill">{{'Paid' if paym.payment_status else 'Unpaid'}}</span></td>
+              <td class="text-nowrap">{{paym.description}}</td>
+              <td class="text-nowrap">{{paym.amount}}</td>
+              <td class="text-nowrap">{{paym.created_at}}</td>
+              <td class="text-nowrap">{{paym.paid_at if paym.paid_at else 'Unsettled'}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="p-3">No Payment yet...</p>
+      {% endif %}
+    </div>
+  </div>
+</div>

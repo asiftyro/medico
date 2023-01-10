@@ -2,7 +2,7 @@ import os
 from flask import Blueprint, render_template, redirect, url_for, flash, request, current_app
 from flask_login import current_user, login_required
 from application.authentication import non_admin_required
-from application.model import User, Conversation, Prescription
+from application.model import User, Conversation, Prescription, PaymentTracker
 from application.form import ConversationForm, ChangePasswordForm
 from application.database import db
 from application.logging import logger
@@ -16,7 +16,7 @@ blueprint = Blueprint("user_home_bp", __name__, url_prefix="/user-home")
 @login_required
 @non_admin_required
 def index():
-    """Patient user view: User(Patient), Prescription, Conversation."""
+    """Patient user view: User(Patient), Prescription, Conversation, Unpaid Bill from PaymentTracker."""
     """Conversation post by user(patient)."""
     user_id = current_user.id
     user = User.query.get(user_id)
@@ -38,6 +38,20 @@ def index():
     for c in conversation:
         if c.read == 0 and (c.author == c.admin_id):
             unread_conversation_count += 1
+
+    payment = (
+        PaymentTracker.query.filter((PaymentTracker.patient_id == user_id) & (PaymentTracker.visible_to_patient==1))
+        .order_by(PaymentTracker.id.desc())
+        .all()
+    )
+
+    unpaid_bill_count = 0
+    unpaid_bill_amount = 0
+    for p in payment:
+        if not p.payment_status:
+            unpaid_bill_count += 1
+            unpaid_bill_amount += p.amount
+    
 
     conv_form = ConversationForm()
     if conv_form.validate_on_submit():
@@ -75,9 +89,12 @@ def index():
     return render_template(
         "user_home/index.html",
         user=user.to_dict(),
+        payment=payment,
         conversation=conversation,
         prescription=prescription,
         unread_conversation_count=unread_conversation_count,
+        unpaid_bill_count=unpaid_bill_count,
+        unpaid_bill_amount=unpaid_bill_amount,
         form=conv_form,
     )
 

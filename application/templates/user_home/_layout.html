@@ -37,6 +37,7 @@
   <title>{{brand.name}} - Patient Home</title>
 </head>
 {% include 'user_home/_top_nav.html'   %}
+
 {{ bootstrap.load_js() }}
 </body>
 
@@ -48,7 +49,6 @@
       </div>
     </div>
     {{ render_messages(dismissible=1,dismiss_animate=1) }}
-    {% include 'user/_patient_info.html' %}
 
     {% block content %} {% endblock %}
   </div>

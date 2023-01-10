@@ -50,6 +50,7 @@ def index():
     if "save_organization_form" in request.form and org_form.validate_on_submit():
         new_logo_name = "default-logo.png"
         if org_form.logo.data:
+            new_logo_name = "logo.png"
             update_org.logo = new_logo_name
             org_logo_path = os.path.join(current_app.config["LOGO_DIR"], new_logo_name)
             save_logo_thumbnail(org_form.logo.data, org_logo_path)

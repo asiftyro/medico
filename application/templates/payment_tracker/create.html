@@ -1,9 +1,21 @@
 {% extends 'layout/layout.html' %}
 {% from 'layout/helper.html' import breadcrumb, case_photo_modal %}
 
-{% block style %} {% endblock style %}
+{% block style %}
+<link href='{{ url_for('static', filename="css/tom-select.bootstrap5.min.css" ) }}' rel="stylesheet" />
+{% endblock style %}
 
-{% block javascript %} {% endblock javascript %}
+{% block javascript %}
+<script src='{{ url_for('static', filename="js/tom-select.base.js" ) }}'></script>
+<script>
+  new TomSelect("#patient_id", {
+    sortField: {
+      field: "text",
+      direction: "asc"
+    }
+  });
+</script>
+{% endblock javascript %}
 
 {% block title %}Add Payment Instruction{% endblock title %}
 
