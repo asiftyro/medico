@@ -37,6 +37,23 @@
 
 {% block javascript %}
 <script>
+  // ------------------------- Nav Scroller without URL.hash ----------------------------------
+  const links = document.querySelectorAll(".use-scroll");
+  for (const link of links) {
+    link.addEventListener("click", clickHandler);
+  }
+
+  function clickHandler(e) {
+    e.preventDefault();
+    const href = this.getAttribute("href");
+    const offsetTop = document.querySelector(href).offsetTop;
+    scroll({
+      top: offsetTop - 200,
+      behavior: "smooth"
+    });
+  }
+
+  // -------------------------Message Counter----------------------------------
   let markMessageAsRead = document.querySelectorAll('.markMessageAsRead');
   for (readStatusLink of markMessageAsRead) {
     readStatusLink.addEventListener('click', async (event) => {
@@ -49,5 +66,6 @@
       let data = await response.text();
     });
   }
+  // -------------------------Message Counter----------------------------------
 </script>
 {% endblock javascript %}
