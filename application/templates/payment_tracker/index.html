@@ -1,9 +1,12 @@
 {% extends 'layout/layout.html' %}
 {% from 'layout/helper.html' import breadcrumb, case_photo_modal %}
 
-{% block style %}{% endblock style %}
+{% block style %}
+<link href='{{ url_for('static', filename="css/tom-select.bootstrap5.min.css" ) }}' rel="stylesheet" />
+{% endblock style %}
 
 {% block javascript %}
+<script src='{{ url_for('static', filename="js/tom-select.base.js" ) }}'></script>
 <script>
   let paymDeleteForms = document.querySelectorAll('form.paym-instr-delete-form');
   paymDeleteForms.forEach((thisDeleteForm) => {
@@ -11,6 +14,13 @@
       if (!confirm("Are you sure to delete?")) event.preventDefault();
       return;
     });
+  });
+
+  new TomSelect("#patient_id", {
+    sortField: {
+      field: "text",
+      direction: "asc"
+    }
   });
 </script>
 {% endblock javascript %}
@@ -63,58 +73,7 @@
           </div>
         </div>
         <!-- Filter Form -->
-        <form class="row" action="{{url_for('payment_tracker_bp.instructions')}}" method="post">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <div class="col-md-3 mt-2">
-            <label for="id" class="form-label">Instruction Id</label>
-            <input class="form-control form-control-sm" name="id" id="id" type="text" value="{{id}}">
-          </div>
-          <div class="col-md-3 mt-2">
-            <label for="patient_id" class="form-label">Patient</label>
-            <select class="form-select form-select-sm" name="patient_id" id="patient_id">
-              <option value="" {{'selected' if patient_id=='' else ''}}></option>
-              {% for pat in patients %}
-              <option value="{{pat.id}}" {{'selected' if pat.id|string==patient_id else ''}}>{{pat.fullname}} - {{pat.username}}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="col-md-3 mt-2">
-            <label for="description" class="form-label">Description</label>
-            <select class="form-select form-select-sm" name="description" id="description">
-              <option value="" {{'selected' if description=='' else ''}}></option>
-              <option value="Consultation" {{'selected' if description=='Consultation' else ''}}>Consultation</option>
-              <option value="Medicine" {{'selected' if description=='Medicine' else ''}}>Medicine</option>
-            </select>
-          </div>
-          <div class="col-md-3 mt-2">
-            <label for="payment_status" class="form-label">Payment Status</label>
-            <select class="form-select form-select-sm" name="payment_status" id="payment_status">
-              <option value="" {{'selected' if payment_status=='' else ''}}></option>
-              <option value="1" {{'selected' if payment_status=='1' else ''}}>Paid</option>
-              <option value="0" {{'selected' if payment_status=='0' else ''}}>Unpaid</option>
-            </select>
-          </div>
-          <div class="col-md-3 mt-2">
-            <label for="created_at_start" class="form-label">Created at Start</label>
-            <input class="form-control form-control-sm" name="created_at_start" id="created_at_start" type="date" value="{{created_at_start}}">
-          </div>
-          <div class="col-md-3 mt-2">
-            <label for="created_at_end" class="form-label">Created at End</label>
-            <input class="form-control form-control-sm" name="created_at_end" id="created_at_end" type="date" value="{{created_at_end}}">
-          </div>
-          <div class="col-md-3 mt-2">
-            <label for="paid_at_start" class="form-label">Paid at Start</label>
-            <input class="form-control form-control-sm" name="paid_at_start" id="paid_at_start" type="date" value="{{paid_at_start}}">
-          </div>
-          <div class="col-md-3 mt-2">
-            <label for="paid_at_end" class="form-label">Paid at End</label>
-            <input class="form-control form-control-sm" name="paid_at_end" id="paid_at_end" type="date" value="{{paid_at_end}}">
-          </div>
-          <div class="col-12 mt-3 text-end">
-            <a name="submit_filter_clear" id="submit_filter_clear" class="btn btn-secondary" href="{{url_for('payment_tracker_bp.instructions')}}">{{render_icon('arrow-repeat')}} Clear Filter</a>
-            <button type="submit" name="submit_filter" id="submit_filter" class="btn btn-dark">{{render_icon('funnel')}} Filter</button>
-          </div>
-        </form>
+        {% include 'payment_tracker/_filter_payment.html'   %}
         <!-- divider -->
         <div class="row">
           <div class="col">
@@ -131,6 +90,8 @@
                     <th class="text-nowrap">Actions</th>
                     <th class="text-nowrap">Instruction ID</th>
                     <th class="text-nowrap">Description</th>
+                    <th class="text-nowrap">Payment Method</th>
+                    <th class="text-nowrap">Patient Notified</th>
                     <th class="text-nowrap">Patient</th>
                     <th class="text-nowrap">Amount</th>
                     <th class="text-nowrap">Payment Status</th>
@@ -146,11 +107,23 @@
                       <form class="d-inline paym-instr-status-form" method="post" action="{{url_for('payment_tracker_bp.change_payment_status', id=paym.id)}}">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="return_url" value="{{ return_url }}">
-                        <button type="submit" class="btn btn-sm btn-dark" href="javascript:void(0)">
+                        <button type="submit" class="btn btn-sm btn-dark font-monospace" href="javascript:void(0)">
                           {% if paym.payment_status %}
-                          {{render_icon('hand-thumbs-down')}}&nbsp;Mark Unpaid
+                          {{render_icon('hand-thumbs-down')}}Unpaid
                           {% else %}
-                          {{render_icon('hand-thumbs-up')}}&nbsp;Mark Paid
+                          {{render_icon('hand-thumbs-up')}}Paid&nbsp;&nbsp;
+                          {% endif %}
+                        </button>
+                      </form>
+                      <!-- Notify Patient -->
+                      <form class="d-inline paym-instr-status-form" method="post" action="{{url_for('payment_tracker_bp.change_patient_notification', id=paym.id)}}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="return_url" value="{{ return_url }}">
+                        <button type="submit" class="btn btn-sm btn-dark font-monospace" href="javascript:void(0)">
+                          {% if paym.visible_to_patient %}
+                          {{render_icon('volume-mute')}}Unnotify
+                          {% else %}
+                          {{render_icon('volume-up')}}Notify&nbsp;&nbsp;
                           {% endif %}
                         </button>
                       </form>
@@ -158,22 +131,23 @@
                       <form class="d-inline paym-instr-edit-form" method="post" action="{{url_for('payment_tracker_bp.edit', id=paym.id)}}">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="return_url" value="{{ return_url }}">
-                        <button type="submit" class="btn btn-sm btn-dark" href="javascript:void(0)">
-                          {{render_icon('pencil')}}&nbsp;Edit
+                        <button type="submit" class="btn btn-sm btn-dark font-monospace" href="javascript:void(0)">
+                          {{render_icon('pencil')}}Edit
                         </button>
                       </form>
                       <!-- Delete -->
                       <form class="d-inline paym-instr-delete-form" method="post" action="{{url_for('payment_tracker_bp.delete', id=paym.id)}}">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="return_url" value="{{ return_url }}">
-                        <button type="submit" class="btn btn-sm btn-dark" href="javascript:void(0)">
-                          {{render_icon('trash')}}
-                          &nbsp;Delete
+                        <button type="submit" class="btn btn-sm btn-danger font-monospace" href="javascript:void(0)">
+                          {{render_icon('trash')}}Delete
                         </button>
                       </form>
                     </td>
                     <td class="text-nowrap">{{paym.id}}</td>
-                    <td class="text-nowrap">{{paym.description}}</td>
+                    <td class="text-nowrap">{{paym.payment_description}}</td>
+                    <td class="text-nowrap">{{paym.payment_method}}</td>
+                    <td class="text-nowrap"><span class="badge rounded-pill bg-{{'info' if paym.visible_to_patient else 'warning'}}">{{'Yes' if paym.visible_to_patient else 'No'}}</span></td>
                     <td class="text-nowrap">{{paym.patient_desc.username}} <br><small>{{paym.patient_desc.fullname}}</small> </td>
                     <td class="text-nowrap">{{paym.amount}}</td>
                     <td class="text-nowrap"><span class="badge rounded-pill bg-{{'success' if paym.payment_status else 'danger'}}">{{'Paid' if paym.payment_status else 'Unpaid'}}</span></td>
@@ -186,19 +160,22 @@
             </div>
           </div>
 
-          <div class="col-12 mt-4">
+          <div class="col-12 mt-4 text-end">
+            <p class="small text-muted">Page: {{payment_instr.page}}/{{payment_instr.pages}}. Records: {{payment_instr.items|length}}/{{payment_instr.total}}</p>
             {{ render_pagination(
                 payment_instr, 
                 align='right',
                 args={
                     'id': id,
                     'patient_id': patient_id,
-                    'description': description,
+                    'payment_description': payment_description,
                     'payment_status': payment_status,
                     'created_at_start': created_at_start,
                     'created_at_end': created_at_end,
                     'paid_at_start': paid_at_start,
                     'paid_at_end': paid_at_end,
+                    'payment_method':payment_method,
+                    'visible_to_patient':visible_to_patient
                 }) 
             }}
           </div>

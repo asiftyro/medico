@@ -1,0 +1,74 @@
+<form class="row" action="{{url_for('payment_tracker_bp.instructions')}}" method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="col-md-4 mt-2">
+    <label for="id" class="form-label">Instruction Id</label>
+    <input class="form-control" name="id" id="id" type="text" value="{{id}}">
+  </div>
+  <div class="col-md-4 mt-2">
+    <label for="patient_id" class="form-label">Patient</label>
+    <select class="form-select" name="patient_id" id="patient_id">
+      <option value="" {{'selected' if patient_id=='' else ''}}></option>
+      {% for pat in patients %}
+      <option value="{{pat.id}}" {{'selected' if pat.id|string==patient_id else ''}}>{{pat.fullname}} - {{pat.username}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-4 mt-2">
+    <label for="payment_description" class="form-label">Description</label>
+    <select class="form-select" name="payment_description" id="payment_description">
+      <option value="" {{'selected' if payment_description=='' else ''}}></option>
+      {% for pm_desc in payment_descriptions %}
+      <option value="{{pm_desc.payment_description}}" {{'selected' if payment_description==pm_desc.payment_description else '' }}>
+        {{pm_desc.payment_description}}
+      </option>
+      {% endfor%}
+    </select>
+  </div>
+  <div class="col-md-4 mt-2">
+    <label for="payment_status" class="form-label">Payment Status</label>
+    <select class="form-select " name="payment_status" id="payment_status">
+      <option value="" {{'selected' if payment_status=='' else ''}}></option>
+      <option value="1" {{'selected' if payment_status=='1' else ''}}>Paid</option>
+      <option value="0" {{'selected' if payment_status=='0' else ''}}>Unpaid</option>
+    </select>
+  </div>
+  <div class="col-md-4 mt-2">
+    <label for="payment_method" class="form-label">Payment Method</label>
+    <select class="form-select" name="payment_method" id="payment_method">
+      <option value="" {{'selected' if payment_method=='' else ''}}></option>
+      {% for pm_meth in payment_methods%}
+      <option value="{{pm_meth.payment_method}}" {{'selected' if payment_method==pm_meth.payment_method else ''}}>
+        {{pm_meth.payment_method}}
+      </option>
+      {% endfor%}
+    </select>
+  </div>
+  <div class="col-md-4 mt-2">
+    <label for="visible_to_patient" class="form-label">Patient Notification</label>
+    <select class="form-select" name="visible_to_patient" id="visible_to_patient">
+      <option value="" {{'selected' if visible_to_patient=='' else ''}}></option>
+      <option value="1" {{'selected' if visible_to_patient=='1' else ''}}>Notified</option>
+      <option value="0" {{'selected' if visible_to_patient=='0' else ''}}>Unnotified</option>
+    </select>
+  </div>
+  <div class="col-md-3 mt-2">
+    <label for="created_at_start" class="form-label">Created at Start</label>
+    <input class="form-control" name="created_at_start" id="created_at_start" type="date" value="{{created_at_start}}">
+  </div>
+  <div class="col-md-3 mt-2">
+    <label for="created_at_end" class="form-label">Created at End</label>
+    <input class="form-control" name="created_at_end" id="created_at_end" type="date" value="{{created_at_end}}">
+  </div>
+  <div class="col-md-3 mt-2">
+    <label for="paid_at_start" class="form-label">Paid at Start</label>
+    <input class="form-control" name="paid_at_start" id="paid_at_start" type="date" value="{{paid_at_start}}">
+  </div>
+  <div class="col-md-3 mt-2">
+    <label for="paid_at_end" class="form-label">Paid at End</label>
+    <input class="form-control" name="paid_at_end" id="paid_at_end" type="date" value="{{paid_at_end}}">
+  </div>
+  <div class="col-12 mt-3 text-end">
+    <a name="submit_filter_clear" id="submit_filter_clear" class="btn btn-secondary" href="{{url_for('payment_tracker_bp.instructions')}}">{{render_icon('arrow-repeat')}} Clear Filter</a>
+    <button type="submit" name="submit_filter" id="submit_filter" class="btn btn-dark">{{render_icon('funnel')}} Filter</button>
+  </div>
+</form>

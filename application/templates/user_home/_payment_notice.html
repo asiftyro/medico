@@ -1,0 +1,56 @@
+<div class="card mb-3">
+  <div class="card-header bg-danger d-flex justify-content-between">
+    <span><b>Payment Notice</b></span>
+    <div>
+      {{render_icon('layout-sidebar')}}
+    </div>
+  </div>
+  <div class="row g-0 collapse show" id="patient-notice">
+    <div class="row mb-3">
+      {% if payment %}
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="text-nowrap">Payment ID</th>
+              <th class="text-nowrap">Status</th>
+              <th class="text-nowrap">Description</th>
+              <th class="text-nowrap">Amount (Tk)</th>
+              <th class="text-nowrap">Billed At</th>
+              <th class="text-nowrap">Payment Method</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for paym in payment %}
+            {% if not paym.payment_status %}
+            <tr>
+              <td class="text-nowrap">{{paym.id}}</td>
+              <td class="text-nowrap"><span class="badge bg-{{'success' if paym.payment_status else 'danger' }} rounded-pill">{{'Paid' if paym.payment_status else 'Unpaid'}}</span></td>
+              <td class="text-nowrap">{{paym.description}}</td>
+              <td class="text-nowrap">{{paym.amount}}</td>
+              <td class="text-nowrap">{{paym.created_at}}</td>
+              <td class="text-nowrap">You can pay through {{paym.payment_method}}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <p class="py-1 px-3 mb-3 text-center">
+        <span class="fw-bold fs-6 text-primary">
+          Total Bill:
+          <svg style="height: 20px; margin-bottom: 2px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5l.415-.207a.75.75 0 011.085.67V10.5m0 0h6m-6 0h-1.5m1.5 0v5.438c0 .354.161.697.473.865a3.751 3.751 0 005.452-2.553c.083-.409-.263-.75-.68-.75h-.745M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          {{unpaid_bill_amount}}
+        </span>
+        <hr class="ms-2 p-0">
+        <span class="ms-2 text-info small">{{render_icon('asterisk')}} You can pay though the payment method instructed above or by cash.</span>
+        <span class="ms-2 text-info small">{{render_icon('asterisk')}} This notice will disappear once payment is settled.</span>
+      </p>
+      {% else %}
+      <p class="p-3 mb-3">No Payment yet...</p>
+      {% endif %}
+    </div>
+  </div>
+</div>

@@ -1,20 +1,38 @@
 {% extends 'user_home/_layout.html' %}
 
 {% block content %}
+
+
+{% if unpaid_bill_count %}
 <div class="row mb-3">
-    <div class="col-12 col-md-6">
-      <div class="p-3">
-        <a id="__prescription" href="#__home" class="text-decoration-none">Home {{render_icon('arrow-up-circle-fill')}}</a>
-      </div>
-      {% include 'user_home/_prescription_list.html' %}
-    </div>
-    <div class="col-12 col-md-6">
-      <div class="p-3">
-        <a id="__conversation" href="#__home" class="text-decoration-none">Home {{render_icon('arrow-up-circle-fill')}}</a>
-      </div>
-      {% include 'user_home/_conversation.html' %}
-    </div>
+  <div class="col-12">
+    {% include 'user_home/_payment_notice.html' %}
   </div>
+</div>
+{% endif %}
+
+{% include 'user/_patient_info.html' %}
+
+<div class="row mb-3">
+  <div class="col-12 col-md-6">
+    <div class="p-3">
+      <a id="__prescription" href="#__home" class="text-decoration-none">Home {{render_icon('arrow-up-circle-fill')}}</a>
+    </div>
+    {% include 'user_home/_prescription_list.html' %}
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="p-3">
+      <a id="__conversation" href="#__home" class="text-decoration-none">Home {{render_icon('arrow-up-circle-fill')}}</a>
+    </div>
+    {% include 'user_home/_conversation.html' %}
+  </div>
+  <div class="col-12">
+    <div class="p-3">
+      <a id="__payment" href="#__home" class="text-decoration-none">Home {{render_icon('arrow-up-circle-fill')}}</a>
+    </div>
+    {% include 'user_home/_payment_history.html' %}
+  </div>
+</div>
 {% endblock %}
 
 {% block javascript %}
@@ -25,6 +43,7 @@
       let convId = event.target.dataset.id;
       event.target.parentElement.innerHTML = '';
       unreadMsgcount.innerHTML = parseInt(unreadMsgcount.innerHTML) - 1;
+      navUnreadMsgCount.innerHTML = unreadMsgcount.innerHTML
       let api_url = `/user-home/set-conversation-as-read/${convId}`;
       let response = await fetch(api_url);
       let data = await response.text();

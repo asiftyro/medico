@@ -235,11 +235,13 @@ class PaymentTracker(db.Model):
     __tablename__ = "paymenttracker"
 
     id = db.Column(db.Integer, primary_key=True)
-    description = db.Column(db.String(128))
+    payment_description = db.Column(db.String(128))
     amount = db.Column(db.Float, default=0)
     patient_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     payment_status = db.Column(db.Integer, default=0)
     paid_at = db.Column(db.Date)
+    payment_method = db.Column(db.String(128))
+    visible_to_patient = db.Column(db.Integer, default=0)
     author = db.Column(db.Integer, db.ForeignKey("user.id"))
     created_at = db.Column(db.Date, default=datetime.datetime.now(datetime.timezone.utc))
     modified_at = db.Column(db.Date, onupdate=datetime.datetime.now(datetime.timezone.utc))
@@ -248,3 +250,38 @@ class PaymentTracker(db.Model):
 
     def __repr__(self):
         return f"<PaymentTracker: {self.id}>"
+
+
+
+
+class PaymentDescription(db.Model):
+
+    __tablename__ = "paymentdescription"
+
+    id = db.Column(db.Integer, primary_key=True)
+    payment_description = db.Column(db.String(128), unique=True)
+    author = db.Column(db.Integer, db.ForeignKey("user.id"))
+    created_at = db.Column(db.Date, default=datetime.datetime.now(datetime.timezone.utc))
+    modified_at = db.Column(db.Date, onupdate=datetime.datetime.now(datetime.timezone.utc))
+    author_desc = db.relationship("User", foreign_keys=author)
+
+    def __repr__(self):
+        return f"<PaymentDescription: {self.id}>"
+
+
+
+
+class PaymentMethod(db.Model):
+
+    __tablename__ = "paymentmethod"
+
+    id = db.Column(db.Integer, primary_key=True)
+    payment_method = db.Column(db.String(128), unique=True)
+    author = db.Column(db.Integer, db.ForeignKey("user.id"))
+    created_at = db.Column(db.Date, default=datetime.datetime.now(datetime.timezone.utc))
+    modified_at = db.Column(db.Date, onupdate=datetime.datetime.now(datetime.timezone.utc))
+    author_desc = db.relationship("User", foreign_keys=author)
+
+    def __repr__(self):
+        return f"<PaymentMethod: {self.id}>"
+        
