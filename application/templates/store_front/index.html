@@ -1,0 +1,132 @@
+{% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'bootstrap5/table.html' import render_table %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% from 'bootstrap5/form.html' import render_form_row %}
+{% from 'bootstrap5/form.html' import render_field %}
+{% from 'bootstrap5/utils.html' import render_messages %}
+{% from 'bootstrap5/nav.html' import render_breadcrumb_item %}
+{% from 'bootstrap5/table.html' import render_table %}
+{% from 'bootstrap5/pagination.html' import render_pagination %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include 'layout/_html_header.html'   %}
+  <title>{{brand.name}}</title>
+
+  <!-- Vendor CSS Files -->
+  <link href="{{url_for('static', filename='store-front/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static', filename='store-front/vendor/aos/aos.css')}}" rel="stylesheet">
+  {{ bootstrap.load_css() }}
+  <link href="{{url_for('static', filename='store-front/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+  <link href="{{url_for('static', filename='store-front/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static', filename='store-front/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{{url_for('static', filename='store-front/css/style.css')}}" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!--  Top Bar  -->
+  <div id="topbar" class="d-flex align-items-center fixed-top">
+    <div class="container d-flex align-items-center justify-content-center justify-content-md-between">
+      <div class="align-items-center d-none d-md-flex">
+        <i class="bi bi-clock"></i> Monday - Saturday, 8AM to 10PM
+      </div>
+      <div class="d-flex align-items-center">
+        <i class="bi bi-phone"></i> Call us now +1 5589 55488 55
+      </div>
+    </div>
+  </div>
+
+  <!--  Header  -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+      <a href="index.html" class="logo me-auto"><img src="{{url_for('static', filename='store-front/img/logo.png')}}" alt="">Homeopath</a>
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a class="nav-link scrollto " href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="#services">Services</a></li>
+          <li><a class="nav-link scrollto" href="#doctors">Doctors</a></li>
+          <li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
+          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+      <a href="#" class="appointment-btn">Patient Login<span class="d-none d-md-inline"></span></a>
+    </div>
+  </header><!-- End Header -->
+
+  <!--  Hero Section  -->
+  <section id="hero">
+    {% include 'store_front/_herocarousel.html'   %}
+  </section><!-- End Hero -->
+
+  <main id="main">
+    <!--  Cta Section  -->
+    <section id="cta" class="cta">
+      {% include 'store_front/_cta.html'   %}
+    </section><!-- End Cta Section -->
+    
+    <!--  Services Section  -->
+    <section id="services" class="about">
+      {% include 'store_front/_services.html'   %}
+    </section><!-- End About Us Section -->
+
+    <!--  Doctors Section  -->
+    <section id="doctors" class="doctors section-bg">
+      {% include 'store_front/_doctor.html'   %}
+    </section><!-- End Doctors Section -->
+
+    <!--  Testimonials Section  -->
+    <section id="testimonials" class="testimonials">
+      {% include 'store_front/_testimonials.html'   %}
+    </section><!-- End Testimonials Section -->
+
+    <!--  Cta Section  -->
+    <section id="cta" class="cta">
+        {% include 'store_front/_cta.html'   %}
+      </section><!-- End Cta Section -->
+
+    <!--  About Section  -->
+    <section id="about" class="featured-services">
+      {% include 'store_front/_about_homeopathy.html'   %}
+    </section><!-- End About Section -->
+
+    <!--  Cta Section  -->
+    <section id="cta" class="cta">
+        {% include 'store_front/_cta.html'   %}
+      </section><!-- End Cta Section -->
+
+    <!--  Frequently Asked Questioins Section  -->
+    <section id="faq" class="faq section-bg">
+    {% include 'store_front/_faq.html'   %}
+    </section><!-- End Frequently Asked Questioins Section -->
+
+    <!--  Contact Section  -->
+    <section id="contact" class="contact">
+        {% include 'store_front/_contact.html'   %}
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+  <!--  Footer  -->
+  <footer id="footer">
+    {% include 'store_front/_footer.html'   %}
+  </footer><!-- End Footer -->
+
+  <!--  Preloader  -->
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  
+  <!-- Vendor JS Files -->
+  <script src="{{url_for('static', filename='store-front/vendor/aos/aos.js')}}"></script>
+  {{ bootstrap.load_js() }}
+  <script src="{{url_for('static', filename='store-front/vendor/swiper/swiper-bundle.min.js')}}"></script>
+  <!-- Template Main JS File -->
+  <script src="{{url_for('static', filename='store-front/js/main.js')}}"></script>
+</body>
+</html>

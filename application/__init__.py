@@ -123,6 +123,7 @@ def create_app(configuration):
     # Register routes/apps
     for route in [
         "index",
+        "store_front",
         "admin",
         "medicine",
         "auth",

@@ -1,0 +1,23 @@
+<div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
+  <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+  <div class="carousel-inner" role="listbox">
+    {% for n in range(1,4) %}
+    <div class="carousel-item active" style="background-image: url({{url_for('static', filename='store-front/img/slide/slide-' ~ n ~ '.jpg')}})">
+      <div class="container">
+        <h2>Welcome to <span>Homeopath</span></h2>
+        <p class="fw-bold">
+          Online Homeopathic treatment for you and your family. Homoeopathic medicines are safe and can cure acute diseases. We are part of you and so we ensure you get the best medical care from us again and again.
+          Our goal is to make the process intuitive for our patients and provide care whereever you are.
+        </p>
+        <a href="#about" class="btn-get-started scrollto">Read More</a>
+      </div>
+    </div>
+    {%endfor%}
+  </div>
+  <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+  </a>
+  <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+    <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+  </a>
+</div>
