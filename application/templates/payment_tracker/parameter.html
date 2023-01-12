@@ -1,0 +1,93 @@
+{% extends 'layout/layout.html' %}
+{% from 'layout/helper.html' import breadcrumb, case_photo_modal %}
+{% block style %} {% endblock style %}
+
+{% block javascript %}
+<script>
+  // // delete 
+    let deleteForms = document.querySelectorAll("form:not(.payment_description_form, .payment_method_form)");
+    for (frm of deleteForms) {
+      frm.addEventListener('submit', (event) => {
+        if (!confirm("Are you sure to delete?")) event.preventDefault();
+      });
+    }
+</script>
+{% endblock javascript %}
+
+{% block title %}Payment Tracker Parameters{% endblock title %}
+
+{% block breadcrumb %}
+
+{{
+    breadcrumb({
+      'Admin':  url_for('admin_bp.index'), 
+      'Payment Tracker': url_for('payment_tracker_bp.instructions'),
+      'Parameters':''
+    }) 
+}}
+{% endblock breadcrumb %}
+
+{% block pageheader %}
+<div class="d-flex justify-content-between flex-wrap align-items-center">
+  <div class="h2 mt-1">Payment Tracker Parameters</div>
+  <div class="btn-group">
+    <a class="btn btn-outline-dark" href="{{ url_for('payment_tracker_bp.instructions') }}">{{render_icon('cash-stack')}}&nbsp;Payment Instructions</a>
+    <button type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+      <span class="visually-hidden">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="{{ url_for('payment_tracker_bp.create') }}">{{render_icon('cash-coin')}} Create New</a>
+    </ul>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col">
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between">
+        <span><b>Payment Tracker Parameters</b></span>
+        <a data-bs-toggle="collapse" data-bs-target="#payment-tracker-param-card" aria-expanded="false" href="javascript:void(0)" class="border px-3 text-muted">
+          {{render_icon('layout-sidebar')}}
+        </a>
+      </div>
+      <div class="card-body collapse show mb-4 p-3" id="payment-tracker-param-card">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            {{ render_form(payment_description_form, action=url_for('payment_tracker_bp.parameter'), method='post', extra_classes='payment_description_form') }}
+            <br>
+            {{ render_table(
+                payment_description,
+                responsive=True,
+                responsive_class='table-responsive',
+                model=payment_description_model, 
+                titles=[('payment_description','Payment Description')],
+                show_actions=True,
+                actions_title='Actions',
+                delete_url= ('payment_tracker_bp.delete_description_parameter', [('id', ':id')])
+              )
+            }}
+          </div>
+          <div class="col-12 col-md-6 border-md-left">
+            {{ render_form(payment_method_form, action=url_for('payment_tracker_bp.parameter'), method='post', extra_classes='payment_method_form') }}
+            <br>
+            {{ render_table(
+                payment_method,
+                responsive=True,
+                responsive_class='table-responsive',
+                model=payment_method_model, 
+                titles=[('payment_method','Payment Method')],
+                show_actions=True,
+                actions_title='Actions',
+                delete_url= ('payment_tracker_bp.delete_method_parameter', [('id', ':id')])
+              )
+            }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

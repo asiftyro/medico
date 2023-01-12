@@ -329,3 +329,26 @@ class PaymentInstructionCreateForm(PaymentInstructionBaseForm):
 class PaymentInstructionEditForm(PaymentInstructionBaseForm):
     visible_to_patient = BooleanField("Notify Patient")
     save_edited_payment_status = SubmitField("Save")
+
+
+class PaymentMethodCreateForm(FlaskForm):
+    payment_method = StringField(
+        "Payment Method",
+        validators=[
+            Unique(PaymentMethod, PaymentMethod.payment_method, "Payment method already exists."),
+            InputRequired(),
+            Length(min=4, max=64),
+        ],
+    )
+    save_payment_method = SubmitField("Add Payment Method")
+
+class PaymentDescriptionCreateForm(FlaskForm):
+    payment_description = StringField(
+        "Payment Description",
+        validators=[
+            Unique(PaymentDescription, PaymentDescription.payment_description, "Payment description already exists."),
+            InputRequired(),
+            Length(min=4, max=64),
+        ],
+    )
+    save_payment_description = SubmitField("Add Payment Description")

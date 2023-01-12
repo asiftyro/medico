@@ -5,11 +5,80 @@ from flask_login import login_required, current_user
 from application.authentication import admin_required
 from application.database import db
 from application.model import PaymentTracker, User, PaymentDescription, PaymentMethod
-from application.form import PaymentInstructionCreateForm, PaymentInstructionEditForm
+from application.form import (
+    PaymentInstructionCreateForm,
+    PaymentInstructionEditForm,
+    PaymentDescriptionCreateForm,
+    PaymentMethodCreateForm,
+)
 from application.helper import string_date_as_timezone
 
 
 blueprint = Blueprint("payment_tracker_bp", __name__, url_prefix="/payment-tracker")
+
+
+@blueprint.route("/delete-method-parameter/<id>", methods=["POST"])
+@login_required
+@admin_required
+def delete_method_parameter(id):
+    obj = PaymentMethod.query.filter(PaymentMethod.id == id).one()
+
+    db.session.delete(obj)
+    db.session.commit()
+
+    flash(f"Payment method '{obj.payment_method}' deleted successfully.", "success")
+    return redirect(url_for("payment_tracker_bp.parameter"))
+
+
+@blueprint.route("/delete-description-parameter/<id>", methods=["POST"])
+@login_required
+@admin_required
+def delete_description_parameter(id):
+    obj = PaymentDescription.query.filter(PaymentDescription.id == id).one()
+
+    db.session.delete(obj)
+    db.session.commit()
+
+    flash(f"Payment description '{obj.payment_description}' deleted successfully.", "success")
+    return redirect(url_for("payment_tracker_bp.parameter"))
+
+
+@blueprint.route("/parameter", methods=["GET", "POST"])
+@login_required
+@admin_required
+def parameter():
+    payment_description_form = PaymentDescriptionCreateForm()
+    payment_method_form = PaymentMethodCreateForm()
+    payment_description = PaymentDescription.query.all()
+    payment_method = PaymentMethod.query.all()
+
+    if "save_payment_method" in request.form and payment_method_form.validate_on_submit():
+        PayMethod = PaymentMethod()
+        payment_method_form.populate_obj(PayMethod)
+        PayMethod.author = current_user.id
+        db.session.add(PayMethod)
+        db.session.commit()
+        flash("New payment method added successfully.", "success")
+        return redirect(url_for("payment_tracker_bp.parameter"))
+
+    if "save_payment_description" in request.form and payment_description_form.validate_on_submit():
+        PayDesc = PaymentDescription()
+        payment_description_form.populate_obj(PayDesc)
+        PayDesc.author = current_user.id
+        db.session.add(PayDesc)
+        db.session.commit()
+        flash("New payment description added successfully.", "success")
+        return redirect(url_for("payment_tracker_bp.parameter"))
+
+    return render_template(
+        "payment_tracker/parameter.html",
+        payment_description_model=PaymentDescription,
+        payment_description=payment_description,
+        payment_method_model=PaymentMethod,
+        payment_method=payment_method,
+        payment_description_form=payment_description_form,
+        payment_method_form=payment_method_form,
+    )
 
 
 @blueprint.route("/edit/<id>", methods=["GET", "POST"])
@@ -116,15 +185,19 @@ def instructions():
     if "submit_filter" in request.form and request.method == "POST":
         id = request.form["id"] if request.form["id"] else id
         patient_id = request.form["patient_id"] if request.form["patient_id"] else patient_id
-        payment_description = request.form["payment_description"] if request.form["payment_description"] else payment_description
+        payment_description = (
+            request.form["payment_description"] if request.form["payment_description"] else payment_description
+        )
         payment_status = request.form["payment_status"] if request.form["payment_status"] else payment_status
         created_at_start = request.form["created_at_start"] if request.form["created_at_start"] else created_at_start
         created_at_end = request.form["created_at_end"] if request.form["created_at_end"] else created_at_end
         paid_at_start = request.form["paid_at_start"] if request.form["paid_at_start"] else paid_at_start
         paid_at_end = request.form["paid_at_end"] if request.form["paid_at_end"] else paid_at_end
         payment_method = request.form["payment_method"] if request.form["payment_method"] else payment_method
-        visible_to_patient = request.form["visible_to_patient"] if request.form["visible_to_patient"] else visible_to_patient
-  
+        visible_to_patient = (
+            request.form["visible_to_patient"] if request.form["visible_to_patient"] else visible_to_patient
+        )
+
         # Build filter query string of page url
         url_query = f"?id={id}&patient_id={patient_id}&payment_description={payment_description}&payment_status={payment_status}&created_at_start={created_at_start}&created_at_end={created_at_end}&paid_at_start={paid_at_start}&paid_at_end={paid_at_end}&payment_method={payment_method}&visible_to_patient={visible_to_patient}"
         # Redirect to built url
@@ -211,7 +284,7 @@ def instructions():
         paid_at_start=paid_at_start,
         paid_at_end=paid_at_end,
         payment_method=payment_method,
-        visible_to_patient=visible_to_patient
+        visible_to_patient=visible_to_patient,
     )
 
 
