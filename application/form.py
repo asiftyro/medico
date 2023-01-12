@@ -65,6 +65,14 @@ class CreateUserForm(FlaskForm):
     )
     password = StringField("Password", validators=[InputRequired(), Length(min=4, max=16)])
     fullname = StringField("Full Name", validators=[InputRequired(), Length(min=4, max=64)])
+    nickname = StringField(
+        "Nick Name",
+        validators=[
+            Unique(User, User.nickname, "Nick name already exists."),
+            InputRequired(),
+            Length(min=2, max=32),
+        ],
+    )
     dob = DateField("Date of Birth", validators=[InputRequired()])
     sex = SelectField("Sex", choices=[("M", "Male"), ("F", "Female"), ("O", "Other")])
     blood = SelectField(
@@ -106,6 +114,14 @@ class EditUserForm(FlaskForm):
         ],
     )
     fullname = StringField("Full Name", validators=[InputRequired(), Length(min=4, max=64)])
+    nickname = StringField(
+        "Nick Name",
+        validators=[
+            Unique(User, User.nickname, "Nick name already exists."),
+            InputRequired(),
+            Length(min=2, max=32),
+        ],
+    )
     dob = DateField("Date of Birth", validators=[InputRequired()])
     sex = SelectField("Sex", choices=[("M", "Male"), ("F", "Female"), ("O", "Other")])
     blood = SelectField(
@@ -309,7 +325,7 @@ class PaymentInstructionCreateForm(PaymentInstructionBaseForm):
         ]
         self.patient_id.choices = usr
 
-class PaymentInstructionEditForm(PaymentInstructionBaseForm):
-    visible_to_patient = BooleanField('Notify Patient')
-    save_edited_payment_status = SubmitField("Save")
 
+class PaymentInstructionEditForm(PaymentInstructionBaseForm):
+    visible_to_patient = BooleanField("Notify Patient")
+    save_edited_payment_status = SubmitField("Save")

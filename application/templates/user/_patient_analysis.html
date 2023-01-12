@@ -8,7 +8,7 @@
         </a>
       </div>
       
-      <div class="row g-0 collapse show" id="patient-analysis">
+      <div class="row g-0 collapse {{'show' if not patient_analysis_card_closed}}" id="patient-analysis">
         <div class="col-md-8">
           <div class="p-3">
           {{user.analysis|safe or "Add analysis notes..."}}

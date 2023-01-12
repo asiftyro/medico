@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(16), unique=True, nullable=False)
     password_hash = db.Column(db.String(128))
     fullname = db.Column(db.String(64), nullable=False)
+    nickname = db.Column(db.String(64), nullable=True)
     dob = db.Column(db.Date, nullable=False)
     sex = db.Column(db.String(1), nullable=False)
     blood = db.Column(db.String(3))
@@ -81,6 +82,7 @@ class User(db.Model, UserMixin):
             "id": self.id,
             "username": self.username,
             "fullname": self.fullname,
+            "nickname": self.nickname,
             "dob": self.dob,
             "dob_str": self.dob.strftime("%Y-%m-%d"),
             "age": "{0.years}y {0.months}m {0.days}d".format(relativedelta(datetime.date.today(), self.dob)),

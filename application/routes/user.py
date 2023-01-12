@@ -162,7 +162,6 @@ def create():
 @login_required
 @admin_required
 def view(username):
-    print(1)
     user = User.query.filter(User.username == username).first_or_404()
     return render_template("user/view.html", user=user.to_dict())
 
@@ -185,7 +184,7 @@ def data():
     search = request.args.get("search")
     if search:
         query = query.filter(
-            db.or_(User.username.like(f"%{search}%"), User.fullname.like(f"%{search}%"), User.dob.like(f"%{search}%"))
+            db.or_(User.username.like(f"%{search}%"), User.nickname.like(f"%{search}%"), User.fullname.like(f"%{search}%"), User.dob.like(f"%{search}%"))
         )
     total = query.count()
 
@@ -196,7 +195,7 @@ def data():
         for s in sort.split(","):
             direction = s[0]
             name = s[1:]
-            if name not in ["username", "fullname", "dob", "sex",'created_at' "active"]:
+            if name not in ["username", "fullname", "nickname", "dob", "sex",'created_at' "active"]:
                 name = "username"
             col = getattr(User, name)
             if direction == "-":

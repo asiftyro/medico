@@ -80,6 +80,10 @@
         name: 'Fullname'
       },
       {
+        id: 'nickname',
+        name: 'Nickname'
+      },
+      {
         id: 'username',
         name: 'Mobile/Username',
       },
@@ -120,7 +124,7 @@
       multiColumn: true,
       server: {
         url: (prev, columns) => {
-          const columnIds = ['username', 'fullname', 'username', 'dob', 'sex', 'created_at', 'active'];
+          const columnIds = ['username', 'fullname', 'nickname', 'username', 'dob', 'sex', 'created_at', 'active'];
           const sort = columns.map(col => (col.direction === 1 ? '+' : '-') + columnIds[col.index]);
           return updateUrl(prev, {
             sort
