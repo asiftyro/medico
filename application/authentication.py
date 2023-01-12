@@ -13,7 +13,8 @@ login_manager = LoginManager()
 # login_manager.login_message_category = 'warning'
 login_success_view_admin = "dashboard_bp.index"
 login_success_view_non_admin = "user_home_bp.index"
-logout_success_view = "auth_bp.login"
+logout_success_view_admin = "auth_bp.login"
+logout_success_view_non_admin = "store_front_bp.index"
 # register_success_view = 'home_bp.index'
 
 

@@ -5,7 +5,8 @@ from application.authentication import (
     admin_required,
     login_success_view_admin,
     login_success_view_non_admin,
-    logout_success_view,
+    logout_success_view_admin,
+    logout_success_view_non_admin,
 )
 from application.form import LoginForm, ChangePasswordForm
 from application.model import User
@@ -44,9 +45,13 @@ def login():
 
 @blueprint.route("/logout", methods=["GET", "POST"])
 def logout():
+    was_admin = current_user.is_admin()
     logout_user()
     flash("Logged out successfully.", "info")
-    return redirect(url_for(logout_success_view))
+    if was_admin:
+        return redirect(url_for(logout_success_view_admin))
+    else:
+        return redirect(url_for(logout_success_view_non_admin))
 
 
 @blueprint.route("/change-password", methods=["GET", "POST"])

@@ -122,11 +122,11 @@ def create_app(configuration):
     Bootstrap5(app)
     # Register routes/apps
     for route in [
+        "auth",
         "index",
         "store_front",
         "admin",
         "medicine",
-        "auth",
         "user_home",
         "dashboard",
         "user",
