@@ -6,25 +6,31 @@
         <div class="footer-info">
           <h3>{{brand.name}}</h3>
           <p>
-            A108 Adam Street <br>
-            NY 535022, USA<br><br>
-            <strong>Phone:</strong> +1 5589 55488 55<br>
-            <strong>Email:</strong> info@example.com<br>
+            Homeo Bhuban
+            <br>
+            Saleha Super Market, Adamjee Nagar
+            <br>
+            Narayanganj, Bangladesh
+            <br>
+            <br>
+            <strong>Phone:</strong> +880-1945-252459
+            <br>
+            <strong>Email:</strong> <a href="mailto:homeopathahsan@gmail.com">homeopathahsan@gmail.com</a><br>
           </p>
           <div class="social-links mt-3">
-            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=100064131609277" class="facebook"><i class="bx bxl-facebook"></i></a>
           </div>
         </div>
       </div>
       <div class="col-lg-2 col-md-6 footer-links">
         <h4>Useful Links</h4>
         <ul>
-          <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-          <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-          <li><i class="bx bx-chevron-right"></i> <a href="#">Doctors</a></li>
-          <li><i class="bx bx-chevron-right"></i> <a href="#">About Homeopathy</a></li>
-          <li><i class="bx bx-chevron-right"></i> <a href="#">Contact</a></li>
-          <li><i class="bx bx-chevron-right"></i> <a href="#">Patient Login</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="{{ url_for('store_front_bp.index' ) }}">Home</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="#services">Services</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="#doctors">Doctors</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="#about">About Homeopathy</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="#contact">Contact</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="{{ url_for('auth_bp.login' ) }}">Patient Login</a></li>
         </ul>
       </div>
       <div class="col-lg-7 col-md-12">

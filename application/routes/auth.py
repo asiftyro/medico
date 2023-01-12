@@ -47,7 +47,7 @@ def login():
 def logout():
     was_admin = current_user.is_admin()
     logout_user()
-    flash("Logged out successfully.", "info")
+    flash("Logged out. Please Login.", "info")
     if was_admin:
         return redirect(url_for(logout_success_view_admin))
     else:
