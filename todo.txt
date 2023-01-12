@@ -1,3 +1,25 @@
+tabs should be closed by default except chat
+ayub script bioo
+tipu bio
+
+add nick name in user
+
+3 pic
+
+Now:
+Store front (use temporary route prefix /store-front, later change to / and remove index_bp)
+    - Add Route
+    - Assign Assets
+    - Clean Assets
+    - Make store from admin panel, use a single table for key value pair
+
+
+URGENT: Update README + keep zsh files in a dir names shell-scripts + keep dev helper scripts in a dir named dev-tools
+
+URGENT: Option for multiple doctors. Make a super admin page from where additional admin can be added
+
+URGENT: Invoice
+
 URGENT: Route fix: 1. in treatment page conversation list should come from conversation.py route file 2. Patient send msg should post in conversation.py route 3. 1. in patient page conversation list should come from conversation.py route file
 
 DONE In patient index page, make all Action buttons in Table btn-dark
