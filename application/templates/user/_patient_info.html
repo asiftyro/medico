@@ -21,12 +21,14 @@
                   <div>{{user.fullname or "-"}}</div>
                 </div>
               </li>
+              {% if current_user.admin %}
               <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
                   <div class="small text-muted">Nickname</div>
                   <div>{{user.nickname or '-'}}</div>
                 </div>
               </li>
+              {% endif %}
               <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
                   <div class="small text-muted">Date of Birth (Age)</div>
