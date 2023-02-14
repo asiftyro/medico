@@ -8,4 +8,4 @@ blueprint = Blueprint("store_front_bp", __name__, url_prefix="/")
 # Public route, open for all
 @blueprint.route("/", methods=["GET"])
 def index():
-    return render_template("store_front/index.html")
+    return redirect("http://homeopathbd.xyz/")
