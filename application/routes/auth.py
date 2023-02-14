@@ -51,7 +51,7 @@ def logout():
     if was_admin:
         return redirect(url_for(logout_success_view_admin))
     else:
-        return redirect(url_for(logout_success_view_non_admin))
+        return redirect("http://homeopathbd.xyz/")
 
 
 @blueprint.route("/change-password", methods=["GET", "POST"])
