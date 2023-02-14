@@ -19,7 +19,7 @@
       {% if error.code == 401 or error.code == 440 %}
       <a class="btn btn-dark" href='{{ url_for("auth_bp.login") }}'><b>&crarr; Login</b></a>
       {% else %}
-      <a class="btn btn-dark" href='{{ url_for("index_bp.index") }}'><b>&crarr; Home</b></a>
+      <a class="btn btn-dark" href='{{ url_for("store_front_bp.index") }}'><b>&crarr; Home</b></a>
       {% endif %}
     </h5>
     {% set img_name = error.code ~ '.svg' %}
