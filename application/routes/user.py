@@ -1,5 +1,6 @@
 import os
 import copy
+import datetime
 from flask import Blueprint, render_template, request, redirect, url_for, current_app, flash
 from flask_login import current_user
 from flask_login import login_required
@@ -148,6 +149,15 @@ def create():
             save_user_avatar_thumbnail(avatar, user_avatar_path)
             user.avatar = unique_avatar_name
         user.author = current_user.id
+
+        # Reverse calculate DOB from age (appx)
+        cur_date = datetime.datetime.now()
+        offset_year = int(create_user_form.age.data)
+        calc_year = cur_date.year - offset_year
+        calc_date = datetime.datetime(calc_year, cur_date.month,cur_date.day,0,0,1,1)
+        user.dob = calc_date
+
+
         db.session.add(user)
         db.session.commit()
         flash("Patient information added.", "success")

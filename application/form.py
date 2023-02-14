@@ -73,7 +73,8 @@ class CreateUserForm(FlaskForm):
             Length(min=2, max=32),
         ],
     )
-    dob = DateField("Date of Birth", validators=[InputRequired()])
+    # dob = DateField("Date of Birth", validators=[InputRequired()])
+    age = StringField("Age", validators=[NumbersOnly(),InputRequired()])
     sex = SelectField("Sex", choices=[("M", "Male"), ("F", "Female"), ("O", "Other")])
     blood = SelectField(
         "Blood Group",
