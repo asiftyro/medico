@@ -14,7 +14,7 @@ login_manager = LoginManager()
 login_success_view_admin = "dashboard_bp.index"
 login_success_view_non_admin = "user_home_bp.index"
 logout_success_view_admin = "auth_bp.login"
-logout_success_view_non_admin = "store_front_bp.index"
+logout_success_view_non_admin = "http://homeopathbd.xyz/"
 # register_success_view = 'home_bp.index'
 
 
