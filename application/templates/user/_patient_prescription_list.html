@@ -5,7 +5,7 @@
       {{render_icon('layout-sidebar')}}
     </a>
   </div>
-  <div class="row g-0 collapse show" id="patient-prescription">
+  <div class="row g-0 collapse  {{'show' if not patient_prescription_card_closed}}" id="patient-prescription">
     <div class="row">
       <div class="col-6 p-3 mt-2">
         <input class="form-control" id="prescription-search" type="text" placeholder="Search Prescription...">
