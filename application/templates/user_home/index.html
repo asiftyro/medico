@@ -1,5 +1,6 @@
+{% set patient_info_card_closed=1 %}
 {% extends 'user_home/_layout.html' %}
-
+{% from 'layout/helper.html' import case_photo_show_on_modal %}
 {% block content %}
 
 
@@ -21,6 +22,12 @@
     {% include 'user_home/_prescription_list.html' %}
   </div>
   <div class="col-12 col-md-6">
+    <div class="p-3">
+      <a id="__stockmedicine" href="#__home" class="text-decoration-none">Home {{render_icon('arrow-up-circle-fill')}}</a>
+    </div>
+    {% include 'user_home/_stockmedicine.html' %}
+  </div>
+  <div class="col-12 col-md-12">
     <div class="p-3">
       <a id="__conversation" href="#__home" class="text-decoration-none">Home {{render_icon('arrow-up-circle-fill')}}</a>
     </div>

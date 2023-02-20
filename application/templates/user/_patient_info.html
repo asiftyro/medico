@@ -2,7 +2,7 @@
   <div class="col">
     <div class="card mb-3">
       <div class="card-header d-flex justify-content-between">
-        <span><small>Patient</small> - <b>{{user.fullname}} | {{user.username}}</b></span>
+        <span><small>Patient</small> - <b>{{user.fullname|truncate(16, True)}}  {{user.username}}</b></span>
         <a data-bs-toggle="collapse" data-bs-target="#patient-info" aria-expanded="false" href="javascript:void(0)" class="border px-2 text-muted">
           {{render_icon('layout-sidebar')}}
         </a>

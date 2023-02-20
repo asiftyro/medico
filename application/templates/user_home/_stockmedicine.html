@@ -1,0 +1,24 @@
+<div class="card mb-3">
+  <div class="card-header d-flex justify-content-between">
+    <span><b>Stock Medicine</b></span>
+    <div>
+      <a data-bs-toggle="collapse" data-bs-target="#stock-medicine" aria-expanded="false" href="javascript:void(0)" class="border px-2 text-muted">
+        {{render_icon('layout-sidebar')}}
+      </a>
+    </div>
+  </div>
+  <div class="row g-0 collapse show" id="stock-medicine">
+    <div class="row">
+      <div class="col-12 px-3 pt-2 py-2 text-center">
+        <img id="analysis_case_photo_1_preview" src="{{user.case_photo_1}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Case Photo" alt="Case Photo" data-bs-toggle="modal" data-bs-target="#analysis_case_photo_1">
+        <img id="analysis_case_photo_1_preview" src="{{user.case_photo_2}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Case Photo" alt="Case Photo" data-bs-toggle="modal" data-bs-target="#analysis_case_photo_2">
+        <img id="analysis_case_photo_1_preview" src="{{user.case_photo_3}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Case Photo" alt="Case Photo" data-bs-toggle="modal" data-bs-target="#analysis_case_photo_3">
+        <img id="analysis_case_photo_1_preview" src="{{user.case_photo_4}}" class="img-thumbnail thumbnail-case-photo" alt="Case Photo" title="Case Photo" alt="Case Photo" data-bs-toggle="modal" data-bs-target="#analysis_case_photo_4">
+      </div>
+    </div>
+  </div>
+</div>
+{{case_photo_show_on_modal('analysis_case_photo_1',user.fullname, user.case_photo_1)}}
+{{case_photo_show_on_modal('analysis_case_photo_2',user.fullname, user.case_photo_2)}}
+{{case_photo_show_on_modal('analysis_case_photo_3',user.fullname, user.case_photo_3)}}
+{{case_photo_show_on_modal('analysis_case_photo_4',user.fullname, user.case_photo_4)}}
