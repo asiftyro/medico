@@ -69,10 +69,16 @@ class CreateUserForm(FlaskForm):
         "Nick Name",
         validators=[
             Unique(User, User.nickname, "Nick name already exists."),
-            InputRequired(),
-            Length(min=2, max=32),
+            Optional(strip_whitespace=True),
+            Length(max=32),
         ],
+        filters=[lambda x: x or None]
     )
+
+
+
+
+
     # dob = DateField("Date of Birth", validators=[InputRequired()])
     age = StringField("Age", validators=[NumbersOnly(),InputRequired()])
     sex = SelectField("Sex", choices=[("M", "Male"), ("F", "Female"), ("O", "Other")])
