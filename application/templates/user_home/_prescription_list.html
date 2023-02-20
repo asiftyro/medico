@@ -19,7 +19,7 @@
     </div>
     <div class="col-12">
       <ul class="list-group list-group-flush list-group-prescription">
-        {% if not prescription %} <p class="p-3">Add prescription...</p> {%endif%}
+        {% if not prescription %} <p class="p-3">...</p> {%endif%}
         {% for presc in prescription %}
         <li class="list-group-item d-flex justify-content-between align-items-center">
           <a target="_blank" href="{{ url_for('prescription_bp.print_view', prescription_id=presc.id) }}">

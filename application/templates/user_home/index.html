@@ -15,7 +15,9 @@
 {% include 'user/_patient_info.html' %}
 
 <div class="row mb-3">
-  <div class="col-12 col-md-6">
+  
+    {#
+    <div class="col-12 col-md-6">
     <div class="p-3">
       <a id="__prescription" href="#__home" class="text-decoration-none">Home {{render_icon('arrow-up-circle-fill')}}</a>
     </div>
@@ -27,6 +29,15 @@
     </div>
     {% include 'user_home/_stockmedicine.html' %}
   </div>
+  #}
+  
+  <div class="col-12 col-md-12">
+    <div class="p-3">
+        <a id="__prescription" href="#__home" class="text-decoration-none">Home {{render_icon('arrow-up-circle-fill')}}</a>
+      </div>
+    {% include 'user_home/_stockmedicine.html' %}
+  </div>
+
   <div class="col-12 col-md-12">
     <div class="p-3">
       <a id="__conversation" href="#__home" class="text-decoration-none">Home {{render_icon('arrow-up-circle-fill')}}</a>
