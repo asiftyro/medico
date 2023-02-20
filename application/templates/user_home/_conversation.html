@@ -44,7 +44,7 @@
               {% endif %}
             </small>
           </div>
-          <p class="mt-1 mb-1">{{conv_item.conversation}}</p>
+          <p class="mt-1 mb-1 conversation-text {{ 'text-success' if conv_item.author_desc.admin else 'text-primary'}}">{{conv_item.conversation}}</p>
         </div>
       </div>
       {% endfor %}

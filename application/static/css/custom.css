@@ -305,3 +305,7 @@
     height: 35px;
     margin-bottom: 3px;
 }
+
+.conversation-text {
+    font-size: 1.2rem;
+}
