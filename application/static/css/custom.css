@@ -29,7 +29,7 @@
 }
 
 .list-group-conversation-details-wrapper {
-    max-height: 300px;
+    max-height: 700px;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
 }
