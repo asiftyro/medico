@@ -1,5 +1,5 @@
 import os
-from flask import Blueprint, render_template, redirect, url_for, flash, request, current_app
+from flask import Blueprint, render_template, redirect, url_for, flash, request, current_app, abort
 from flask_login import current_user, login_required
 from application.authentication import non_admin_required
 from application.model import User, Conversation, Prescription, PaymentTracker
@@ -107,9 +107,24 @@ def set_conversation_as_read(convId):
     conv.read = 1
     db.session.add(conv)
     db.session.commit()
-    print("EEhaa")
     return "OK"
 
+
+@blueprint.route("/delete-conversation", methods=["POST"])
+@login_required
+@non_admin_required
+def delete_conversation():
+    id = request.form['id']
+    conv = Conversation.query.get(id)
+    if not conv:
+        abort(401)
+    if current_user.id != conv.author:
+        abort(401)
+
+    db.session.delete(conv)
+    db.session.commit()
+    flash("Message deleted.", "success")
+    return redirect(url_for('user_home_bp.index'));
 
 @blueprint.route("/change-password", methods=["GET", "POST"])
 @login_required

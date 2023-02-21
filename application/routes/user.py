@@ -1,7 +1,7 @@
 import os
 import copy
 import datetime
-from flask import Blueprint, render_template, request, redirect, url_for, current_app, flash
+from flask import Blueprint, render_template, request, redirect, url_for, current_app, flash, abort
 from flask_login import current_user
 from flask_login import login_required
 from application.authentication import admin_required
@@ -166,6 +166,24 @@ def create():
         flash("Please check form fields.", "error")
 
     return render_template("user/create.html", form=create_user_form)
+
+
+@blueprint.route("/delete-conversation", methods=["POST"])
+@login_required
+@admin_required
+def delete_conversation():
+    id = request.form['id']
+    conv = Conversation.query.get(id)
+    if not conv:
+        abort(401)
+    if current_user.id != conv.author:
+        abort(401)
+
+    return_to_username = conv.patient_desc.username
+    db.session.delete(conv)
+    db.session.commit()
+    flash("Message deleted.", "success")
+    return redirect(url_for('user_bp.treatment', username=return_to_username));
 
 
 @blueprint.route("/<username>", methods=["GET"])

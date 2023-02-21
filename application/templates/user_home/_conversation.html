@@ -44,7 +44,17 @@
               {% endif %}
             </small>
           </div>
-          <p class="mt-1 mb-1 conversation-text {{ 'text-success' if conv_item.author_desc.admin else 'text-primary'}}">{{conv_item.conversation}}</p>
+          <p class="mt-1 mb-1 conversation-text {{ 'text-success' if conv_item.author_desc.admin else 'text-primary'}}">
+            {{conv_item.conversation}}
+            {% if conv_item.author == current_user.id  %}
+            <br />
+            <form method="post" action="{{url_for('user_home_bp.delete_conversation')}}" onsubmit="return confirm('Do you really want delete?');">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <input type="hidden" name="id" value="{{conv_item.id}}">
+              <button class="btn btn-sm btn-danger">Delete</button>
+            </form>
+            {% endif %}
+          </p>
         </div>
       </div>
       {% endfor %}

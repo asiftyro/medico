@@ -52,6 +52,14 @@
             </span>
           </p>
           {% endif %}
+          {% if conv_item.author == current_user.id  %}
+            <br />
+            <form method="post" action="{{url_for('user_bp.delete_conversation')}}" onsubmit="return confirm('Do you really want delete?');">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <input type="hidden" name="id" value="{{conv_item.id}}">
+              <button class="btn btn-sm btn-danger">Delete</button>
+            </form>
+          {% endif %}
         </div>
       </div>
       <div>
