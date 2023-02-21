@@ -34,7 +34,8 @@
 {% endblock content %}
 
 {% block style %}
-<link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+
+<link href='/static/css/mermaid.min.css' rel="stylesheet" />
 <style>
   /* Gridjs fix: avoid column header name to shorten and show elipse (...) */
   th.gridjs-th-sort .gridjs-th-content {
@@ -54,7 +55,7 @@
 {% endblock style %}
 
 {% block javascript %}
-<script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+<script src="/static/js/gridjs.umd.js"></script>
 <script>
   const updateUrl = (prev, query) => {
     return prev + (prev.indexOf('?') >= 0 ? '&' : '?') + new URLSearchParams(query).toString();
