@@ -220,7 +220,7 @@ class Organization(db.Model):
     title = db.Column(db.String(128))
     logo = db.Column(db.String(128))
     description = db.Column(db.String(128))
-    address = db.Column(db.String(128))
+    address = db.Column(db.String(255))
     author = db.Column(db.Integer, db.ForeignKey("user.id"))
     created_at = db.Column(db.DateTime, default=datetime.datetime.now(datetime.timezone.utc))
     modified_at = db.Column(db.DateTime, onupdate=datetime.datetime.now(datetime.timezone.utc))
