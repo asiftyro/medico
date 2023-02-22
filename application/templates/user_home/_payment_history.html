@@ -27,7 +27,7 @@
             <tr>
               <td class="text-nowrap">{{paym.id}}</td>
               <td class="text-nowrap"><span class="badge bg-{{'success' if paym.payment_status else 'danger' }} rounded-pill">{{'Paid' if paym.payment_status else 'Unpaid'}}</span></td>
-              <td class="text-nowrap">{{paym.description}}</td>
+              <td class="text-nowrap">{{paym.payment_description}}</td>
               <td class="text-nowrap">{{paym.amount}}</td>
               <td class="text-nowrap">{{paym.created_at}}</td>
               <td class="text-nowrap">{{paym.paid_at if paym.paid_at else 'Unsettled'}}</td>

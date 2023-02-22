@@ -1,5 +1,5 @@
 <div class="card mb-3">
-  <div class="card-header bg-danger d-flex justify-content-between">
+  <div class="card-header bg-danger text-white d-flex justify-content-between">
     <span><b>Payment Notice</b></span>
     <div>
       {{render_icon('layout-sidebar')}}
@@ -26,7 +26,7 @@
             <tr>
               <td class="text-nowrap">{{paym.id}}</td>
               <td class="text-nowrap"><span class="badge bg-{{'success' if paym.payment_status else 'danger' }} rounded-pill">{{'Paid' if paym.payment_status else 'Unpaid'}}</span></td>
-              <td class="text-nowrap">{{paym.description}}</td>
+              <td class="text-nowrap">{{paym.payment_description}}</td>
               <td class="text-nowrap">{{paym.amount}}</td>
               <td class="text-nowrap">{{paym.created_at}}</td>
               <td class="text-nowrap">You can pay through {{paym.payment_method}}</td>
