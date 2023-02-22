@@ -74,7 +74,7 @@ def get_unread():
             (Conversation.admin_id == admin_id) & (Conversation.read == 0) & (Conversation.author != admin_id)
         )
         .order_by(Conversation.created_at.desc())
-        .all()
+        .limit(15)
     )
 
     return_json = []
