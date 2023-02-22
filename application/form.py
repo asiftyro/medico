@@ -94,7 +94,7 @@ class CreateUserForm(FlaskForm):
     email = StringField(
         "Email", validators=[Email(), Optional(strip_whitespace=True), Length(max=64)], filters=[lambda x: x or None]
     )
-    address = StringField("Address", validators=[Length(max=64)])
+    address = StringField("Address", validators=[Length(max=255)])
     avatar = FileField(
         "Patient' Photo", validators=[FileAllowed(["jpg", "png", "jpeg"], "Allowed JPG or PNG Images only.")]
     )
@@ -143,7 +143,7 @@ class EditUserForm(FlaskForm):
     email = StringField(
         "Email", validators=[Email(), Optional(strip_whitespace=True), Length(max=64)], filters=[lambda x: x or None]
     )
-    address = StringField("Address", validators=[Length(max=64)])
+    address = StringField("Address", validators=[Length(max=255)])
     avatar = FileField(
         "Patient's Photo", validators=[FileAllowed(["jpg", "png", "jpeg"], "Allowed JPG or PNG Images only.")]
     )
@@ -205,7 +205,7 @@ class LoginForm(FlaskForm):
 
 
 class ConversationForm(FlaskForm):
-    conversation = StringField("Send Message", validators=[InputRequired(), Length(max=128)])
+    conversation = StringField("Send Message", validators=[InputRequired(), Length(max=512)])
     conversation_attachment = FileField(
         "Send Photo/Video",
         validators=[
@@ -263,7 +263,7 @@ class AdminSettingsForm(FlaskForm):
     email = StringField(
         "Email", validators=[Email(), Optional(strip_whitespace=True), Length(max=64)], filters=[lambda x: x or None]
     )
-    address = StringField("Address", validators=[Length(max=64)])
+    address = StringField("Address", validators=[Length(max=255)])
     save_admin_settings_form = SubmitField("Save")
 
 
@@ -281,7 +281,7 @@ class OrganizationForm(FlaskForm):
         filters=[lambda x: x or None],
     )
     address = StringField(
-        "Address", validators=[Length(min=2, max=128), Optional(strip_whitespace=True)], filters=[lambda x: x or None]
+        "Address", validators=[Length(min=2, max=255), Optional(strip_whitespace=True)], filters=[lambda x: x or None]
     )
     logo = FileField("Logo", validators=[FileAllowed(["jpg", "png", "jpeg"], "Allowed JPG or PNG Images only.")])
     save_organization_form = SubmitField("Save")

@@ -25,7 +25,7 @@ class User(db.Model, UserMixin):
     blood = db.Column(db.String(3))
     reference = db.Column(db.String(64))
     email = db.Column(db.String(64), nullable=True, unique=True)
-    address = db.Column(db.String(64))
+    address = db.Column(db.String(255))
     avatar = db.Column(db.String(128))
     analysis = db.Column(db.Text)
     case_photo_1 = db.Column(db.String(128))
@@ -150,7 +150,7 @@ class Conversation(db.Model):
     __tablename__ = "conversation"
 
     id = db.Column(db.Integer, primary_key=True)
-    conversation = db.Column(db.String(128))
+    conversation = db.Column(db.String(512))
     read = db.Column(db.SmallInteger, default=0)
     patient_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     admin_id = db.Column(db.Integer, db.ForeignKey("user.id"))
