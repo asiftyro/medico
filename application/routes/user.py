@@ -151,11 +151,11 @@ def create():
         user.author = current_user.id
 
         # Reverse calculate DOB from age (appx)
-        cur_date = datetime.datetime.now()
-        offset_year = int(create_user_form.age.data)
-        calc_year = cur_date.year - offset_year
-        calc_date = datetime.datetime(calc_year, cur_date.month,cur_date.day,0,0,1,1)
-        user.dob = calc_date
+        # cur_date = datetime.datetime.now()
+        # offset_year = int(create_user_form.age.data)
+        # calc_year = cur_date.year - offset_year
+        # calc_date = datetime.datetime(calc_year, cur_date.month,cur_date.day,0,0,1,1)
+        # user.dob = calc_date
 
 
         db.session.add(user)
@@ -212,7 +212,7 @@ def data():
     search = request.args.get("search")
     if search:
         query = query.filter(
-            db.or_(User.username.like(f"%{search}%"), User.nickname.like(f"%{search}%"), User.fullname.like(f"%{search}%"), User.dob.like(f"%{search}%"))
+            db.or_(User.username.like(f"%{search}%"), User.nickname.like(f"%{search}%"), User.fullname.like(f"%{search}%"), User.age.like(f"%{search}%"))
         )
     total = query.count()
 

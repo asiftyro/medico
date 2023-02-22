@@ -68,7 +68,7 @@ def create_first_admin_user_if_not_exist(app):
                     active=1,
                     created_at=datetime.datetime.now(),
                     sex="O",
-                    dob=datetime.datetime.now(),
+                    age="0y",
                 )
                 db.session.add(new_user)
                 db.session.commit()

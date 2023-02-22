@@ -10,7 +10,7 @@ for n in range(4, 500):
     # password = 123456
     password_hash = "sha256$g0cb3gG1kfuzOslu$6a4b80c5bccbd75065c4de22721149e8305833d0400a5d9f76ee5bcf7bb6db84"
     fullname = fake.unique.name()
-    dob = fake.date()
+    age = "1y"
     sex = random.choice(["M", "F", "O"])
     blood = random.choice(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-", "U"])
     reference = fake.unique.name()
@@ -31,5 +31,5 @@ for n in range(4, 500):
     author = 1
     created_at = fake.date()
     modified_at = ''
-    record = f"{id}\t{username}\t{password_hash}\t{fullname}\t{dob}\t{sex}\t{blood}\t{reference}\t{email}\t{address}\t{avatar}\t{analysis}\t{case_photo_1}\t{case_photo_2}\t{case_photo_3}\t{case_photo_4}\t{admin}\t{active}\t{author}\t{created_at}\t{modified_at}"
+    record = f"{id}\t{username}\t{password_hash}\t{fullname}\t{age}\t{sex}\t{blood}\t{reference}\t{email}\t{address}\t{avatar}\t{analysis}\t{case_photo_1}\t{case_photo_2}\t{case_photo_3}\t{case_photo_4}\t{admin}\t{active}\t{author}\t{created_at}\t{modified_at}"
     print(record)

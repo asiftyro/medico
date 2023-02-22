@@ -38,7 +38,7 @@ def index():
     if "save_admin_settings_form" in request.form and admin_form.validate_on_submit():
         user.username = admin_form.username.data
         user.fullname = admin_form.fullname.data
-        user.dob = admin_form.dob.data
+        user.age = admin_form.age.data
         user.sex = admin_form.sex.data
         user.blood = admin_form.blood.data
         user.email = admin_form.email.data

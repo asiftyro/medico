@@ -74,13 +74,7 @@ class CreateUserForm(FlaskForm):
         ],
         filters=[lambda x: x or None]
     )
-
-
-
-
-
-    # dob = DateField("Date of Birth", validators=[InputRequired()])
-    age = StringField("Age", validators=[NumbersOnly(),InputRequired()])
+    age = StringField("Age")
     sex = SelectField("Sex", choices=[("M", "Male"), ("F", "Female"), ("O", "Other")])
     blood = SelectField(
         "Blood Group",
@@ -129,7 +123,7 @@ class EditUserForm(FlaskForm):
             Length(min=2, max=32),
         ],
     )
-    dob = DateField("Date of Birth", validators=[InputRequired()])
+    age = StringField("Age")
     sex = SelectField("Sex", choices=[("M", "Male"), ("F", "Female"), ("O", "Other")])
     blood = SelectField(
         "Blood Group",
@@ -250,7 +244,7 @@ class AdminSettingsForm(FlaskForm):
         ],
     )
     fullname = StringField("Full Name", validators=[InputRequired(), Length(min=4, max=64)])
-    dob = DateField("Date of Birth", validators=[InputRequired()])
+    age = StringField("Date of Birth")
     sex = SelectField("Sex", choices=[("M", "Male"), ("F", "Female"), ("O", "Other")])
     blood = SelectField(
         "Blood Group",
