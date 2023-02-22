@@ -124,7 +124,7 @@ class EditUserForm(FlaskForm):
     nickname = StringField(
         "Nick Name",
         validators=[
-            Unique(User, User.nickname, "Nick name already exists."),
+            UniqueUserOnUpdate(User, User.nickname,"id", "Nick name already exists."),
             InputRequired(),
             Length(min=2, max=32),
         ],
