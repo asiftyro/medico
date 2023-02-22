@@ -25,6 +25,8 @@
   <br>
   <br>
   <p style="text-align: right;">
+    <img src="/static/img/logo/logo.png" alt="" style="width:60px;float:left">
+    <br>
     Prescription ID <b>#{{'%05d' %prescription.id}}</b>
     <br>
     Date: {{prescription.created_at|local_datetime('dd')}}
@@ -33,7 +35,7 @@
   <p style="float: left;">
     Patient Name: <b>{{prescription.patient_desc.fullname}}</b>
     <br>
-    Age: {{prescription.patient_desc.age}}
+    Age: {{prescription.patient_desc.age or "-"}}
     <br>
     Sex: {{prescription.patient_desc.sex}}
     <br>
@@ -42,12 +44,12 @@
   <p style="float: right; text-align:left;">
     Mobile/Username: {{prescription.patient_desc.username}}
     <br>
-    Email: {{prescription.patient_desc.email}}
+    Email: {{prescription.patient_desc.email or "-"}}
     <br>
-    Reference: {{prescription.patient_desc.reference}}
+    Reference: {{prescription.patient_desc.reference or "-"}}
   </p>
   <p style="clear:both;">
-    Address: {{prescription.patient_desc.address}}
+    Address: {{prescription.patient_desc.address or "-"}}
   </p>
   <hr>
   <h3>Rx</h3>
